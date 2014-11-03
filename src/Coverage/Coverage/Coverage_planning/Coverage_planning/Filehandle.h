@@ -14,12 +14,13 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
 class Filehandle
 {
 public:
-    Filehandle(string path);
+    Filehandle(string filename);
     
 };

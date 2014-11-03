@@ -8,8 +8,15 @@
 
 #include "Filehandle.h"
 
-Filehandle::Filehandle(string path)
+Filehandle::Filehandle(string filename)
 {
-    cout << path << endl;
+
+    ifstream map;
+    map.open(filename,ios::binary);
+    if (!map.is_open()) {
+        cout << "An error occured while openning" << endl;
+        exit(0);
+    }
+    
     
 }

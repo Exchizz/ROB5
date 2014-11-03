@@ -27,6 +27,7 @@
 		9BCEAE551A078C3A008CF466 /* Coverage_planning */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Coverage_planning; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BCEAE581A078C3A008CF466 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9BCEAE621A079129008CF466 /* Filehandle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Filehandle.cpp; sourceTree = "<group>"; };
+		9BCEAE641A0792F9008CF466 /* Filehandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filehandle.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				9BCEAE581A078C3A008CF466 /* main.cpp */,
+				9BCEAE641A0792F9008CF466 /* Filehandle.h */,
 				9BCEAE621A079129008CF466 /* Filehandle.cpp */,
 			);
 			path = Coverage_planning;
