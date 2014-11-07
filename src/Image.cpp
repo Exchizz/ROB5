@@ -7,6 +7,13 @@
 
 #include "Image.h"
 
+int Image::getMaxValue() {
+	return maxValue;
+}
+
+std::string Image::getVersion() {
+	return version;
+}
 
 void Image::createImage(const std::string filename, const int width, const int height, int maxValue){
 	imageFile.open(filename.c_str(),std::ios::out);
@@ -36,6 +43,7 @@ void Image::loadImage(const std::string filename){
 		std::cout << "Version NOT P2, be aware code might not work as expected" << std::endl;;
 	}
 	else std::cout << "Version : " << inputLine << std::endl;
+	this->version = inputLine;
 
 	// Second line : comment
 	getline(imageFile,inputLine);

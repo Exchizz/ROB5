@@ -20,6 +20,8 @@ public:
 	~Image();
 	int getWidth();
 	int getHeight();
+	int getMaxValue();
+	std::string getVersion();
 	int getPixel(int width, int height);
 
 	void setPixel(const int width, const int height, const int value);
@@ -35,6 +37,7 @@ private:
 	int height;
 	int maxValue;
 	std::string inputLine;
+	std::string version;
 	std::stringstream ss;
 };
 
