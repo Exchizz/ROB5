@@ -7,10 +7,8 @@
 //
 
 #include "Coverage_planing.h"
-using namespace std;
 
-//Coverage_planing::Coverage_planing(Filehandle map){};
 
 Coverage_planing::Coverage_planing(Filehandle map){
-    cout << "Constructor for Coverage_planing" << endl; 
+    cout <<  map.map.tellg() << endl;
 };
