@@ -95,11 +95,11 @@ void Image::createVector(std::vector< std::vector<int> > &image){
 
 int Image::getPixel(int width, int height){
 	if(width >= this->width){
-		std::cout << "Requested width: \""  <<  width  << "\" max width is: \"" << this->width << "\"" << std::endl;
+		std::cout << "Requested width: \""  <<  width  << "\" max width is: \"" << this->width -1 << "\"" << std::endl;
 		exit(0);
 	}
 	if(height >= this->height){
-		std::cout << "Requested height: \""  <<  width  << "\" max height is: \"" << this->width << "\"" << std::endl;
+		std::cout << "Requested height: \""  <<  width  << "\" max height is: \"" << this->height -1 << "\"" << std::endl;
 		exit(0);
 	}
 
@@ -108,11 +108,11 @@ int Image::getPixel(int width, int height){
 
 void Image::setPixel(const int width, const int height, const int  value){
 	if(width >= this->width){
-		std::cout << "Requested width: \""  <<  width  << "\" max width is: \"" << this->width << "\"" << std::endl;
+		std::cout << "Requested width: \""  <<  width  << "\" max width is: \"" << this->width -1 << "\"" << std::endl;
 		exit(0);
 	}
 	if(height >= this->height){
-		std::cout << "Requested height: \""  <<  width  << "\" max height is: \"" << this->width << "\"" << std::endl;
+		std::cout << "Requested height: \""  <<  height  << "\" max height is: \"" << this->height -1 << "\"" << std::endl;
 		exit(0);
 	}
 

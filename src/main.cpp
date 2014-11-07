@@ -4,12 +4,11 @@
 int main(){
 	Image myImage;
 	//myImage.loadImage("image.pgm");
-	myImage.createImage("my_image.pgm", 100, 100);
+	myImage.createImage("my_image.pgm", 100, 100); // as a  fourth parameter, max value can be given - default is 255(8 bit greyscale)
 
-	for(int x = 0; x < myImage.getWidth(); ++x){
-		for(int y = 0; y < myImage.getHeight(); ++y ){
+	for(int x = 0; x < myImage.getWidth() +1; ++x){
+		for(int y = 0; y < myImage.getHeight() ; ++y ){
 			std::cout << "x,y: " << x << " " << y << " \t";
-			//std::cout << "value: " << myImage.setPixel(x,y, x+y) << std::endl;
 			std::cout << "value: " << x+y << std::endl;
 			 myImage.setPixel(x,y, x+y);
 		}
