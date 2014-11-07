@@ -9,7 +9,6 @@
 #include "Filehandle.h"
 
 Filehandle::Filehandle(string filename){
-
     map.open(filename,ios::binary);
     if (!map.is_open()) {
         cout << "An error occured while openning" << endl;
@@ -35,3 +34,4 @@ int Filehandle::getLenght(){
     map.seekg(temp_position,map.beg);
     return lenght;
 };
+

@@ -15,9 +15,7 @@ int main(int argc, const char * argv[]) {
     Filehandle map("/Users/keerthikanratnarajah/Documents/Kode/ROB5/src/Coverage/Coverage/Coverage_planning/Coverage_planning/complete_map_project.pgm");
     
     cout << map.getHeight() << endl;
-    cout << map.map.tellg() << endl;
     cout << map.getLenght() << endl;
-    cout << map.map.tellg() << endl; 
     
     
     std::cout << "Hello, World!\n";
