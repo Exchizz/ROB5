@@ -7,6 +7,16 @@
 
 #include "Image.h"
 
+
+void Image::createImage(const std::string filename){
+	imageFile.open(filename.c_str(),std::ios::out);
+	if(!imageFile.is_open()){
+		std::cout << "Unable to create \"" + filename + "\"" << std::endl;
+		exit(0);
+	}
+
+	imageFile << "it's cool";
+}
 void Image::loadImage(const std::string filename){
 	imageFile.open(filename.c_str());
 	if(!imageFile.is_open()){

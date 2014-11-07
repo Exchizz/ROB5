@@ -26,7 +26,7 @@ public:
 	void createImage(const std::string filename);
 
 private:
-	std::ifstream imageFile;
+	std::fstream imageFile;
 	std::vector< std::vector<int> > imageData;
 	int width;
 	int height;

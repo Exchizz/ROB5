@@ -3,7 +3,8 @@
 #include "Image.h"
 int main(){
 	Image myImage;
-	myImage.loadImage("image.pgm");
+	//myImage.loadImage("image.pgm");
+	myImage.createImage("my_image.pgm");
 
 	for(int x = 0; x < myImage.getWidth(); ++x){
 		for(int y = 0; y < myImage.getHeight(); ++y ){
