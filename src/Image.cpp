@@ -8,14 +8,20 @@
 #include "Image.h"
 
 
-void Image::createImage(const std::string filename){
+void Image::createImage(const std::string filename, const int width, const int height, int maxValue){
 	imageFile.open(filename.c_str(),std::ios::out);
 	if(!imageFile.is_open()){
 		std::cout << "Unable to create \"" + filename + "\"" << std::endl;
 		exit(0);
 	}
 
-	imageFile << "it's cool";
+	this->width = width;
+	this->height = height;
+	this->maxValue = maxValue;
+
+	createVector(imageData);
+
+	std::cout << "vector size width :" << imageData.size() << " height: " << imageData[0].size() << std::endl;
 }
 void Image::loadImage(const std::string filename){
 	imageFile.open(filename.c_str());
@@ -81,9 +87,8 @@ int Image::getHeight() {
 
 void Image::createVector(std::vector< std::vector<int> > &image){
 	image.reserve(width);
-	for(auto i : image){
-		std::vector<int> temp;
-		temp.reserve(height);
+	for(int i = 0; i < width; ++i){
+		std::vector<int> temp(height);
 		image.push_back(temp);
 	}
 }
@@ -99,4 +104,30 @@ int Image::getPixel(int width, int height){
 	}
 
 	return imageData[width][height];
+}
+
+void Image::setPixel(const int width, const int height, const int  value){
+	if(width >= this->width){
+		std::cout << "Requested width: \""  <<  width  << "\" max width is: \"" << this->width << "\"" << std::endl;
+		exit(0);
+	}
+	if(height >= this->height){
+		std::cout << "Requested height: \""  <<  width  << "\" max height is: \"" << this->width << "\"" << std::endl;
+		exit(0);
+	}
+
+	imageData[width][height] = value;
+}
+
+Image::~Image(){
+	imageFile << "P2\n";
+	imageFile << "# THE BEER-WARE LICENSE (Revision 42)\n";
+	imageFile << width << " " << height << "\n";
+	imageFile << maxValue << "\n";
+	for(int x = 0; x < width; ++x){
+		for(int y = 0; y < height; y++){
+			imageFile << imageData[x][y] << " ";
+		}
+		imageFile << "\n";
+	}
 }
