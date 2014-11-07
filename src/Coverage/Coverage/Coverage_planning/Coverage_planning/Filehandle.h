@@ -22,5 +22,10 @@ class Filehandle
 {
 public:
     Filehandle(string filename);
+    int getHeight();
+    int getLenght();
+    ifstream map;
+    
+private:
     
 };
