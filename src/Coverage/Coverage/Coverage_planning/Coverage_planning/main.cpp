@@ -17,6 +17,7 @@ int main(int argc, const char * argv[]) {
     cout << maps.getHeight() << endl;
     cout << maps.getLenght() << endl;
     Coverage_planing test(maps);
+    cout << "No way" << endl;
     std::cout << "Hello, World!\n";
     return 0;
 }
