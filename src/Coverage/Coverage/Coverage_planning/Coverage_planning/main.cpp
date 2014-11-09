@@ -7,15 +7,13 @@
 //
 
 #include <iostream>
-#include "Filehandle.h"
+#include "Image.h"
 #include <unistd.h>
+using namespace std;
 
 int main(int argc, const char * argv[]) {
-    
-    Filehandle map("/Users/keerthikanratnarajah/Documents/Kode/ROB5/src/Coverage/Coverage/Coverage_planning/Coverage_planning/complete_map_project.pgm");
-    char * dir = getcwd(NULL, 0); // Platform-dependent, see reference link below
-    printf("Current dir: %s", dir);
-    
-    std::cout << "Hello, World!\n";
+    Image map;
+    map.loadImage("/Users/keerthikanratnarajah/Documents/Kode/ROB5/src/Coverage/Coverage/Coverage_planning/Coverage_planning/complete_map_project.pgm");
+    std::cout << "hello" << std::endl;
     return 0;
 }

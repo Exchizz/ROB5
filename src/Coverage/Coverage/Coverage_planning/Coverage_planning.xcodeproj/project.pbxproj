@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9BCEAE591A078C3A008CF466 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BCEAE581A078C3A008CF466 /* main.cpp */; };
-		9BCEAE631A079129008CF466 /* Filehandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BCEAE621A079129008CF466 /* Filehandle.cpp */; };
+		9BD9CD271A0EEBAA008284EA /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BD9CD251A0EEBAA008284EA /* Image.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,8 +26,8 @@
 /* Begin PBXFileReference section */
 		9BCEAE551A078C3A008CF466 /* Coverage_planning */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Coverage_planning; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BCEAE581A078C3A008CF466 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		9BCEAE621A079129008CF466 /* Filehandle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Filehandle.cpp; sourceTree = "<group>"; };
-		9BCEAE641A0792F9008CF466 /* Filehandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Filehandle.h; sourceTree = "<group>"; };
+		9BD9CD251A0EEBAA008284EA /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
+		9BD9CD261A0EEBAA008284EA /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,9 +60,9 @@
 		9BCEAE571A078C3A008CF466 /* Coverage_planning */ = {
 			isa = PBXGroup;
 			children = (
+				9BD9CD251A0EEBAA008284EA /* Image.cpp */,
+				9BD9CD261A0EEBAA008284EA /* Image.h */,
 				9BCEAE581A078C3A008CF466 /* main.cpp */,
-				9BCEAE641A0792F9008CF466 /* Filehandle.h */,
-				9BCEAE621A079129008CF466 /* Filehandle.cpp */,
 			);
 			path = Coverage_planning;
 			sourceTree = "<group>";
@@ -123,8 +123,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BD9CD271A0EEBAA008284EA /* Image.cpp in Sources */,
 				9BCEAE591A078C3A008CF466 /* main.cpp in Sources */,
-				9BCEAE631A079129008CF466 /* Filehandle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
