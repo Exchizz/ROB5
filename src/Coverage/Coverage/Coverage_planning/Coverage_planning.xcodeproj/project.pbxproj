@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9BBB1BAD1A10A2F900B6DF13 /* Coverage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB1BAB1A10A2F900B6DF13 /* Coverage.cpp */; };
 		9BCEAE591A078C3A008CF466 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BCEAE581A078C3A008CF466 /* main.cpp */; };
 		9BD9CD271A0EEBAA008284EA /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BD9CD251A0EEBAA008284EA /* Image.cpp */; };
 /* End PBXBuildFile section */
@@ -24,6 +25,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9BBB1BAB1A10A2F900B6DF13 /* Coverage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coverage.cpp; sourceTree = "<group>"; };
+		9BBB1BAC1A10A2F900B6DF13 /* Coverage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coverage.h; sourceTree = "<group>"; };
 		9BCEAE551A078C3A008CF466 /* Coverage_planning */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Coverage_planning; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BCEAE581A078C3A008CF466 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9BD9CD251A0EEBAA008284EA /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Image.cpp; sourceTree = "<group>"; };
@@ -63,6 +66,8 @@
 				9BD9CD251A0EEBAA008284EA /* Image.cpp */,
 				9BD9CD261A0EEBAA008284EA /* Image.h */,
 				9BCEAE581A078C3A008CF466 /* main.cpp */,
+				9BBB1BAB1A10A2F900B6DF13 /* Coverage.cpp */,
+				9BBB1BAC1A10A2F900B6DF13 /* Coverage.h */,
 			);
 			path = Coverage_planning;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BBB1BAD1A10A2F900B6DF13 /* Coverage.cpp in Sources */,
 				9BD9CD271A0EEBAA008284EA /* Image.cpp in Sources */,
 				9BCEAE591A078C3A008CF466 /* main.cpp in Sources */,
 			);

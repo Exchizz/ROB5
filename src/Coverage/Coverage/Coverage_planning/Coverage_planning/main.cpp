@@ -8,12 +8,13 @@
 
 #include <iostream>
 #include "Image.h"
+#include "Coverage.h"
 #include <unistd.h>
 using namespace std;
 
 int main(int argc, const char * argv[]) {
     Image map;
     map.loadImage("/Users/keerthikanratnarajah/Documents/Kode/ROB5/src/Coverage/Coverage/Coverage_planning/Coverage_planning/complete_map_project.pgm");
-    std::cout << "hello" << std::endl;
+    Coverage routing(map);
     return 0;
 }

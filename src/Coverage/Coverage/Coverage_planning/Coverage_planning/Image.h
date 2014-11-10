@@ -32,10 +32,10 @@ public:
 
 private:
 	std::fstream imageFile;
-	std::vector< std::vector<int> > imageData;
 	int width;
 	int height;
 	int maxValue;
+    std::vector< std::vector<int> > imageData;
 	std::string inputLine;
 	std::string version;
 	std::stringstream ss;
