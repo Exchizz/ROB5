@@ -1,6 +1,6 @@
 /Debug/
 /test/
-.gitignore
-.gitignore~
-.project
-.cproject
+/.gitignore
+/.gitignore~
+/.project
+/.cproject
