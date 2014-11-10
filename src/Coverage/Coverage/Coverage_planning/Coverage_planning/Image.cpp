@@ -16,6 +16,7 @@ std::string Image::getVersion() {
 }
 
 void Image::createImage(const std::string filename, const int width, const int height, int maxValue){
+	createFile = true;
 	imageFile.open(filename.c_str(),std::ios::out);
 	if(!imageFile.is_open()){
 		std::cout << "Unable to create \"" + filename + "\"" << std::endl;
@@ -31,6 +32,7 @@ void Image::createImage(const std::string filename, const int width, const int h
 	std::cout << "vector size width :" << imageData.size() << " height: " << imageData[0].size() << std::endl;
 }
 void Image::loadImage(const std::string filename){
+	createFile = false;
 	imageFile.open(filename.c_str());
 	if(!imageFile.is_open()){
 		std::cout << "Unable to open \"" + filename + "\"" << std::endl;
@@ -128,14 +130,17 @@ void Image::setPixel(const int width, const int height, const int  value){
 }
 
 Image::~Image(){
-	imageFile << "P2\n";
-	imageFile << "# THE BEER-WARE LICENSE (Revision 42)\n";
-	imageFile << width << " " << height << "\n";
-	imageFile << maxValue << "\n";
-	for(int x = 0; x < width; ++x){
-		for(int y = 0; y < height; y++){
-			imageFile << imageData[x][y] << " ";
+	if(createFile){
+		imageFile << "P2\n";
+		imageFile << "# THE BEER-WARE LICENSE (Revision 42)\n";
+		imageFile << width << " " << height << "\n";
+		imageFile << maxValue << "\n";
+		for(int x = 0; x < width; ++x){
+			for(int y = 0; y < height; y++){
+				imageFile << imageData[x][y] << " ";
+			}
+			imageFile << "\n";
 		}
-		imageFile << "\n";
+		imageFile.close();
 	}
 }

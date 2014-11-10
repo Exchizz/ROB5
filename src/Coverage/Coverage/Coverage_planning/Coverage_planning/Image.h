@@ -39,6 +39,8 @@ private:
 	std::string inputLine;
 	std::string version;
 	std::stringstream ss;
+
+	bool createFile;
 };
 
 #endif /* IMAGE_H_ */
