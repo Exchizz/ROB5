@@ -17,7 +17,7 @@
 class Image{
 public:
 	Image();
-	~Image();
+	//~Image();
 	int getWidth();
 	int getHeight();
 	int getMaxValue();
@@ -28,7 +28,8 @@ public:
 
 	void createVector(std::vector< std::vector <int> >  &image);
 	void loadImage(const std::string filename);
-	void createImage(const std::string filename, const int width, const int height, int maxValue = 255);
+	//void createImage(const std::string filename, const int width, const int height, int maxValue = 255);
+	void saveImage(std::string filename);
 
 private:
 	std::fstream imageFile;
@@ -39,8 +40,6 @@ private:
 	std::string inputLine;
 	std::string version;
 	std::stringstream ss;
-
-	bool createFile;
 };
 
 #endif /* IMAGE_H_ */
