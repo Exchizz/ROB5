@@ -15,24 +15,27 @@ std::string Image::getVersion() {
 	return version;
 }
 
-void Image::createImage(const std::string filename, const int width, const int height, int maxValue){
-	createFile = true;
+void Image::saveImage(std::string filename){
 	imageFile.open(filename.c_str(),std::ios::out);
 	if(!imageFile.is_open()){
 		std::cout << "Unable to create \"" + filename + "\"" << std::endl;
 		exit(0);
 	}
+	imageFile << "P2\n";
+	imageFile << "# THE BEER-WARE LICENSE (Revision 42)\n";
+	imageFile << width << " " << height << "\n";
+	imageFile << maxValue << "\n";
 
-	this->width = width;
-	this->height = height;
-	this->maxValue = maxValue;
 
-	createVector(imageData);
-
-	std::cout << "vector size width :" << imageData.size() << " height: " << imageData[0].size() << std::endl;
+	for(int y = 0; y < height; ++y){
+		for(int x = 0; x < width; ++x){
+			imageFile << getPixel(x,y) << " ";
+		}
+		imageFile << std::endl;
+	}
+	imageFile.close();
 }
 void Image::loadImage(const std::string filename){
-	createFile = false;
 	imageFile.open(filename.c_str());
 	if(!imageFile.is_open()){
 		std::cout << "Unable to open \"" + filename + "\"" << std::endl;
@@ -59,7 +62,6 @@ void Image::loadImage(const std::string filename){
 
 	// fourth line : max value
 	getline(imageFile,inputLine);
-	std::cout << "line: " << inputLine << std::endl;
 	ss.clear();
 	ss << inputLine;
 	ss >> maxValue;
@@ -71,14 +73,16 @@ void Image::loadImage(const std::string filename){
 
 	//Creates imageData-vector
 	createVector(imageData);
+
 	//Put image into 2-D vectors
-	for(int x = 0; x < height; ++x){
-		for(int y = 0; y < width; ++y){
+	for(int y = 0; y < height; ++y){
+		for(int x = 0; x < width; ++x){
 			int value;
 			ss >> value;
-			imageData[y].push_back(value);
+			setPixel(x,y,value);
 		}
 	}
+	imageFile.close();
 }
 
 Image::Image() {
@@ -109,14 +113,14 @@ int Image::getPixel(int width, int height){
 		exit(0);
 	}
 	if(height >= this->height){
-		std::cout << "Requested height: \""  <<  width  << "\" max height is: \"" << this->height -1 << "\"" << std::endl;
+		std::cout << "Requested height: \""  <<  height  << "\" max height is: \"" << this->height -1 << "\"" << std::endl;
 		exit(0);
 	}
 
 	return imageData[width][height];
 }
 
-void Image::setPixel(const int width, const int height, const int  value){
+void Image::setPixel(const int width, const int height, const int value){
 	if(width >= this->width){
 		std::cout << "Requested width: \""  <<  width  << "\" max width is: \"" << this->width -1 << "\"" << std::endl;
 		exit(0);
@@ -127,20 +131,4 @@ void Image::setPixel(const int width, const int height, const int  value){
 	}
 
 	imageData[width][height] = value;
-}
-
-Image::~Image(){
-	if(createFile){
-		imageFile << "P2\n";
-		imageFile << "# THE BEER-WARE LICENSE (Revision 42)\n";
-		imageFile << width << " " << height << "\n";
-		imageFile << maxValue << "\n";
-		for(int x = 0; x < width; ++x){
-			for(int y = 0; y < height; y++){
-				imageFile << imageData[x][y] << " ";
-			}
-			imageFile << "\n";
-		}
-		imageFile.close();
-	}
 }
