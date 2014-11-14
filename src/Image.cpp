@@ -15,24 +15,6 @@ std::string Image::getVersion() {
 	return version;
 }
 
-/*
-void Image::createImage(const std::string filename, const int width, const int height, int maxValue){
-	createFile = true;
-	imageFile.open(filename.c_str(),std::ios::out);
-	if(!imageFile.is_open()){
-		std::cout << "Unable to create \"" + filename + "\"" << std::endl;
-		exit(0);
-	}
-
-	this->width = width;
-	this->height = height;
-	this->maxValue = maxValue;
-
-	createVector(imageData);
-
-	std::cout << "vector size width :" << imageData.size() << " height: " << imageData[0].size() << std::endl;
-}
- */
 void Image::saveImage(std::string filename){
 	imageFile.open(filename.c_str(),std::ios::out);
 	if(!imageFile.is_open()){

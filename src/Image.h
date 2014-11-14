@@ -8,6 +8,7 @@
 #ifndef IMAGE_H_
 #define IMAGE_H_
 
+
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -17,7 +18,6 @@
 class Image{
 public:
 	Image();
-	//~Image();
 	int getWidth();
 	int getHeight();
 	int getMaxValue();
@@ -28,7 +28,6 @@ public:
 
 	void createVector(std::vector< std::vector <int> >  &image);
 	void loadImage(const std::string filename);
-	//void createImage(const std::string filename, const int width, const int height, int maxValue = 255);
 	void saveImage(std::string filename);
 
 private:
