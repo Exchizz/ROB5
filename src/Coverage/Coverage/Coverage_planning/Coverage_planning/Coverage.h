@@ -14,7 +14,7 @@
 #include "Image.h"
 class Coverage{
 public:
-    Coverage(Image a);
+    Coverage();
 private:
     
 };

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B1F26DF1A16055E00AB164A /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B1F26DD1A16055E00AB164A /* Cell.cpp */; };
 		9BBB1BAD1A10A2F900B6DF13 /* Coverage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BBB1BAB1A10A2F900B6DF13 /* Coverage.cpp */; };
 		9BCEAE591A078C3A008CF466 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BCEAE581A078C3A008CF466 /* main.cpp */; };
 		9BD9CD271A0EEBAA008284EA /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BD9CD251A0EEBAA008284EA /* Image.cpp */; };
@@ -25,6 +26,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9B1F26DD1A16055E00AB164A /* Cell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cell.cpp; sourceTree = "<group>"; };
+		9B1F26DE1A16055E00AB164A /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
 		9BBB1BAB1A10A2F900B6DF13 /* Coverage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Coverage.cpp; sourceTree = "<group>"; };
 		9BBB1BAC1A10A2F900B6DF13 /* Coverage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coverage.h; sourceTree = "<group>"; };
 		9BCEAE551A078C3A008CF466 /* Coverage_planning */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Coverage_planning; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +70,8 @@
 				9BD9CD261A0EEBAA008284EA /* Image.h */,
 				9BCEAE581A078C3A008CF466 /* main.cpp */,
 				9BBB1BAB1A10A2F900B6DF13 /* Coverage.cpp */,
+				9B1F26DD1A16055E00AB164A /* Cell.cpp */,
+				9B1F26DE1A16055E00AB164A /* Cell.h */,
 				9BBB1BAC1A10A2F900B6DF13 /* Coverage.h */,
 			);
 			path = Coverage_planning;
@@ -129,6 +134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BBB1BAD1A10A2F900B6DF13 /* Coverage.cpp in Sources */,
+				9B1F26DF1A16055E00AB164A /* Cell.cpp in Sources */,
 				9BD9CD271A0EEBAA008284EA /* Image.cpp in Sources */,
 				9BCEAE591A078C3A008CF466 /* main.cpp in Sources */,
 			);
