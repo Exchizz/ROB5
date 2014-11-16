@@ -11,5 +11,8 @@
 Cell::Cell(){
     visited = false;
     cleaned = false;
+    list<int> upperBound;
+    list<int> lowerBound;
+    
     
 }

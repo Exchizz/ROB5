@@ -11,10 +11,14 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <list>
 #include "Image.h"
+using namespace std;
 class Coverage{
 public:
     Coverage(const Image&);
+    list<int> tempUpperbound;
+    list<int> tempLowerbound;
 private:
     
 };

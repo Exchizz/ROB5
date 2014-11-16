@@ -39,10 +39,7 @@ private:
 	std::string inputLine;
 	std::string version;
 	std::stringstream ss;
-<<<<<<< HEAD:src/Coverage/Coverage/Coverage_planning/Coverage_planning/Image.h
 	bool createFile;
-=======
->>>>>>> origin/Mathias:src/Image.h
 };
 
 #endif /* IMAGE_H_ */

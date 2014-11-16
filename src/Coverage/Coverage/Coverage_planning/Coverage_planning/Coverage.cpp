@@ -8,7 +8,7 @@
 
 #include "Coverage.h"
 
-Coverage::Coverage(const Image a)
+Coverage::Coverage(const Image& a)
 {
     std::cout << "Map er loadet" << std::endl;
     
