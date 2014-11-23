@@ -6,13 +6,15 @@
 //  Copyright (c) 2014 Keerthikan Ratnarajah. All rights reserved.
 //
 
-#include "Cell.h"
-
-Cell::Cell(){
+#include "Cell.h"  
+Cell::Cell( vector<pair<int, int>> &cell_temp){
+    pixels = move(cell_temp);
     visited = false;
     cleaned = false;
-    list<int> upperBound;
-    list<int> lowerBound;
     
+};
+
+void Cell::merge(Cell &B){
     
-}
+    pixels.insert(pixels.end(),B.pixels.begin(),B.pixels.end());
+};

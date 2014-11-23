@@ -13,14 +13,16 @@
 #include "Coverage.h"
 #include "Image.h"
 #include <list>
-
+#include <utility>      // std::pair
+#include <vector>
 
 using namespace std;
+
 class Cell{
 public:
-    Cell();
-    list<int> floor;
-    list<int> Ceeling;
+    Cell(vector<pair<int, int>> &);
+    vector<pair<int, int>> pixels;
+    void merge(Cell&);
 private:
     bool visited;
     bool cleaned;

@@ -7,18 +7,25 @@
 //
 
 #ifndef __Coverage_planning__Coverage__
+#define DOWN    0
+#define  UP     2
+#define LEFT    3
+#define RIGHT   1
+#define BLACK   0
+#define WHITE   255
 #define __Coverage_planning__Coverage__
 
 #include <stdio.h>
 #include <iostream>
 #include <list>
+#include <utility>      // std::pair
 #include "Image.h"
+#include <vector>
+#include "Cell.h"
 using namespace std;
 class Coverage{
 public:
-    Coverage(const Image&);
-    list<int> tempUpperbound;
-    list<int> tempLowerbound;
+    Coverage( Image&);
 private:
     
 };
