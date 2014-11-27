@@ -42,8 +42,9 @@ int main() {
 	auto listCenterHallways = img.detect_center(listHallways);
 
 	//auto shortestDistances =
-	auto distances_hallways_to_rooms = img.detect_room_to_hallways(listCenter,listCenterHallways);
-	std::cout << "size:..." << distances_hallways_to_rooms.size() << std::endl;
+	//auto distances_hallways_to_rooms =
+	img.detect_room_to_hallways(listCenter,listCenterHallways);
+	//std::cout << "size:..." << distances_hallways_to_rooms.size() << std::endl;
 	/*
 	for(auto elm : distances_hallways_to_rooms){
 		std::cout << "ok \n.... \n...";

@@ -63,7 +63,8 @@ public:
 	std::vector<square> detect_rooms();
 	std::vector<std::pair<int,int>> detect_center(std::vector<square>);
 	std::vector<square> detect_hallways(std::vector<square> center_rooms);
-	std::vector<std::vector<std::pair<int,std::pair<int,int>>>> detect_room_to_hallways(std::vector<std::pair<int,int>> rooms, std::vector<std::pair<int,int>> hallways);
+	//std::vector<std::vector<std::pair<int,std::pair<int,int>>>>
+	void detect_room_to_hallways(std::vector<std::pair<int,int>> rooms, std::vector<std::pair<int,int>> hallways);
 	void draw_area(square);
 	float dist_room_hall(std::pair<int,int> room, std::pair<int,int> hallway);
 

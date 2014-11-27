@@ -213,9 +213,9 @@ int Planning::getHallIdent(std::pair<int,int> hall){
 	return retval;
 }
 
-std::vector<std::vector<std::pair<int,std::pair<int,int>>>> Planning::detect_room_to_hallways(std::vector<std::pair<int,int>> rooms, std::vector<std::pair<int,int>> hallways){
+void Planning::detect_room_to_hallways(std::vector<std::pair<int,int>> rooms, std::vector<std::pair<int,int>> hallways){
 	for(auto room : rooms){
-		// dist, room, hotel
+		// dist, room, hallway
 		std::vector<std::tuple<int, std::pair<int,int>,std::pair<int,int>>> direct_distances;
 		for(auto hallway : hallways){
 			int dist = dist_room_hall(room,hallway);
@@ -229,8 +229,9 @@ std::vector<std::vector<std::pair<int,std::pair<int,int>>>> Planning::detect_roo
 				temp = elm;
 			}
 		}
-		hallToRooms[std::get<0>(temp)].push_back(temp);
+		std::cout << "Hall center: " << std::get<2>(temp).first << " " <<  std::get<2>(temp).second << std::endl;
+		///hallToRooms[std::get<0>(temp)].push_back(temp);
 	}
-
-	return hallToRooms;
+	//return hallToRooms;
 }
+
