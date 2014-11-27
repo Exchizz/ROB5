@@ -11,16 +11,18 @@
 #include "Coverage.h"
 #include <math.h>
 #include <unistd.h>
+#include "planning.h"
+#include "structure.h"
+
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    Image map;
-    map.loadImage("/Users/keerthikanratnarajah/Documents/Kode/ROB5/src/Coverage/Coverage/Coverage_planning/Coverage_planning/dm.pgm");
-    
-    Coverage Boustreohodon(map);
-
-
-    map.saveImage("/Users/keerthikanratnarajah/Documents/Kode/ROB5/src/Coverage/Coverage/Coverage_planning/Coverage_planning/edge.pgm");
+    Planning img;
+    structure billede;
+    img.loadImage("/Users/keerthikanratnarajah/Documents/Kode/ROB5/src/Coverage/Coverage/Coverage_planning/complete_map_project.pgm");
+    img.detect_rooms();
+    billede.priority_Blok_area(img.detect_rooms()); 
+    //img.saveImage("/Users/keerthikanratnarajah/Documents/Kode/ROB5/src/Coverage/Coverage/Coverage_planning/Coverage_planning/edge.pgm");
     
     cout << "hello world" << endl;
     return 0;

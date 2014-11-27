@@ -20,8 +20,8 @@ using namespace std;
 
 class Cell{
 public:
-    Cell(vector<pair<int, int>> &);
-    vector<pair<int, int>> pixels;
+    Cell(vector<vector<pair<int, int>>> &);
+    vector<vector<pair<int, int>>> pixels;
     void merge(Cell&);
 private:
     bool visited;

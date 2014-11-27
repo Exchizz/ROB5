@@ -10,39 +10,52 @@
 
 Coverage::Coverage( Image& map)
 {
-    vector<pair<int, int>> tempPixelList;
    // int x_temp;
    // int y_temp;
-    vector<Cell> cell_Objects;
-    for (int x = 0; x<map.getWidth(); ++x) {
-        for (int y = 0; y<map.getHeight(); ++y) {
-            if(map.getPixel(x,y) == 255)
-            {
-                tempPixelList.push_back(make_pair(x,y));
-                map.setPixel(x, y, 100);
-                cell_Objects.push_back(Cell(tempPixelList));
-                tempPixelList.clear();
-            };
-            
-        };
-    };
-    for(int j = 0; j< 30000; ++j) {
-        int i = j;
-            while(map.getPixel(cell_Objects[j].pixels[0].first,cell_Objects[j].pixels[0].second) == 100 && j < 30000)
-            {
-                cout << "merge possible " << map.getPixel(cell_Objects[i].pixels[0].first, cell_Objects[i].pixels[0].second) << " koordinater " << cell_Objects[i].pixels[0].first<< "," << cell_Objects[i].pixels[0].second << " and " << map.getPixel(cell_Objects[j].pixels[0].first, cell_Objects[j].pixels[0].second) << " koordinater "<<cell_Objects[j].pixels[0].first << ","<<  cell_Objects[j].pixels[0].second << endl;
-                cell_Objects[i].merge(cell_Objects[j]);
-                cout << cell_Objects[i].pixels.size() << endl;
-                cout << "merged" << endl;
-                ++j;
-            }
-    }
+//    
+//    vector<vector<pair<int,int>>> tempPixelList (map.getWidth(), vector<pair<int, int>>(map.getHeight()));
+//    vector<vector<Cell>> cell_Objects (map.getWidth(),vector<Cell>(map.getHeight()));
+//    
+//    //Each free pixel gets celled
+//    for (int x = 0; x<map.getWidth(); ++x) {
+//        cout << "beta" << endl;
+//        for (int y = 0; y<map.getHeight(); ++y) {
+//            if(map.getPixel(x,y) == 255)
+//            {
+//                cout << x << y << endl; 
+//                tempPixelList[x][y] = make_pair(x, y);
+//                cell_Objects[x].push_back(Cell(tempPixelList));
+//                cout << tempPixelList[x][y].second << endl;
+//                map.setPixel(tempPixelList[x][y].first,tempPixelList[x][y].second,100);
+//                cout << "map" << endl;
+//            };
+//            
+//        };
+//    };
+//  
+//
+//    int j = 0;
+//        for (int i = 1; i<=1180; ++i) {
+//            //cout << cell_Objects[i].pixels[0].second - cell_Objects[i-1].pixels[0].second  << " i: " << i << endl;
+//            //cout << "ROW er!!!! " << j << endl;
+//            //cout << "reel y pixel " << 1180*(j+1) - i << endl;
+//            if (cell_Objects[i].pixels[0].second - cell_Objects[i-1].pixels[0].second == 1)
+//            {
+//                cell_Objects[j].merge(cell_Objects[i]);
+//                cell_Objects.insert(cell_Objects.begin()+j+1,cell_Objects.begin()+i+1 , cell_Objects.end());
+//            }
+//            else if(i == 1180 && j< map.getWidth()){
+//              //  cout << "next row" << endl;
+//                j++;
+//                i = 0;
+//                i = j+i;
+//            }
+//            else
+//                cell_Objects.erase(cell_Objects.begin()+i, cell_Objects.end());
+//            
+//        }
+//    cout << "merged" << endl;
     
-    for (int i = 0; i < cell_Objects[0].pixels.size(); ++i) {
-        cout << "pixel positions x: " << cell_Objects[0].pixels[i].first << " y: " <<  cell_Objects[0].pixels[i].second << endl;
-        map.setPixel(cell_Objects[0].pixels[i].first, cell_Objects[0].pixels[i].second, 0);
-    }
-    
-    
+
 };
     

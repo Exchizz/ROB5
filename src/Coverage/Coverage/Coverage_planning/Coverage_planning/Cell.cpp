@@ -7,7 +7,8 @@
 //
 
 #include "Cell.h"  
-Cell::Cell( vector<pair<int, int>> &cell_temp){
+
+Cell::Cell( vector<vector<pair<int, int>>> &cell_temp){
     pixels = move(cell_temp);
     visited = false;
     cleaned = false;
@@ -17,4 +18,6 @@ Cell::Cell( vector<pair<int, int>> &cell_temp){
 void Cell::merge(Cell &B){
     
     pixels.insert(pixels.end(),B.pixels.begin(),B.pixels.end());
+    B.pixels.clear();
 };
+
