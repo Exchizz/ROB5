@@ -1,0 +1,9 @@
+*.log
+*.gz(busy)
+*.aux
+report/ROB5_port3_nlynn12_jejep12_manee12_kerat12.out
+report/ROB5_port3_nlynn12_jejep12_manee12_kerat12.aux
+report/ROB5_port3_nlynn12_jejep12_manee12_kerat12.log
+report/ROB5_port3_nlynn12_jejep12_manee12_kerat12.toc
+report/ROB5_port3_nlynn12_jejep12_manee12_kerat12.synctex.gz
+.gitignore~

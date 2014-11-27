@@ -1,0 +1,59 @@
+\input{tex_defs}	%Must include definitions and usepackages!
+
+\begin{document}
+\title{\Huge Portfolio 3\\
+\small The Cup Collector\\
+\vspace{1.5cm}
+\includegraphics[scale=1]{sdu}
+\vspace{1cm}
+}
+\author{
+	Robotics in Context, RB-ROB5-U2-E14,\\
+	University of Southern Denmark\\\ \\
+	Nicolai A. Lynnerup, Jes G. Jepsen, Mathias M. Neerup, Keerthikan Ratnarajah
+}
+\date{	
+	Handed in: \today
+}
+\maketitle
+
+
+\thispagestyle{empty}
+\addtocounter{page}{-1}
+
+\newpage
+\thispagestyle{empty}
+\tableofcontents
+
+
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+\addtocounter{page}{-1}
+\newpage
+\chapter{Planning}
+test
+test2
+\chapter{Coverage}
+\chapter{Localization}
+
+
+
+\label{LastMainPage}
+
+
+\newpage
+\clearpage
+
+\begin{appendices}
+\makeatletter
+\addtocontents{toc}{\let\protect\l@chapter\protect\l@section}
+\makeatother
+\chapter{Planning}
+%\label{app:avl_tree}
+%\vspace{-1cm}
+%\section{AVL Tree Class}
+%\lstinputlisting[firstline=25]{../AVL_tree/AVL_tree/avl_tree.h}
+
+
+\end{appendices}
+
+\end{document}

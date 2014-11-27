@@ -1,0 +1,261 @@
+\documentclass[11pt, twoside]{report}
+
+
+% ------- Enable UTF8 characters ------- %
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+
+% ------- Page layout ------- %
+\usepackage{fullpage}
+\headsep = 24pt % spacing between header and text
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{paralist}
+\fancyhf{}
+\fancyhead[LE]{\slshape \rightmark} % section
+\fancyhead[RE]{\thepage}
+\fancyhead[RO]{\slshape \leftmark} % chapter
+\fancyhead[LO]{\thepage}
+\pagestyle{fancy}
+\setlength{\headheight}{15pt}
+
+\usepackage[toc,page]{appendix}
+
+\usepackage{blindtext} % lorem ipsum replica
+
+\usepackage{hyperref} % clickable references
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+\usepackage{array}
+
+%\newcolumntype{Le}[1]{%
+%>{\raggedleft\hspace{0pt}}p{#1}}%
+
+%\newcolumntype{Ri}[1]{%
+%>{\raggedright\hspace{0pt}}p{#1}}%
+
+%\newcommand{\tn}{\tabularnewline}
+
+
+% ------- Math ------- %
+\newcommand{\bm}[1]{\mbox{\boldmath $#1$}}	% bold math characters
+\usepackage{icomma}							% use , as decimal pointer
+
+
+
+%-------  Coding ------- %
+\usepackage{listings}
+\lstset{
+	%backgroundcolor		= \color{anti-flashwhite},
+	frame				= none,
+ 	language			= C++,
+ 	aboveskip			= 3mm,
+ 	belowskip			= 3mm,
+ 	showstringspaces	= false,
+	columns				= flexible,
+	basicstyle			= {\scriptsize\ttfamily},
+	numbers				= left,
+	numberstyle			= \tiny\color{gray},
+	keywordstyle		= \color{blue},
+	commentstyle		= \color{dkgreen},
+	stringstyle			= \color{mauve},
+ 	breaklines			= true,
+	breakatwhitespace	= true,
+	tabsize				= 3,
+	moredelim			= **[is][\color{mauve}]{@}{@},
+}
+%\lstinline|•|
+%\begin{lstlisting}
+%\lstin­put­list­ing{file­name.c}
+
+\lstdefinelanguage{VHDL}{
+  morekeywords={
+    abs,access,after,alias,all,and,architecture,array,assert,attribute,
+    begin,block,body,buffer,bus,
+    case,component,configuration,constant,
+    disconnect,downto,
+    else,elsif,end,entity,exit,
+    file,for,function,generate,generic,generic,
+    if,impure,in,inertial,inout,is,
+    label,library,linkage,literal,loop,
+    map,mod,
+    nand,new,next,nor,not,null,
+    of,on,open,or,others,out,
+    package,port,postponed,procedure,process,pure,
+    range,record,register,reject,rem,report,return,rol,ror,
+    select,severity,shared,shared,sla,sll,sra,srl,subtype,
+    then,to,transport,type,
+    unaffected,units,until,use,
+    variable,
+    wait,when,while,with,
+    xnor,xor
+  },
+  morekeywords={rising_edge,falling_edge},
+  sensitive=false,
+  morecomment=[l]--
+}
+\lstdefinestyle{vhdl}{
+  language     = VHDL,
+  basicstyle   = \ttfamily,
+  keywordstyle = \color{blue}\bfseries,
+  commentstyle = \color{dkgreen}
+}
+\lstset{
+	emph={falling_edge,rising_edge,std_logic_vector,std_logic,conv_integer}, emphstyle=\color{mauve}
+}
+
+
+% ------- Images ------- %
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{subcaption}
+\DeclareCaptionFont{gray}{\color{gray}}
+\captionsetup{textfont={footnotesize,sc,gray},font={footnotesize,sc,gray}}
+\usepackage{pdfpages}
+% newcounter
+\newcounter{includepdfpage}
+
+% ------- Colors ------- %
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{ashgrey}{rgb}{0.7, 0.75, 0.71}
+\definecolor{anti-flashwhite}{rgb}{0.95, 0.95, 0.96}
+
+
+% ------- TiKz ------- %
+\usepackage{tikz}
+\usetikzlibrary{shapes.multipart}
+\usetikzlibrary{automata,arrows}
+\usetikzlibrary{shapes,snakes}
+
+\tikzset{
+    data/.style={
+        draw,
+        rectangle split,
+        rectangle split parts=4,
+        text centered,
+    },
+    data+/.style={
+        data,
+        rectangle split every empty part={},% resets empty-part macro (explanation below)
+        rectangle split empty part width=\widthof{#1},
+        rectangle split empty part height=\heightof{#1},
+        rectangle split empty part depth=\depthof{#1},
+    },
+}
+
+
+\makeatletter
+\pgfdeclareshape{datastore}{
+  \inheritsavedanchors[from=rectangle]
+  \inheritanchorborder[from=rectangle]
+  \inheritanchor[from=rectangle]{center}
+  \inheritanchor[from=rectangle]{base}
+  \inheritanchor[from=rectangle]{north}
+  \inheritanchor[from=rectangle]{north east}
+  \inheritanchor[from=rectangle]{east}
+  \inheritanchor[from=rectangle]{south east}
+  \inheritanchor[from=rectangle]{south}
+  \inheritanchor[from=rectangle]{south west}
+  \inheritanchor[from=rectangle]{west}
+  \inheritanchor[from=rectangle]{north west}
+  \backgroundpath{
+    %  store lower right in xa/ya and upper right in xb/yb
+    \southwest \pgf@xa=\pgf@x \pgf@ya=\pgf@y
+    \northeast \pgf@xb=\pgf@x \pgf@yb=\pgf@y
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@ya}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@ya}}
+    \pgfpathmoveto{\pgfpoint{\pgf@xa}{\pgf@yb}}
+    \pgfpathlineto{\pgfpoint{\pgf@xb}{\pgf@yb}}
+ }
+}
+\makeatother
+
+\newcounter{wavenum}
+ 
+\setlength{\unitlength}{1cm}
+% advance clock one cycle, not to be called directly
+\newcommand*{\clki}{
+ \draw (t_cur) -- ++(0,.3) -- ++(.5,0) -- ++(0,-.6) -- ++(.5,0) -- ++(0,.3)
+   node[time] (t_cur) {};
+}
+ 
+\newcommand*{\bitvector}[3]{
+ \draw[fill=#3] (t_cur) -- ++( .1, .3) -- ++(#2-.2,0) -- ++(.1, -.3)
+                        -- ++(-.1,-.3) -- ++(.2-#2,0) -- cycle;
+ \path (t_cur) -- node[anchor=mid] {#1} ++(#2,0) node[time] (t_cur) {};
+}
+ 
+% \known{val}{length}
+\newcommand*{\known}[2]{
+   \bitvector{#1}{#2}{white}
+}
+ 
+% \unknown{length}
+\newcommand*{\unknown}[2][XXX]{
+   \bitvector{#1}{#2}{black!20}
+}
+ 
+% \bit{1 or 0}{length}
+\newcommand*{\bit}[2]{
+ \draw (t_cur) -- ++(0,.6*#1-.3) -- ++(#2,0) -- ++(0,.3-.6*#1)
+   node[time] (t_cur) {};
+}
+ 
+% \unknownbit{length}
+\newcommand*{\unknownbit}[1]{
+ \draw[ultra thick,black!50] (t_cur) -- ++(#1,0) node[time] (t_cur) {};
+}
+ 
+% \nextwave{name}
+\newcommand{\nextwave}[1]{
+ \path (0,\value{wavenum}) node[left] {#1} node[time] (t_cur) {};
+ \addtocounter{wavenum}{-1}
+}
+ 
+% \clk{name}{period}
+\newcommand{\clk}[2]{
+   \nextwave{#1}
+   \FPeval{\res}{(\wavewidth+1)/#2}
+   \FPeval{\reshalf}{#2/2}
+   \foreach \t in {1,2,...,\res}{
+       \bit{\reshalf}{1}
+       \bit{\reshalf}{0}
+   }
+}
+ 
+% \begin{wave}[clkname]{num_waves}{clock_cycles}
+\newenvironment{wave}[3][SSI\_CLK]{
+ \begin{tikzpicture}[draw=black, yscale=.7,xscale=1]
+   \tikzstyle{time}=[coordinate]
+   \setlength{\unitlength}{1cm}
+   \def\wavewidth{#3}
+   \setcounter{wavenum}{0}
+   \nextwave{#1}
+   \foreach \t in {0,1,...,\wavewidth}{
+     \draw[dotted] (t_cur) +(0,.5) node[above] {t=\t} -- ++(0,.4-#2);
+     \clki
+   }
+}{\end{tikzpicture}}
+ 
+\usepackage{verbatim}
+
+% ------- Comments & ToDo's ------- %
+\usepackage{todonotes}
+\usepackage{comment}
+
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+
+
+
+\usepackage{epstopdf}
