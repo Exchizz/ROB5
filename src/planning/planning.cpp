@@ -23,6 +23,7 @@
 /***************************** Include files *******************************/
 #include <iostream>
 #include <vector>
+#include <map>
 #include "image.h"
 #include "planning.h"
 
@@ -108,7 +109,7 @@ std::vector<square> Planning::detect_rooms() {
 		// 		Move horizontally right from (x+1,y-1) to first black pixel
 		while (!is_black(xRU, yLU) and !outSideBox) {
 			// 2.2.1 Check that we're still inside the image
-			if (xRU >= getWidth()) {
+			if (xRU >= getWidth()-1) {
 				outSideBox = true;
 				break;
 			}
@@ -193,14 +194,29 @@ std::vector<square> Planning::detect_hallways(std::vector<square> center_rooms){
 	return listHalls;
 }
 
-int Planning::dist_room_hall(std::pair<int,int> room, std::pair<int,int> hallway){
-	return 0;
+float Planning::dist_room_hall(std::pair<int,int> room, std::pair<int,int> hallway){
+	return sqrt(pow(abs(room.first - hallway.first),2) + pow(abs(room.second - hallway.second),2));
 }
 
-void Planning::detect_room_to_hallways(std::vector<std::pair<int,int>> rooms, std::vector<std::pair<int,int>> hallways){
-	std::vector<std::tuple<int, std::pair<int,int>,std::pair<int,int>>> distances;
-	std::vector<std::tuple<int, std::pair<int,int>,std::pair<int,int>>> direct_distances;
+int Planning::getHallIdent(std::pair<int,int> hall){
+	int retval = 0;
+	static int uniq = 0;
+
+	if(hallToRooms.find(hall) == hallToRooms.end()){
+		hallToRooms[hall] = uniq;
+		retval = uniq;
+		uniq++;
+		std::cout << uniq << std::endl;
+	} else {
+		retval = hallToRooms[hall];
+	}
+	return retval;
+}
+
+std::vector<std::vector<std::pair<int,std::pair<int,int>>>> Planning::detect_room_to_hallways(std::vector<std::pair<int,int>> rooms, std::vector<std::pair<int,int>> hallways){
 	for(auto room : rooms){
+		// dist, room, hotel
+		std::vector<std::tuple<int, std::pair<int,int>,std::pair<int,int>>> direct_distances;
 		for(auto hallway : hallways){
 			int dist = dist_room_hall(room,hallway);
 			direct_distances.push_back(std::make_tuple(dist,room, hallway));
@@ -213,7 +229,8 @@ void Planning::detect_room_to_hallways(std::vector<std::pair<int,int>> rooms, st
 				temp = elm;
 			}
 		}
-
-		distances.push_back(temp);
+		hallToRooms[std::get<0>(temp)].push_back(temp);
 	}
+
+	return hallToRooms;
 }
