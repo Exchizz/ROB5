@@ -158,6 +158,8 @@ std::vector<square> Planning::detect_rooms() {
 	for (auto square : listSquares) {
 		draw_area(square);
 	}
+
+	//
 	return listSquares;
 }
 
