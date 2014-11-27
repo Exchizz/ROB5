@@ -33,7 +33,7 @@
 
 int main() {
 	Planning img;
-	img.loadImage("img/test2.pgm");
+	img.loadImage("img/complete_map_project.pgm");
 	auto listCenter = img.detect_rooms();
 	img.detect_center(listCenter);
 	img.saveImage("img/output.pgm");
