@@ -181,3 +181,39 @@ std::vector<std::pair<int,int>> Planning::detect_center(std::vector<square> list
 	}
 	return listCenters;
 }
+
+
+std::vector<square> Planning::detect_hallways(std::vector<square> center_rooms){
+	std::vector<square> listHalls;
+	for(auto room : center_rooms){
+		if (abs(room.y4-room.y2)/abs((room.x3 - room.x1)) <= 22 and abs(room.y4-room.y2)/abs((room.x3 - room.x1)) >= 7) {
+			listHalls.push_back(square(room.x1,room.y1,room.x2,room.y2,room.x3,room.y3,room.x4,room.y4));
+		}
+	}
+	return listHalls;
+}
+
+int Planning::dist_room_hall(std::pair<int,int> room, std::pair<int,int> hallway){
+	return 0;
+}
+
+void Planning::detect_room_to_hallways(std::vector<std::pair<int,int>> rooms, std::vector<std::pair<int,int>> hallways){
+	std::vector<std::tuple<int, std::pair<int,int>,std::pair<int,int>>> distances;
+	std::vector<std::tuple<int, std::pair<int,int>,std::pair<int,int>>> direct_distances;
+	for(auto room : rooms){
+		for(auto hallway : hallways){
+			int dist = dist_room_hall(room,hallway);
+			direct_distances.push_back(std::make_tuple(dist,room, hallway));
+		}
+		std::tuple<int, std::pair<int,int>,std::pair<int,int>> temp;
+		std::get<0>(temp) = 999999;
+
+		for(auto elm : direct_distances){
+			if(std::get<0>(temp) > std::get<0>(elm)){
+				temp = elm;
+			}
+		}
+
+		distances.push_back(temp);
+	}
+}

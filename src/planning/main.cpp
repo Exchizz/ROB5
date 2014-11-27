@@ -33,9 +33,18 @@
 
 int main() {
 	Planning img;
-	img.loadImage("img/complete_map_project.pgm");
+	img.loadImage("img/test.pgm");
+
 	auto listSquares = img.detect_rooms();
 	auto listCenter = img.detect_center(listSquares);
+
+	auto listHallways = img.detect_hallways(listSquares);
+	auto listCenterHallways = img.detect_center(listHallways);
+
+	//auto shortestDistances =
+	img.detect_room_to_hallways(listCenter,listCenterHallways);
+
 	img.saveImage("img/output.pgm");
+	std::cout << "Hello world";
 	return 0;
 }

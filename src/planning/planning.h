@@ -62,7 +62,10 @@ public:
 	bool is_black(int, int);
 	std::vector<square> detect_rooms();
 	std::vector<std::pair<int,int>> detect_center(std::vector<square>);
+	std::vector<square> detect_hallways(std::vector<square> center_rooms);
+	void detect_room_to_hallways(std::vector<std::pair<int,int>> rooms, std::vector<std::pair<int,int>> hallways);
 	void draw_area(square);
+	int dist_room_hall(std::pair<int,int> room, std::pair<int,int> hallway);
 	// Wavefront
 
 };
