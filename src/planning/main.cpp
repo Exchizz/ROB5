@@ -34,8 +34,8 @@
 int main() {
 	Planning img;
 	img.loadImage("img/complete_map_project.pgm");
-	auto listCenter = img.detect_rooms();
-	img.detect_center(listCenter);
+	auto listSquares = img.detect_rooms();
+	auto listCenter = img.detect_center(listSquares);
 	img.saveImage("img/output.pgm");
 	return 0;
 }
