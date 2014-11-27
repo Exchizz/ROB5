@@ -172,6 +172,9 @@ std::vector<std::pair<int,int>> Planning::detect_center(std::vector<square> list
 		center.first = (diffX/2) + std::min(square.x1, square.x4);
 		center.second = (diffY/2) + std::min(square.y1, square.y2);
 		listCenters.push_back(center);
+
+		// DEBUG
+		setPixel(center.first,center.second,255);
 		std::cout << "Center: (" << center.first << "," << center.second << ")\n";
 	}
 	return listCenters;

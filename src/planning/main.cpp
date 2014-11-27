@@ -26,11 +26,6 @@
 #include "planning.h"
 
 /*****************************    Defines    *******************************/
-#ifdef _WIN32
-#define windows 1;
-#else
-#define windows 0;
-#endif
 
 /*****************************   Constants   *******************************/
 
@@ -38,9 +33,9 @@
 
 int main() {
 	Planning img;
-	img.loadImage("test2.pgm");
+	img.loadImage("img/test2.pgm");
 	auto listCenter = img.detect_rooms();
 	img.detect_center(listCenter);
-	img.saveImage("output.pgm");
+	img.saveImage("img/output.pgm");
 	return 0;
 }
