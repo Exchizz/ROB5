@@ -43,6 +43,11 @@ private:
 };
 
 onlineWaveFront::onlineWaveFront(Image &tempImg){
+	incValue = 2;
+	listsize = 0;
+	listsize2 = 1;
+
+
     // Load map
     std::cout << "Loading Map" << std::endl;
 

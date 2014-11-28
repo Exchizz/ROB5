@@ -17,15 +17,14 @@ class onlineWaveFront{
 private:
 	Image img;
 	Image imgcopy;
-    int incValue=2;
-	int listsize = 0;
-	int listsize2 = 1;
+	int incValue;
+	int listsize;
+	int listsize2;
 	int xHeight;
 	int xWidth;
 public:
-	onlineWaveFront();
+	onlineWaveFront::onlineWaveFront(Image &tempImg);
 	void makeWaveFront(int,int,int,int);
-	~onlineWaveFront();
 };
 
 #endif /* ONLINEWAVEFRONT_H_ */
