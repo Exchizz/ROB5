@@ -1,0 +1,196 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{fullpage}
+\setlength{\parindent}{0pt} %no indent after equations or fig. - has to be after TOC
+\usepackage{amsmath}
+\usepackage{dcolumn}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage{dcolumn}
+\usepackage{steinmetz}
+\usepackage{float}
+\restylefloat{table}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{epstopdf}
+% hyperlink
+\usepackage[linktoc=all]{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{icomma}
+\usepackage{setspace}
+
+\usepackage{tocloft}
+\renewcommand\cftbeforesecskip{0pt}
+
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\DeclareCaptionFont{red}{\color{gray}}
+\captionsetup{textfont={footnotesize,sc,red},font={footnotesize,sc,red}}
+
+\lstset{frame=false,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  moredelim=**[is][\color{mauve}]{@}{@},
+}
+
+\newcolumntype{C}[1]{%
+ >{\vbox to 5ex\bgroup\vfill\centering}%
+ p{#1}%
+ <{\egroup}}  
+
+\graphicspath{{./figures/}}
+
+\title{ROB5}
+
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+
+\textsc{\Large }\\[0.5cm]
+\vfill
+\includegraphics[scale=0.4]{img/SDU}\\[1cm]
+\hrule ~\\[0.3cm]
+{ \huge \bfseries The Cup Collector \\ROB5\\[0.4cm] }
+\hrule ~\\[1.5cm]
+\vfill
+
+% Author and supervisor
+\begin{minipage}[t]{7.9cm}
+\begin{flushleft} \large
+\emph{By:}\\
+Jes Jepsen  \\
+Keerthikan Ratnarajah\\
+Mathias Neerup\\
+Nicolai Lynnerup \\
+\end{flushleft}
+\end{minipage}
+\begin{minipage}[t]{7.9cm}
+\begin{flushright} \large
+\emph{University teacher:} \\
+Jimmy Alison Jørgensen \\
+jimali@mmmi.sdu.dk
+\end{flushright}
+\end{minipage}
+
+\vspace{1.2cm}
+Dato: \today
+
+
+\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\newpage
+\section{The Cup Collector}
+The cantina at SDU has in a period of time collected empirical data that suggests that researchers and students at SDU are lazy and forgetful when it comes to bringing back used cups to the cantina. To avoid situations where there are no coffee cups and thereby loosing coffee sales (or fresh students), the cantina has decided to assign the task of collecting cups form offices and hallways of SDU, to one person for 2 hours per day.\\[0.2cm]
+A master student with some knowledge on vision and point clouds has using a Kinect and a robot arm implemented an algorithm to detect and collect cups within a distance of 2 meters. Also he has implemented the stable grasping of cups that are within 1 meter of the robot. Unfortunately, this master student never attended ROB05 and therefore has no skill in navigating robots.\\[0.2cm]
+The problem is therefore presented to this year’s class in ROB05.\\[0.2cm]
+The task contains 3 parts. All 3 must be targeted in the project.
+
+\subsection{Limitations and information}
+\begin{itemize}
+\item The map ”complete\_map\_project.pgm” use a scale 10pixel:1m. 
+\item The map use the scale 10px to 1 meter
+\item The robot can only carry 20 cups at the time
+\item The robot is NOT a point robot. It has a circular shape with a radius of 0.4m
+\item The robot can drive up to 5km per hour
+\item The elevators are denoted with pixelvalues 128,129,130,131 and 132.
+\end{itemize}
+\newpage
+
+\input{part1}
+\newpage
+
+\input{part2}
+\newpage
+
+\input{part3}
+\newpage
+
+\section{Future work}
+What changes could make the solution more optimal/feasible?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
