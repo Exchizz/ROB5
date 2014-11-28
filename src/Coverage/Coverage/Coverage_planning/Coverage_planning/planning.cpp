@@ -176,7 +176,7 @@ std::vector<std::pair<int,int>> Planning::detect_center(std::vector<square> list
         listCenters.push_back(center);
         
         // DEBUG
-        setPixel(center.first,center.second,255);
+        //setPixel(center.first,center.second,255);
         std::cout << "Center: (" << center.first << "," << center.second << ")\n";
     }
     return listCenters;

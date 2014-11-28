@@ -21,8 +21,9 @@ int main(int argc, const char * argv[]) {
     structure billede;
     img.loadImage("/Users/keerthikanratnarajah/Documents/Kode/ROB5/src/Coverage/Coverage/Coverage_planning/complete_map_project.pgm");
     img.detect_rooms();
-    billede.priority_Blok_area(img.detect_rooms()); 
-    //img.saveImage("/Users/keerthikanratnarajah/Documents/Kode/ROB5/src/Coverage/Coverage/Coverage_planning/Coverage_planning/edge.pgm");
+    img.detect_center((billede.priority_Blok_area(img.detect_rooms())));
+    billede.who_is_my_neighbour(img,img.detect_center((billede.priority_Blok_area(img.detect_rooms()))), img.detect_center(img.detect_rooms()));
+    img.saveImage("/Users/keerthikanratnarajah/Documents/Kode/ROB5/src/Coverage/Coverage/Coverage_planning/Coverage_planning/edge.pgm");
     
     cout << "hello world" << endl;
     return 0;
