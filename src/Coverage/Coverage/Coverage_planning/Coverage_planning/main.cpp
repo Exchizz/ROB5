@@ -21,7 +21,7 @@ int main(int argc, const char * argv[]) {
     img.loadImage("/Users/keerthikanratnarajah/Documents/Kode/ROB5/src/Coverage/ROB5-master/img/complete_map_project.pgm");
 
     auto rooms = img.detect_rooms();
-    auto hallways = img.priority_Blok_area(rooms);
+    auto hallways = img.Big_rooms(rooms);
     img.who_is_my_neighbour(hallways);
     img.saveImage("/Users/keerthikanratnarajah/Documents/Kode/ROB5/src/Coverage/Coverage/Coverage_planning/Coverage_planning/edge.pgm");
     

@@ -83,7 +83,7 @@ struct compare{
 
 class Planning: public Image {
 public:
-    std::vector<Room> priority_Blok_area(std::vector<square> rooms);
+    std::vector<Room> Big_rooms(std::vector<square> rooms);
     void who_is_my_neighbour(std::vector<Room> hallways);
     std::vector<square> listSquares;
     int state = 0;

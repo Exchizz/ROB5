@@ -57,7 +57,7 @@ Room::Room(square &Lokale) :  corners(Lokale.x1,Lokale.y1,Lokale.x2,Lokale.y2,Lo
     
 };
 
-std::vector<Room> Planning::priority_Blok_area(std::vector<square> rooms){
+std::vector<Room> Planning::Big_rooms(std::vector<square> rooms){
 
     std::vector<Room> hallways;
     for (int i = 0  ; i<rooms.size(); i++)
@@ -231,38 +231,41 @@ void Planning::who_is_my_neighbour(std::vector<Room> hallways_center)
     std::vector<int> samlet;
     int j = 10000000;
     int iterator = 0;
+    int hitA = 0;
+    int hitB = 0;
+    int hitC = 0;
+    int hitD = 0;
+    int hitE = 0;
+    int hitBig_hall = 0;
 
 
 
     for (int i = 0; i < Lokale.size(); ++i) {
-        std::cout << i << std::endl;
+        std::cout << "Room: " << i << std::endl;
+        //Calculate distance to hallways.
         samlet.push_back((abs(hallways_center[0].center.first - Lokale[i].center.first) + abs(hallways_center[0].center.second - Lokale[i].center.second)));
         samlet.push_back(abs(hallways_center[1].center.first -  Lokale[i].center.first) + abs(hallways_center[1].center.second - Lokale[i].center.second));
         samlet.push_back(abs(hallways_center[2].center.first -  Lokale[i].center.first) + abs(hallways_center[2].center.second - Lokale[i].center.second));
         samlet.push_back(abs(hallways_center[3].center.first -  Lokale[i].center.first) + abs(hallways_center[3].center.second - Lokale[i].center.second));
         samlet.push_back(abs(hallways_center[4].center.first -  Lokale[i].center.first) + abs(hallways_center[4].center.second - Lokale[i].center.second));
         samlet.push_back(abs(hallways_center[5].center.first -  Lokale[i].center.first) + abs(hallways_center[5].center.second - Lokale[i].center.second));
-        if (Lokale[i].center.first > 4000) {
-
-            std::cout <<i<< "if D" << abs(hallways_center[4].center.first -  Lokale[i].center.first) + abs(hallways_center[4].center.second - Lokale[i].center.second) << std::endl;
-            std::cout << "if E" << abs(hallways_center[5].center.first -  Lokale[i].center.first) + abs(hallways_center[5].center.second - Lokale[i].center.second) << std::endl;
-
-        }
-
+      
+        //Determines which one is smallest
         for (int k = 0; k <= 5; ++k) {
             if (samlet[k] < j) {
                 iterator = k;
                 j = samlet[k];
             }
         }
-
+        //Insert room in priority_queue
         switch (iterator) {
             case BLOK_A:
                 std::cout << "lies in A" << std::endl;
                 Lokale[i].distance = samlet[iterator];
                 iterator = 0;
                 j = 10000000;
-                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);     debug purpose
+                hitA++;
                 blok_A.push(Lokale[i]);
                 samlet.clear();
             break;
@@ -271,7 +274,8 @@ void Planning::who_is_my_neighbour(std::vector<Room> hallways_center)
                 Lokale[i].distance = samlet[iterator];
                 iterator = 0;
                 j = 10000000;
-                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);     debug purpose
+                hitBig_hall++;
                 Big_hall.push(Lokale[i]);
                 samlet.clear();
             break;
@@ -280,7 +284,8 @@ void Planning::who_is_my_neighbour(std::vector<Room> hallways_center)
                 Lokale[i].distance = samlet[iterator];
                 iterator = 0;
                 j = 10000000;
-                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);     debug purpose
+                hitB++;
                 blok_B.push(Lokale[i]);
                 samlet.clear();
             break;
@@ -289,7 +294,8 @@ void Planning::who_is_my_neighbour(std::vector<Room> hallways_center)
                 Lokale[i].distance = samlet[iterator];
                 iterator = 0;
                 j = 10000000;
-                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);     debug purpose
+                hitC++;
                 blok_C.push(Lokale[i]);
                 samlet.clear();
             break;
@@ -298,7 +304,8 @@ void Planning::who_is_my_neighbour(std::vector<Room> hallways_center)
                 Lokale[i].distance = samlet[iterator];
                 iterator = 0;
                 j = 10000000;
-                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);     debug purpose
+                hitD++;
                 blok_D.push(Lokale[i]);
                 samlet.clear();
             break;
@@ -307,7 +314,8 @@ void Planning::who_is_my_neighbour(std::vector<Room> hallways_center)
                 Lokale[i].distance = samlet[iterator];
                 iterator = 0;
                 j = 10000000;
-                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);     debug purpose
+                hitE++;
                 blok_E.push(Lokale[i]);
                 samlet.clear();
             break;
@@ -316,5 +324,6 @@ void Planning::who_is_my_neighbour(std::vector<Room> hallways_center)
         };
 
     };
-
+    //debug
+    std::cout << hitA << " " << hitB << " " << hitC << " " << hitD << " " << hitE << " " << hitBig_hall << std::endl;
 };
