@@ -22,7 +22,6 @@
 
 /***************************** Include files *******************************/
 #include <iostream>
-#include <vector>
 #include "image.h"
 #include "planning.h"
 
@@ -46,6 +45,38 @@ square::square(){
     y4 = 0;
     
 }
+
+Room::Room(square &Lokale) :  corners(Lokale.x1,Lokale.y1,Lokale.x2,Lokale.y2,Lokale.x3,Lokale.y3,Lokale.x4,Lokale.y4)
+{
+    int diffX = std::max(Lokale.x1, Lokale.x4) - std::min(Lokale.x1, Lokale.x4);
+    int diffY = std::max(Lokale.y1, Lokale.y2) - std::min(Lokale.y1, Lokale.y2);
+    center.first = (diffX/2) + std::min(Lokale.x1, Lokale.x4);
+    center.second = (diffY/2) + std::min(Lokale.y1, Lokale.y2);
+    distance = 0;
+    
+    
+};
+
+std::vector<Room> Planning::priority_Blok_area(std::vector<square> rooms){
+
+    std::vector<Room> hallways;
+    for (int i = 0  ; i<rooms.size(); i++)
+    {
+        Lokale.push_back(Room(rooms[i]));
+        if (abs(rooms[i].y4-rooms[i].y2)/abs((rooms[i].x3 - rooms[i].x1)) <= 22 and abs(rooms[i].y4-rooms[i].y2)/abs((rooms[i].x3 - rooms[i].x1)) >= 7) {
+            std::cout << "hallway" << std::endl;
+            hallways.push_back(Room(rooms[i]));
+        }
+        //detection of hall in the middle
+        if (rooms[i].x2 == 969 and rooms[i].y2 == 1136 and rooms[i].x3 == 3755) {
+            std::cout << "hallway" << std::endl;
+            hallways.push_back(Room(rooms[i]));
+        }
+    }
+    return hallways;
+    
+};
+
 bool Planning::is_black(int x, int y) {
     if (x >= this->getWidth()) {
         std::cout << "Error: Width out of range\n";
@@ -194,3 +225,96 @@ std::vector<std::pair<int,int>> Planning::detect_center(std::vector<square> list
     }
     return listCenters;
 }
+
+void Planning::who_is_my_neighbour(std::vector<Room> hallways_center)
+{
+    std::vector<int> samlet;
+    int j = 10000000;
+    int iterator = 0;
+
+
+
+    for (int i = 0; i < Lokale.size(); ++i) {
+        std::cout << i << std::endl;
+        samlet.push_back((abs(hallways_center[0].center.first - Lokale[i].center.first) + abs(hallways_center[0].center.second - Lokale[i].center.second)));
+        samlet.push_back(abs(hallways_center[1].center.first -  Lokale[i].center.first) + abs(hallways_center[1].center.second - Lokale[i].center.second));
+        samlet.push_back(abs(hallways_center[2].center.first -  Lokale[i].center.first) + abs(hallways_center[2].center.second - Lokale[i].center.second));
+        samlet.push_back(abs(hallways_center[3].center.first -  Lokale[i].center.first) + abs(hallways_center[3].center.second - Lokale[i].center.second));
+        samlet.push_back(abs(hallways_center[4].center.first -  Lokale[i].center.first) + abs(hallways_center[4].center.second - Lokale[i].center.second));
+        samlet.push_back(abs(hallways_center[5].center.first -  Lokale[i].center.first) + abs(hallways_center[5].center.second - Lokale[i].center.second));
+        if (Lokale[i].center.first > 4000) {
+
+            std::cout <<i<< "if D" << abs(hallways_center[4].center.first -  Lokale[i].center.first) + abs(hallways_center[4].center.second - Lokale[i].center.second) << std::endl;
+            std::cout << "if E" << abs(hallways_center[5].center.first -  Lokale[i].center.first) + abs(hallways_center[5].center.second - Lokale[i].center.second) << std::endl;
+
+        }
+
+        for (int k = 0; k <= 5; ++k) {
+            if (samlet[k] < j) {
+                iterator = k;
+                j = samlet[k];
+            }
+        }
+
+        switch (iterator) {
+            case BLOK_A:
+                std::cout << "lies in A" << std::endl;
+                Lokale[i].distance = samlet[iterator];
+                iterator = 0;
+                j = 10000000;
+                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+                blok_A.push(Lokale[i]);
+                samlet.clear();
+            break;
+            case BIG_HALL:
+                std::cout << "lies in Bighall" << std::endl;
+                Lokale[i].distance = samlet[iterator];
+                iterator = 0;
+                j = 10000000;
+                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+                Big_hall.push(Lokale[i]);
+                samlet.clear();
+            break;
+            case BLOK_B:
+                std::cout << "lies in B" << std::endl;
+                Lokale[i].distance = samlet[iterator];
+                iterator = 0;
+                j = 10000000;
+                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+                blok_B.push(Lokale[i]);
+                samlet.clear();
+            break;
+            case BLOK_C:
+                std::cout << "lies in C" << std::endl;
+                Lokale[i].distance = samlet[iterator];
+                iterator = 0;
+                j = 10000000;
+                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+                blok_C.push(Lokale[i]);
+                samlet.clear();
+            break;
+            case BLOK_D:
+                std::cout << "lies in D" << std::endl;
+                Lokale[i].distance = samlet[iterator];
+                iterator = 0;
+                j = 10000000;
+                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+                blok_D.push(Lokale[i]);
+                samlet.clear();
+            break;
+            case BLOK_E:
+                std::cout << "lies in E" << std::endl;
+                Lokale[i].distance = samlet[iterator];
+                iterator = 0;
+                j = 10000000;
+                //img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+                blok_E.push(Lokale[i]);
+                samlet.clear();
+            break;
+
+
+        };
+
+    };
+
+};

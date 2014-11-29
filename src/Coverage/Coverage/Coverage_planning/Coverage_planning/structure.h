@@ -7,7 +7,14 @@
 //
 
 #ifndef __Coverage_planning__structure__
+
 #define __Coverage_planning__structure__
+#define BLOK_A      0
+#define BIG_HALL    1
+#define BLOK_B      2
+#define BLOK_C      3
+#define BLOK_D      4
+#define BLOK_E      5
 
 #include <stdio.h>
 #include <iostream>
@@ -20,33 +27,5 @@ using namespace std;
 
 
 
-class Room: public square{
-public:
-    Room(square&);
-    square corners;
-    pair<int, int> center;
-    int distance;
-};
-
-struct compare{
-    bool operator()(const Room &centerA, Room &centerB)
-    {
-        return centerA.distance > centerB.distance;
-    }
-};
-
-class structure: public Image{
-public:
-    vector<Room> priority_Blok_area(vector<square> rooms);
-    void who_is_my_neighbour(Image&,vector<Room> hallways);
-    vector<Room> Lokale;
-private:
-    std::priority_queue<Room , vector<Room> , compare > blok_A;
-    std::priority_queue<Room , vector<Room> , compare > blok_B;
-    std::priority_queue<Room , vector<Room> , compare > blok_C;
-    std::priority_queue<Room , vector<Room> , compare > blok_D;
-    std::priority_queue<Room , vector<Room> , compare > blok_E;
-    std::priority_queue<Room , vector<Room> , compare > Big_hall;
-};
 
 #endif /* defined(__Coverage_planning__structure__) */
