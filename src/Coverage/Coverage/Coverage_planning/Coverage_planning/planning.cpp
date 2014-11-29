@@ -63,6 +63,7 @@ std::vector<Room> Planning::Big_rooms(std::vector<square> rooms){
     for (int i = 0  ; i<rooms.size(); i++)
     {
         Lokale.push_back(Room(rooms[i]));
+        //detection of "blokke"
         if (abs(rooms[i].y4-rooms[i].y2)/abs((rooms[i].x3 - rooms[i].x1)) <= 22 and abs(rooms[i].y4-rooms[i].y2)/abs((rooms[i].x3 - rooms[i].x1)) >= 7) {
             std::cout << "hallway" << std::endl;
             hallways.push_back(Room(rooms[i]));
