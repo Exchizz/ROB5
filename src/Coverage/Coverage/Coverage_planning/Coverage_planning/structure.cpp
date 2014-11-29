@@ -8,14 +8,26 @@
 
 #include "structure.h"
 
+Room::Room(square &Lokale) :  corners(Lokale.x1,Lokale.y1,Lokale.x2,Lokale.y2,Lokale.x3,Lokale.y3,Lokale.x4,Lokale.y4)
 
-vector<square> structure::priority_Blok_area(vector<square> rooms)
+{
+    int diffX = std::max(Lokale.x1, Lokale.x4) - std::min(Lokale.x1, Lokale.x4);
+    int diffY = std::max(Lokale.y1, Lokale.y2) - std::min(Lokale.y1, Lokale.y2);
+    center.first = (diffX/2) + std::min(Lokale.x1, Lokale.x4);
+    center.second = (diffY/2) + std::min(Lokale.y1, Lokale.y2);
+    distance = 0;
+    
+    
+}
+
+vector<Room> structure::priority_Blok_area(vector<square> rooms)
 {
     int hits = 0;
-    vector<square> hallways;
+    vector<Room> hallways;
+    cout << rooms.size() << endl;
     for (int i = 0  ; i<rooms.size(); i++)
     {
-        
+        Lokale.push_back(Room(rooms[i]));
         if (abs(rooms[i].y4-rooms[i].y2)/abs((rooms[i].x3 - rooms[i].x1)) <= 22 and abs(rooms[i].y4-rooms[i].y2)/abs((rooms[i].x3 - rooms[i].x1)) >= 7) {
             cout << "hallways detect" << endl;
             cout << endl;
@@ -23,127 +35,146 @@ vector<square> structure::priority_Blok_area(vector<square> rooms)
             cout << endl;
             cout << endl;
             cout << endl;
-            hallways.push_back(rooms[i]);
+            hallways.push_back(Room(rooms[i]));
             hits++;
         }
-        
-    }
-    cout << hits << endl;
+        //detection of hall in the middle
+        if (rooms[i].x2 == 969 and rooms[i].y2 == 1136 and rooms[i].x3 == 3755) {
+            //cout << rooms[i].x1 << "," << rooms[i].y1 << " and " << rooms[i].x2 << "," << rooms[i].y2 << " and " << rooms[i].x3 <<","<< rooms[i].y3 << " and "  << rooms[i].x4 << "," << rooms[i].y4
+            //<< endl;
+            //first = double(abs(rooms[i].y4-rooms[i].y2))/double(abs(rooms[i].x3 - rooms[i].x1));
+            //second =double(abs(rooms[i].y4-rooms[i].y2))/double(abs((rooms[i].x3 - rooms[i].x1)));
+            //cout << "Første forhold: " << (rooms[i].y4-rooms[i].y2) << " "<< (rooms[i].x3 - rooms[i].x1) << " " << first << endl;
+            //cout << "andet forhold: " << (rooms[i].y4-rooms[i].y2) <<" "<< (rooms[i].x3 - rooms[i].x1) << " " <<second << endl;
+            hallways.push_back(Room(rooms[i]));
+            hits++;
 
+        }
+    }
+    cout << "Done------------------------------------------" << endl; 
+    cout << hits << endl;
+    //969 , 1137
+    // Returns Corner vector of all squares which define the hallways.
     return hallways;
 };
-void structure::Spiral( int X, int Y,Image &map){
-    int x,y,dx,dy;
-    x = y = dx =0;
-    dy = -1;
-    int t = std::max(X,Y);
-    int maxI = t*t;
-    for(int i =0; i < maxI; i++){
-        if ((-X/2 <= x) && (x <= X/2) && (-Y/2 <= y) && (y <= Y/2)){
-            map.setPixel(X, Y, WHITE);
-        }
-        if( (x == y) || ((x < 0) && (x == -y)) || ((x > 0) && (x == 1-y))){
-            t = dx;
-            dx = -dy;
-            dy = t;
-        }
-        x += dx;
-        y += dy;
-    }
-}
 
-void structure::who_is_my_neighbour(Image &map,vector<pair<int, int>> hallways_center, vector<pair<int, int>> rooms)
+void structure::who_is_my_neighbour(Image &img,vector<Room> hallways_center)
 {
     int hitA = 0;
     int hitB = 0;
+    int hitBig= 0;
     int hitC = 0;
     int hitD = 0;
     int hitE = 0;
+    vector<int> samlet;
+    int j = 10000000;
+    int iterator = 0;
+    cout << "--------------------------------------------------------" << endl;
+    cout << "hallways_center: " << hallways_center.size() << endl;
     
-    cout << hallways_center.size() << endl;
-
-    for (int i = 0; i<rooms.size(); ++i) {
-        cout << endl;
-        cout << endl;
-        cout << endl;
-        cout << endl;
-        cout << endl;
-        cout << "looking at room "<<rooms[i].first<<"," <<rooms[i].second << endl;
-        cout << endl;
-        cout << endl;
-        cout << endl;
-        cout << endl;
-
-        if (abs(hallways_center[0].first - rooms[i].first) < 130 and abs(hallways_center[0].second - rooms[i].second) < 600 )
-        {
-                //cout << "room in blok A found, center at " << hallways_center[0].first << ","<<hallways_center[0].second << endl;
-            cout <<"room A " << i <<" "<< rooms[i].first<<"," <<rooms[i].second << endl;
-            hitA++;
-            blok_A.push(rooms[i]);
-            map.setPixel(rooms[i].first, rooms[i].second, BLACK);
-            cout << endl;
-            cout << endl;
-            cout << endl;
-            cout << endl;
-            cout << "SET" << endl; 
-        }
-        else{
-            cout << "rejected room A because" << abs(hallways_center[0].first - rooms[i].first) << " " <<abs(hallways_center[0].second - rooms[i].second) << endl;
-
-            
-        }
-        
-        if (abs(hallways_center[1].first - rooms[i].first) < 150 and abs(hallways_center[1].second - rooms[i].second) < 600 ) {
-                //cout << "room in blok B found, center at " <<hallways_center[1].first <<"," << hallways_center[1].second<< endl;
-                cout<<"room B " << i << " " <<rooms[i].first<<"," <<rooms[i].second << endl;
-            hitB++;
-            blok_B.push(rooms[i]);
-            map.setPixel(rooms[i].first, rooms[i].second, BLACK);
-        }
-        else
-        {
-            cout << "rejected room B because" << abs(hallways_center[1].first - rooms[i].first) << " " <<abs(hallways_center[1].second - rooms[i].second) << endl;
-        }
-        if (abs(hallways_center[2].first - rooms[i].first) < 150 and abs(hallways_center[2].second - rooms[i].second) < 600 ) {
-               // cout << "room in blok C found, center at " << hallways_center[2].first << "," <<hallways_center[2].second << endl;
-                cout<<"rooms C " <<i <<" "<< rooms[i].first<<"," <<rooms[i].second << endl;
-            hitC++;
-            blok_C.push(rooms[i]);
-            map.setPixel(rooms[i].first, rooms[i].second, BLACK);
-
-        }
-        else{
-            cout << "rejected room C because" << abs(hallways_center[2].first - rooms[i].first) << " " <<abs(hallways_center[2].second - rooms[i].second) << endl;
-        }
-        if (abs(hallways_center[3].first - rooms[i].first) < 160 and abs(hallways_center[3].second - rooms[i].second) < 900 ) {
-                //cout << "room in blok D found, center at " << hallways_center[3].first << "," <<hallways_center[3].second << endl;
-                cout<< "rooms D " <<i<<" "<< rooms[i].first<<"," <<rooms[i].second << endl;
-            hitD++;
-            blok_D.push(rooms[i]);
-            map.setPixel(rooms[i].first, rooms[i].second, BLACK);
-
-        }
-        else{
-            cout << "rejected room D because" << abs(hallways_center[3].first - rooms[i].first) << " " <<abs(hallways_center[3].second - rooms[i].second) << endl;
-        }
-        
-        if (abs(hallways_center[4].first - rooms[i].first) < 130 and abs(hallways_center[4].second - rooms[i].second) < 600 ) {
-                //cout << "room in blok E found, center at " << hallways_center[4].first << "," <<hallways_center[4].second << endl;
-                cout <<"rooms E "<< i <<" "<< rooms[i].first<<"," <<rooms[i].second << endl;
-            hitE++;
-            blok_E.push(rooms[i]);
-            map.setPixel(rooms[i].first, rooms[i].second, BLACK);
-
-        }
-        else{
-            cout << "rejected room E because" << abs(hallways_center[4].first - rooms[i].first) << " " <<abs(hallways_center[4].second - rooms[i].second) << endl;
-        }
-    };
-    for (int i = 0; i< blok_A.size(); ++i) {
-        cout << "x,y: " << abs(blok_A.top().first - hallways_center[0].first) << "," << abs(blok_A.top().second- hallways_center[0].second) << endl;
-        blok_A.pop();
+    
+    for (int i = 0 ; i<hallways_center.size(); ++i) {
+        cout << "Centers " <<hallways_center[i].center.first << "," << hallways_center[i].center.second  << endl;
     }
-    cout << " "<<hitA <<" "<< hitB <<" "<< hitC <<" "<< hitD <<" " <<hitE << endl;
+
+//    exit(0);
+    
+    for (int i = 0; i < Lokale.size(); ++i) {
+        cout << i << endl;
+        samlet.push_back((abs(hallways_center[0].center.first - Lokale[i].center.first) + abs(hallways_center[0].center.second - Lokale[i].center.second)));
+        samlet.push_back(abs(hallways_center[1].center.first -  Lokale[i].center.first) + abs(hallways_center[1].center.second - Lokale[i].center.second));
+        samlet.push_back(abs(hallways_center[2].center.first -  Lokale[i].center.first) + abs(hallways_center[2].center.second - Lokale[i].center.second));
+        samlet.push_back(abs(hallways_center[3].center.first -  Lokale[i].center.first) + abs(hallways_center[3].center.second - Lokale[i].center.second));
+        samlet.push_back(abs(hallways_center[4].center.first -  Lokale[i].center.first) + abs(hallways_center[4].center.second - Lokale[i].center.second));
+        samlet.push_back(abs(hallways_center[5].center.first -  Lokale[i].center.first) + abs(hallways_center[5].center.second - Lokale[i].center.second));
+        if (Lokale[i].center.first > 4000) {
+            
+        cout <<i<< "if D" << abs(hallways_center[4].center.first -  Lokale[i].center.first) + abs(hallways_center[4].center.second - Lokale[i].center.second) << endl;
+         cout << "if E" << abs(hallways_center[5].center.first -  Lokale[i].center.first) + abs(hallways_center[5].center.second - Lokale[i].center.second) << endl;
+        
+        }
+        
+        for (int k = 0; k <= 5; ++k) {
+            if (samlet[k] < j) {
+                iterator = k;
+                j = samlet[k];
+            }
+        }
+        
+        
+        
+        if (iterator == 0) {
+            cout << "lies in A" << endl;
+            Lokale[i].distance = samlet[iterator];
+            iterator = 0;
+            j = 10000000;
+            hitA++;
+            img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+            blok_A.push(Lokale[i]);
+            samlet.clear();
+        }
+        if (iterator == 1) {
+            cout << "lies in Bighall" << endl;
+            Lokale[i].distance = samlet[iterator];
+            iterator = 0;
+            j = 10000000;
+            hitBig++;
+            img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+            Big_hall.push(Lokale[i]);
+            samlet.clear();
+
+
+        }
+        if (iterator == 2) {
+            cout << "lies in B" << endl;
+            Lokale[i].distance = samlet[iterator];
+            iterator = 0;
+            j = 10000000;
+            hitB++;
+            img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+            blok_B.push(Lokale[i]);
+            samlet.clear();
+
+        }
+        if (iterator == 3) {
+            cout << "lies in C" << endl;
+            Lokale[i].distance = samlet[iterator];
+            iterator = 0;
+            j = 10000000;
+            hitC++;
+            img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+            blok_C.push(Lokale[i]);
+            samlet.clear();
+
+        }
+        if (iterator == 4) {
+            cout << "lies in D" << endl;
+            cout << Lokale[i].center.first << "," << Lokale[i].center.first << endl;
+            Lokale[i].distance = samlet[iterator];
+            iterator = 0;
+            j = 10000000;
+            hitD++;
+            img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+            blok_D.push(Lokale[i]);
+            samlet.clear();
+
+
+        }
+        if (iterator == 5) {
+            cout << "lies in E" << endl;
+            Lokale[i].distance = samlet[iterator];
+            iterator = 0;
+            j = 10000000;
+            hitE++;
+            img.setPixel(Lokale[i].center.first, Lokale[i].center.second, BLACK);
+            blok_E.push(Lokale[i]);
+            samlet.clear();
+        }
+        
+    };
+    
+
+    cout << " "<<hitA <<" "<<hitBig<<" "<< hitB <<" "<< hitC <<" "<< hitD <<" " <<hitE << endl;
     
 };
 //2611,1042 2611,107 2655,107 2655,1042

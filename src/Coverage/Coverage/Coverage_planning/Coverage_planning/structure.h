@@ -16,17 +16,37 @@
 #include "Image.h"
 #include "planning.h"
 using namespace std;
+
+
+
+
+class Room: public square{
+public:
+    Room(square&);
+    square corners;
+    pair<int, int> center;
+    int distance;
+};
+
+struct compare{
+    bool operator()(const Room &centerA, Room &centerB)
+    {
+        return centerA.distance > centerB.distance;
+    }
+};
+
 class structure: public Image{
 public:
-    vector<square> priority_Blok_area(vector<square> rooms);
-    void who_is_my_neighbour(Image & ,vector<pair<int, int>> , vector<pair<int, int>> );
-    void Spiral( int X, int Y,Image &map);
+    vector<Room> priority_Blok_area(vector<square> rooms);
+    void who_is_my_neighbour(Image&,vector<Room> hallways);
+    vector<Room> Lokale;
 private:
-    [std::priority_queue<std::pair<int, int> greater<pair<int, int>>> blok_A;
-    std::priority_queue<std::pair<int, int> > blok_B;
-    std::priority_queue<std::pair<int, int> > blok_C;
-    std::priority_queue<std::pair<int, int> > blok_D;
-    std::priority_queue<std::pair<int, int> > blok_E;
+    std::priority_queue<Room , vector<Room> , compare > blok_A;
+    std::priority_queue<Room , vector<Room> , compare > blok_B;
+    std::priority_queue<Room , vector<Room> , compare > blok_C;
+    std::priority_queue<Room , vector<Room> , compare > blok_D;
+    std::priority_queue<Room , vector<Room> , compare > blok_E;
+    std::priority_queue<Room , vector<Room> , compare > Big_hall;
 };
 
 #endif /* defined(__Coverage_planning__structure__) */
