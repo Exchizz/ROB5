@@ -34,8 +34,11 @@
 int main() {
 	Planning img;
 	img.loadImage("img/complete_map_project.pgm");
-	auto listCenter = img.detect_rooms();
-	img.detect_center(listCenter);
+	img.detect_rooms();
+	img.detect_center();
+	img.detect_hallways();
+	img.detect_neighbours();
 	img.saveImage("img/output.pgm");
+	std::cout << "done" << std::endl;
 	return 0;
 }
