@@ -24,6 +24,7 @@
 #include <vector>
 #include "image.h"
 #include "planning.h"
+#include "coverage.h"
 
 /*****************************    Defines    *******************************/
 
@@ -38,6 +39,10 @@ int main() {
 	img.detect_center();
 	img.detect_hallways();
 	img.detect_neighbours();
+
+	//Coverage cov(img);
+	//cov.cover_room()
+
 	img.saveImage("img/output.pgm");
 	std::cout << "done" << std::endl;
 	return 0;
