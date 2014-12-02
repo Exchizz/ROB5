@@ -332,6 +332,7 @@ void Planning::detect_neighbours() {
 	std::cout << hitA << " " << hitB << " " << hitC << " " << hitD << " " << hitE << " " << hitBig_hall << std::endl;
 	std::cout << blok_A.size() << " " << blok_B.size() << " " << blok_C.size() << " " << blok_D.size() << " " << blok_E.size() << " " << Big_hall.size() << std::endl;
 
+
 	//for (unsigned int i = 0; i< blok_A.size(); ++i){
 	while(!blok_A.empty()){
 		auto drawList = Bresenham(listHallways[BLOK_A].center.first, listHallways[BLOK_A].center.second,blok_A.top().center.first,blok_A.top().center.second);
@@ -381,6 +382,9 @@ void Planning::detect_neighbours() {
 	}
 	std::cout << blok_A.size() << " " << blok_B.size() << " " << blok_C.size() << " " << blok_D.size() << " " << blok_E.size() << " " << Big_hall.size() << std::endl;
 	std::cout << listRooms.size() << std::endl;
+
+
+
 	/*	for (unsigned int i = 0; i< blok_A.size(); ++i){
 	 draw_line(listHallways[0].center,blok_A.top().center);
 	 blok_A.pop();

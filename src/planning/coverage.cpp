@@ -22,10 +22,10 @@ int Coverage::cover_room(Room &room){
 	//Go to upper left corner
 	//draw_line(room.center,std::make_pair(room.corners.x1, room.corners.y1));
 	for(int globalx = room.x1; globalx < room.x4; globalx+=16 ){
-		int globalTemp = globalx + 8;
+		//int globalTemp = globalx + 8;
 		for(int globaly = room.y1; globaly <= room.y2; globaly++){
 			for(int x = globalx; x < globalx+8; x++){
-				if(x > 499){
+				if(x > img->getWidth()){
 					std::cout << "hit wall\n";
 					return 0;
 				}
@@ -38,7 +38,7 @@ int Coverage::cover_room(Room &room){
 			std::cout << "y: " << globaly << std::endl;
 			for(int x = globalx+8; x < globalx+16; x++){
 				std::cout << "globalx: " << x << std::endl;
-				if(x > 499){
+				if(x > img->getWidth()){
 					std::cout << "hit wall\n";
 					return 0;
 				}

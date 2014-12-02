@@ -7,6 +7,8 @@
 
 #ifndef COVERAGE_H_
 #define COVERAGE_H_
+#include "image.h"
+#include "planning.h"
 
 class Coverage {
 public:
