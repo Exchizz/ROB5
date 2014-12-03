@@ -2,15 +2,13 @@
 \contentsline {section}{\numberline {1}The Cup Collector}{2}{section.1}
 \contentsline {subsection}{\numberline {1.1}Limitations and information}{2}{subsection.1.1}
 \contentsline {section}{\numberline {2}Planning}{3}{section.2}
-\contentsline {subsection}{\numberline {2.1}Method}{3}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Results}{4}{subsection.2.2}
-\contentsline {subsection}{\numberline {2.3}Conclusion}{4}{subsection.2.3}
-\contentsline {section}{\numberline {3}Coverage}{5}{section.3}
-\contentsline {subsection}{\numberline {3.1}Method}{5}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Results}{5}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Conclusion}{5}{subsection.3.3}
-\contentsline {section}{\numberline {4}Localisation}{6}{section.4}
-\contentsline {subsection}{\numberline {4.1}Method}{6}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Results}{6}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Conclusion}{6}{subsection.4.3}
-\contentsline {section}{\numberline {5}Future work}{7}{section.5}
+\contentsline {subsection}{\numberline {2.1}Solution}{3}{subsection.2.1}
+\contentsline {section}{\numberline {3}Coverage}{6}{section.3}
+\contentsline {subsection}{\numberline {3.1}Method}{6}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Results}{6}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Conclusion}{6}{subsection.3.3}
+\contentsline {section}{\numberline {4}Localisation}{7}{section.4}
+\contentsline {subsection}{\numberline {4.1}Method}{7}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Results}{7}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Conclusion}{7}{subsection.4.3}
+\contentsline {section}{\numberline {5}Future work}{8}{section.5}
