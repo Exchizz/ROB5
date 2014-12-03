@@ -34,11 +34,13 @@
 
 int main() {
 	Planning img;
-	img.loadImage("img/complete_map_project.pgm");
+	img.loadImage("img/test2.pgm");
 	img.detect_rooms();
 	img.detect_center();
-	img.detect_hallways();
-	img.detect_neighbours();
+	//img.detect_hallways();
+	//img.detect_neighbours();
+
+	img.cover_room(img.listRooms[0]);
 
 	//Coverage cov(img);
 	//cov.cover_room()

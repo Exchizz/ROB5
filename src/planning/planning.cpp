@@ -205,14 +205,14 @@ void Planning::detect_rooms() {
 				setPixel(xLU - 1, yLU + 1, 100);
 				setPixel(xRU - 1, yLU + 1, 100);
 				setPixel(xRU - 1, yLD + 1, 100);
-				setPixel(xLU - 1, yLD + 1, 100);
+				setPixel(xLU - 1, yLD + 1, 200);
 			}
 		}
 	}
 	//DEBUG: Draw squares' area
-	for (auto room : listRooms) {
-		draw_area(room);
-	}
+	//for (auto room : listRooms) {
+	//	draw_area(room);
+	//}
 }
 
 void Planning::detect_center() {
@@ -394,3 +394,106 @@ void Planning::detect_neighbours() {
 		blok_E.pop();
 	}*/
 }
+
+std::pair<int,int> Planning::drive_up(std::pair<int,int> coord){
+	while(!is_black(coord.first,coord.second+ROBOT_RAD)){
+		// Robot's path
+		setPixel(coord.first,coord.second,200);
+		// Coverage
+		/*for(signed int tempX = x-ROBOT_RAD; tempX < x+ROBOT_RAD; tempX++){
+			// only color coverage not path
+			if(getPixel(tempX,y)!=200)
+				setPixel(tempX,y,240);
+			}*/
+		coord.second++;
+		}
+
+	return coord;
+}
+
+std::pair<int,int> Planning::drive_down(std::pair<int,int> coord){
+	while(!is_black(coord.first,coord.second-ROBOT_RAD)){
+	//while(coord.second - room.y4 > 4){
+		setPixel(coord.first,coord.second,200);
+		// Coverage
+		/*for(signed int tempX = coord.first-ROBOT_RAD; tempX < coord.first+ROBOT_RAD; tempX++){
+			// only color coverage not path
+			if(getPixel(tempX,coord.second)!=200)
+				setPixel(tempX,coord.second,230);
+		}*/
+		coord.second--;
+	}
+	return coord;
+}
+
+std::pair<int,int> Planning::drive_right(std::pair<int,int> coord){
+	for(int i=0;i<ROBOT_DIA;i++){
+		setPixel(coord.first,coord.second,200);
+		coord.first++;
+	}
+	return coord;
+}
+
+void Planning::cover_room(Room room) {
+	// For each room in list??? Must be something else..
+	int goalX;
+	int goalY;
+	// 1. Initialize
+	// 1.1 Start Position
+	std::pair<int,int> coord;
+	coord.first = room.x2+ROBOT_RAD;
+	coord.second = room.y2+ROBOT_RAD;
+
+	// 1.2 Initial Coverage
+	for(signed int tempY = coord.second-ROBOT_RAD; tempY < coord.second+ROBOT_RAD; tempY++){
+		for(signed int tempX = coord.first-ROBOT_RAD; tempX < coord.first+ROBOT_RAD; tempX++){
+			setPixel(tempX,tempY,230);
+		}
+	}
+
+	// 1.3 Compute length of room
+	int length = room.x3 - room.x2;
+	std::cout << "Length: " << length << std::endl;
+
+	// Compute number of lanes
+	float lanes = (float)length / ROBOT_DIA;
+	std::cout << "Lanes: "<< lanes << " " << ceil(lanes)<< std::endl;
+
+	if((int)ceil(lanes) % 2 == 0){ 	// if odd
+		goalX = room.x3-ROBOT_RAD;
+		goalY = room.y3+ROBOT_RAD;
+	}else{						// if even
+		goalX = room.x4-ROBOT_RAD;
+		goalY = room.y4-ROBOT_RAD;
+	}
+	setPixel(goalX,goalY,10);
+
+	//while(dist berween wall and robot is smaller than ROBOT_DIA)
+	while(room.x3-coord.first > ROBOT_DIA){
+		coord = drive_up(coord);
+		coord = drive_right(coord);
+		coord = drive_down(coord);
+		coord = drive_right(coord);
+	}
+
+	std::cout << goalX-coord.first << std::endl;
+
+	if((int)ceil(lanes) % 2 != 0){
+		coord = drive_down(coord);
+	}else{
+		coord = drive_up(coord);
+	}
+
+	for(int q = 0; q<goalX-coord.first+1; q++){
+		setPixel(coord.first,coord.second,200);
+		coord.first++;
+	}
+
+	if((int)ceil(lanes) % 2 == 0){
+		coord = drive_down(coord);
+	}else{
+		coord = drive_up(coord);
+	}
+
+}
+

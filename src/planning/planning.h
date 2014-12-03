@@ -39,6 +39,9 @@
 #define BLOK_C		3
 #define BLOK_D		4
 #define BLOK_E		5
+
+#define ROBOT_DIA	8
+#define ROBOT_RAD	(ROBOT_DIA/2)
 /*****************************   Constants   *******************************/
 
 /*****************************   Functions   *******************************/
@@ -81,11 +84,14 @@ private:
 	std::priority_queue<Room, std::vector<Room>, compare> blok_D;
 	std::priority_queue<Room, std::vector<Room>, compare> blok_E;
 	std::priority_queue<Room, std::vector<Room>, compare> Big_hall;
-	std::vector<Room> listRooms;
+
 	std::vector<Room> listHallways;
+	std::pair<int,int> drive_up(std::pair<int,int>);
+	std::pair<int,int> drive_down(std::pair<int,int>);
+	std::pair<int,int> drive_right(std::pair<int,int>);
 public:
 	int state = 0;
-
+	std::vector<Room> listRooms;
 	// Room detection
 	bool is_black(int, int);
 	void detect_rooms();
@@ -94,6 +100,7 @@ public:
 	void detect_neighbours();
 	void draw_area(Room);
 	void draw_line(std::pair<int,int>, std::pair<int,int>);
+	void cover_room(Room);
 
 	// Wavefront
 	//void offline_wavefront();
