@@ -42,9 +42,23 @@
 
 #define ROBOT_DIA	8
 #define ROBOT_RAD	(ROBOT_DIA/2)
+
+#define MOVE_RIGHT	0
+#define MOVE_UP		1
+#define MOVE_DOWN	2
+
+#define PATH		200
+
 /*****************************   Constants   *******************************/
 
 /*****************************   Functions   *******************************/
+
+class Robot{
+public:
+	int direction;
+	int posX,posY;
+	bool room_for_robot = true;
+};
 
 class Room {
 public:
@@ -86,9 +100,11 @@ private:
 	std::priority_queue<Room, std::vector<Room>, compare> Big_hall;
 
 	std::vector<Room> listHallways;
-	std::pair<int,int> drive_up(std::pair<int,int>);
-	std::pair<int,int> drive_down(std::pair<int,int>);
-	std::pair<int,int> drive_right(std::pair<int,int>);
+	//std::pair<int,int> drive_up(std::pair<int,int>);
+	//std::pair<int,int> drive_down(std::pair<int,int>);
+	//std::pair<int,int> drive_right(std::pair<int,int>);
+	Robot move_foreward(Robot, Room);
+	Robot draw_coverage(Robot);
 public:
 	int state = 0;
 	std::vector<Room> listRooms;

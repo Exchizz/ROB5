@@ -34,13 +34,16 @@
 
 int main() {
 	Planning img;
-	img.loadImage("img/test2.pgm");
+	img.loadImage("img/dm_test.pgm");
 	img.detect_rooms();
 	img.detect_center();
 	//img.detect_hallways();
 	//img.detect_neighbours();
 
-	img.cover_room(img.listRooms[0]);
+	for(int i=0; i<=55; i++){
+		img.cover_room(img.listRooms[i]);
+	}
+
 
 	//Coverage cov(img);
 	//cov.cover_room()
