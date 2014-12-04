@@ -15,7 +15,8 @@
  *
  *	141123		NAL		Module Created
  *	141125		NAL		<Square> constructor updated to C++11 standard
- *
+ *	141203		NAL		Inserted KR's functions (detect_hallways and detect_neighbours)
+ *	141204		NAL		cover_room function added
  *	------------------------------------------------------
  */
 
@@ -47,7 +48,9 @@
 #define MOVE_UP		1
 #define MOVE_DOWN	2
 
+#define CUP			150
 #define PATH		200
+#define COVERAGE	220
 
 /*****************************   Constants   *******************************/
 
@@ -57,7 +60,9 @@ class Robot{
 public:
 	int direction;
 	int posX,posY;
+	int cup_holder=0;
 	bool room_for_robot = true;
+	int endX,endY;
 };
 
 class Room {
@@ -116,7 +121,9 @@ public:
 	void detect_neighbours();
 	void draw_area(Room);
 	void draw_line(std::pair<int,int>, std::pair<int,int>);
-	void cover_room(Room);
+
+	//Coverage
+	Robot cover_room(Room);
 
 	// Wavefront
 	//void offline_wavefront();

@@ -34,19 +34,20 @@
 
 int main() {
 	Planning img;
-	img.loadImage("img/dm_test.pgm");
+	img.loadImage("img/complete_map_project.pgm");
 	img.detect_rooms();
 	img.detect_center();
 	//img.detect_hallways();
 	//img.detect_neighbours();
 
-	for(int i=0; i<=55; i++){
-		img.cover_room(img.listRooms[i]);
+	int cups = 0;
+	Robot robot;
+	for(auto room : img.listRooms){
+		robot = img.cover_room(room);
+		cups+=robot.cup_holder;
 	}
 
-
-	//Coverage cov(img);
-	//cov.cover_room()
+	std::cout << "Cup holder: " << cups << std::endl;
 
 	img.saveImage("img/output.pgm");
 	std::cout << "done" << std::endl;

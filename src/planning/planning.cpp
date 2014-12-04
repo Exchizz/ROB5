@@ -202,10 +202,10 @@ void Planning::detect_rooms() {
 				// std::cout << "Corner LD: (" << xRU - 1 << "," << yLD + 1 << ")\n";
 				// std::cout << "Corner RD: (" << xLU - 1 << "," << yLD + 1 << ")\n";
 				// DEBUG: Color each corner
-				setPixel(xLU - 1, yLU + 1, 100);
-				setPixel(xRU - 1, yLU + 1, 100);
-				setPixel(xRU - 1, yLD + 1, 100);
-				setPixel(xLU - 1, yLD + 1, 200);
+				//setPixel(xLU - 1, yLU + 1, 100);
+				//setPixel(xRU - 1, yLU + 1, 100);
+				//setPixel(xRU - 1, yLD + 1, 100);
+				//setPixel(xLU - 1, yLD + 1, 200);
 			}
 		}
 	}
@@ -396,10 +396,15 @@ void Planning::detect_neighbours() {
 }
 
 Robot Planning::draw_coverage(Robot robot){
-	for(signed int tempX = robot.posX-ROBOT_RAD; tempX <= robot.posX+ROBOT_RAD; tempX++){
-		// only color coverage not path
-		if(getPixel(tempX,robot.posY)==WHITE)
-			setPixel(tempX,robot.posY,220);
+	for(signed int tempY = robot.posY-ROBOT_RAD; tempY < robot.posY+ROBOT_RAD; tempY++){
+		for(signed int tempX = robot.posX-ROBOT_RAD; tempX < robot.posX+ROBOT_RAD; tempX++){
+			if(getPixel(tempX,tempY)==WHITE or getPixel(tempX,tempY)==COVERAGE){
+				setPixel(tempX,tempY,COVERAGE);
+			}else if(getPixel(tempX,tempY) == CUP){
+				robot.cup_holder++;
+				setPixel(tempX,tempY,COVERAGE);
+			}
+		}
 	}
 	return robot;
 }
@@ -410,11 +415,11 @@ Robot Planning::move_foreward(Robot robot,Room room){
 	{
 		int boundary = ROBOT_DIA+robot.posX;
 		while(robot.posX < boundary){
-			//robot = draw_coverage(robot);
+			robot = draw_coverage(robot);
 			robot.posX++;
 			if(room.x3 - robot.posX <= ROBOT_RAD){
 				robot.room_for_robot = false;
-				std::cout << "No more room\n";
+				//std::cout << "No more room\n";
 				break;
 			}
 			setPixel(robot.posX,robot.posY,PATH);
@@ -446,12 +451,19 @@ Robot Planning::move_foreward(Robot robot,Room room){
 	return robot;
 }
 
-void Planning::cover_room(Room room){
+Robot Planning::cover_room(Room room){
 	Robot robot;
 
 	// Initialize starting position
 	robot.posX = room.x2+ROBOT_RAD;
 	robot.posY = room.y2+ROBOT_RAD;
+
+	// 1.2 Initial Coverage
+	for(signed int tempY = robot.posY-ROBOT_RAD; tempY < robot.posY+ROBOT_RAD; tempY++){
+		for(signed int tempX = robot.posX-ROBOT_RAD; tempX < robot.posX+ROBOT_RAD; tempX++){
+			setPixel(tempX,tempY,COVERAGE);
+		}
+	}
 
 	while(robot.room_for_robot){
 		robot.direction = MOVE_UP;
@@ -460,7 +472,7 @@ void Planning::cover_room(Room room){
 		robot=move_foreward(robot,room);
 		if(!robot.room_for_robot){
 			// DEBUG
-			std::cout << "Breaking out of loop\n";
+			//std::cout << "Breaking out of loop\n";
 			break;
 		}
 		robot.direction = MOVE_DOWN;
@@ -473,8 +485,8 @@ void Planning::cover_room(Room room){
 
 	int diffX = room.x3 - ROBOT_RAD - robot.posX;
 	int diffY = room.y3 + ROBOT_RAD - robot.posY;
-	std::cout << room.x3 << " " << robot.posX << " " << diffX << std::endl;
-	std::cout << room.y3 << " " << robot.posY << " " << diffY << std::endl;
+	//std::cout << room.x3 << " " << robot.posX << " " << diffX << std::endl;
+	//std::cout << room.y3 << " " << robot.posY << " " << diffY << std::endl;
 
 	if(robot.direction == MOVE_RIGHT){
 		if(diffX == 0 and diffY != 0){
@@ -486,4 +498,8 @@ void Planning::cover_room(Room room){
 			robot = move_foreward(robot,room);
 		}
 	}
+	robot.endX = robot.posX;
+	robot.endY = robot.posY;
+	std::cout << "Cup holder: " << robot.cup_holder << std::endl;
+	return robot;
 }
