@@ -82,7 +82,7 @@ public:
 	int distance;
 
 	Room(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) :
-			x1(x1), y1(y1), x2(x2), y2(y2), x3(x3), y3(y3), x4(x4), y4(y4), distance(0) {
+		x1(x1), y1(y1), x2(x2), y2(y2), x3(x3), y3(y3), x4(x4), y4(y4), distance(0) {
 	}
 
 };
@@ -93,6 +93,13 @@ struct compare {
 	}
 };
 
+
+class RobotWave{
+public:
+	int startX,startY;
+	int goalX,goalY;
+	int currX,currY;
+};
 
 
 class Planning: public Image {
@@ -110,24 +117,26 @@ private:
 	//std::pair<int,int> drive_right(std::pair<int,int>);
 	Robot move_foreward(Robot, Room);
 	Robot draw_coverage(Robot);
+	void draw_area(Room);
+	void draw_line(std::pair<int,int>, std::pair<int,int>);
 public:
 	int state = 0;
 	std::vector<Room> listRooms;
+
 	// Room detection
 	bool is_black(int, int);
 	void detect_rooms();
 	void detect_center();
 	void detect_hallways();
 	void detect_neighbours();
-	void draw_area(Room);
-	void draw_line(std::pair<int,int>, std::pair<int,int>);
 
 	//Coverage
 	Robot cover_room(Room);
 
-	// Wavefront
+	// Navigation
 	//void offline_wavefront();
-	//void online_wavefront();
+	void online_wavefront(int,int,int,int);
+	int** wall_expansion();
 };
 
 #endif

@@ -262,21 +262,23 @@ void Planning::detect_neighbours() {
 	int hitE = 0;
 	int hitBig_hall = 0;
 
+	std::cout << listHallways.size() << std::endl;
+
+	// std::vector<priority_queue> hallQueue
+	// for (auto hallway : listHallways){
+	// 	hallQueue.push_back
+	//}
+
 	for (auto& room : listRooms) {
 		// std::cout << "Room: " << i << std::endl;
 		//Calculate distance to hallways.
 		for (auto hallway : listHallways) {
 			//std::cout << "hallway x: " << hallway.center.first  << " room x: " << room.center.first << std::endl;
-			listDistances.push_back(
-					sqrt(
-							pow(abs(hallway.center.first - room.center.first),
-									2)
-									+ pow(
-											abs(
-													hallway.center.second
-													- room.center.second),
-													2)));
+			listDistances.push_back(sqrt(pow(abs(hallway.center.first - room.center.first),2)+ pow(abs(hallway.center.second- room.center.second),2)));
 		}
+
+		int min_dist = *std::min_element(listDistances.begin(),listDistances.end());
+		int pos = distance(listDistances.begin(),std::min_element(listDistances.begin(),listDistances.end()));
 
 		//std::cout << listDistances.size() << std::endl;
 		//Determines smallest distance from list
@@ -288,6 +290,9 @@ void Planning::detect_neighbours() {
 				//std::cout << k << "," << j << std::endl;
 			}
 		}
+		std::cout << "min value: "<<min_dist << "," << listDistances[iterator] << std::endl;
+		std::cout << "pos" << pos << "," << iterator << std::endl;
+
 		//Insert room in priority_queue
 		switch (iterator) {
 		case BLOK_A:
@@ -332,7 +337,7 @@ void Planning::detect_neighbours() {
 	std::cout << hitA << " " << hitB << " " << hitC << " " << hitD << " " << hitE << " " << hitBig_hall << std::endl;
 	std::cout << blok_A.size() << " " << blok_B.size() << " " << blok_C.size() << " " << blok_D.size() << " " << blok_E.size() << " " << Big_hall.size() << std::endl;
 
-
+	/*
 	//for (unsigned int i = 0; i< blok_A.size(); ++i){
 	while(!blok_A.empty()){
 		auto drawList = Bresenham(listHallways[BLOK_A].center.first, listHallways[BLOK_A].center.second,blok_A.top().center.first,blok_A.top().center.second);
@@ -382,8 +387,7 @@ void Planning::detect_neighbours() {
 	}
 	std::cout << blok_A.size() << " " << blok_B.size() << " " << blok_C.size() << " " << blok_D.size() << " " << blok_E.size() << " " << Big_hall.size() << std::endl;
 	std::cout << listRooms.size() << std::endl;
-
-
+	*/
 
 	/*	for (unsigned int i = 0; i< blok_A.size(); ++i){
 	 draw_line(listHallways[0].center,blok_A.top().center);
@@ -500,6 +504,171 @@ Robot Planning::cover_room(Room room){
 	}
 	robot.endX = robot.posX;
 	robot.endY = robot.posY;
-	std::cout << "Cup holder: " << robot.cup_holder << std::endl;
+	//std::cout << "Cup holder: " << robot.cup_holder << std::endl;
 	return robot;
+}
+
+void Planning::online_wavefront(int startPOSX,int startPOSY, int goalPOSX,int goalPOSY){
+	std::cout << "Initialize...\n";
+	// 1. Initialize
+	// 1.1 Set start and goal for robot
+	RobotWave robot;
+	robot.startX = startPOSX;
+	robot.startY = startPOSY;
+	robot.currX = robot.startX;
+	robot.currY = robot.startY;
+	robot.goalX = goalPOSX;
+	robot.goalY = goalPOSY;
+
+	// 1.2 Create copy of map
+	int** map_copy = new int*[getWidth()];
+	for (int i = 0; i < getWidth(); i++)
+		map_copy[i] = new int[getHeight()];
+
+	// 1.2.1 Transform the map to One's and Zero's
+	for (int y = 0; y < getHeight(); y++){
+		for (int x = 0; x < getWidth(); x++){
+			if (getPixel(x, y) == 255)
+				map_copy[x][y] = 0;
+			else
+				map_copy[x][y] = 1;
+		}
+	}
+
+	// 1.3 Label the goal with a two
+	map_copy[robot.goalX][robot.goalY] = 2;
+
+	// 1.4 Create buffers that will hold locations of last visited values
+	std::vector<std::pair<int,int>> buffer_write;
+
+
+	// 1.5 Put goal into buffer
+	buffer_write.push_back(std::make_pair(robot.goalX,robot.goalY));
+
+
+	int incValue = 2;
+
+	std::cout << "Create wave...\n";
+	//Make the wave
+	//Run until robot's location has a value
+	int tempX, tempY;
+	while (map_copy[robot.currX][robot.currY] == 0)
+	{
+		incValue++;
+		//Copy write buffer to read buffer
+		std::vector<std::pair<int,int>> buffer_read (buffer_write);
+		buffer_write.clear();
+
+		//Go through all coordinates set in previous iteration
+		for(auto coord : buffer_read)
+		{
+			//Location to inspect is loaded
+			std::pair<int,int> location = std::make_pair(coord.first,coord.second);
+
+			//Do for each connection (four in this case)
+			for ( int i = 0; i < 4; i++ )
+			{
+				switch (i)
+				{
+				case 0:
+					tempY = location.second - 1;
+					tempX = location.first;
+					break;
+				case 1:
+					tempY = location.second + 1;
+					tempX = location.first;
+					break;
+				case 2:
+					tempY = location.second;
+					tempX = location.first - 1;
+					break;
+				case 3:
+					tempY = location.second;
+					tempX = location.first + 1;
+					break;
+				}
+				//If connected pixel is not a wall or obstacle set value to incValue(the incrementing value)
+				if (tempX <= getWidth() - 1 && tempY <= getHeight() - 1 && tempX > 0 && tempY > 0)
+				{
+					//only if there is no value there
+					if (map_copy[tempX][tempY] == 0)
+					{
+						map_copy[tempX][tempY] = incValue;
+						buffer_write.push_back(std::make_pair(tempX,tempY));
+					}
+				}
+			}
+		}
+	}
+
+	std::cout << "Run through wave...\n";
+	// Plan/Run route
+	while (true)
+	{
+		//Get value at robots location
+		incValue = map_copy[robot.currX][robot.currY];
+		// For all connecting points try to find a value that is less than the current
+		// Directions up and right are preferred
+		// When found change pixelvalue and increment moves
+		for (int i = 0; i < 4; i++)
+		{
+			switch (i){
+			case 3:
+				tempY = robot.currY - 1;
+				tempX = robot.currX;
+				break;
+			case 1:
+				tempY = robot.currY + 1;
+				tempX = robot.currX;
+				break;
+			case 2:
+				tempY = robot.currY;
+				tempX = robot.currX - 1;
+				break;
+			case 0:
+				tempY = robot.currY;
+				tempX = robot.currX + 1;
+				break;
+			}
+			if (tempX <= getWidth() - 1 && tempY <= getHeight() - 1 && tempX > 0 && tempY > 0){
+				if (incValue > map_copy[tempX][tempY] && map_copy[tempX][tempY] != 1){
+					robot.currX = tempX;
+					robot.currY = tempY;
+					setPixel(tempX, tempY, 80);
+					break;
+				}
+			}
+		}
+		//If goal is reached break loop
+		if (robot.currX == robot.goalX and robot.currY == robot.goalY)
+			break;
+	}
+}
+
+int** Planning::wall_expansion() {
+	int expansion_factor = 4;
+
+	int** expand_map = new int*[getWidth()];
+
+	for (int i = 0; i < getWidth(); i++){
+		expand_map[i] = new int[getHeight()];
+	}
+
+	for(int x = 0; x < getWidth(); x++){
+		for(int y = 0; y < getHeight(); y++){
+			if(getPixel(x,y) <= 50){
+				for(int i = 0; i<=expansion_factor;i++){
+					for(int j = 0; j<=expansion_factor;j++){
+						if(y+i <= getHeight()-1 && x+j <= getWidth()-1 ){expand_map[x+j][y+i] = 1;}
+						if(y+i <= getHeight()-1 && x-j >= 0){expand_map[x-j][y+i] = 1;}
+						if(y-i >= 0 && x-j >= 0 ){expand_map[x-j][y-i] = 1;}
+						if(y-i >= 0 && x+j <= getWidth()-1 ){expand_map[x+j][y-i] = 1;}
+					}
+				}
+			}else if(expand_map[x][y] != 1){
+				expand_map[x][y] = 0;
+			}
+		}
+	}
+	return expand_map;
 }
