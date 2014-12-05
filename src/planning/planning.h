@@ -111,7 +111,9 @@ private:
 	std::priority_queue<Room, std::vector<Room>, compare> blok_E;
 	std::priority_queue<Room, std::vector<Room>, compare> Big_hall;
 
-	std::vector<Room> listHallways;
+
+
+
 	//std::pair<int,int> drive_up(std::pair<int,int>);
 	//std::pair<int,int> drive_down(std::pair<int,int>);
 	//std::pair<int,int> drive_right(std::pair<int,int>);
@@ -122,6 +124,8 @@ private:
 public:
 	int state = 0;
 	std::vector<Room> listRooms;
+	std::vector<std::priority_queue<Room, std::vector<Room>, compare>> listQueues;
+	std::vector<Room> listHallways;
 
 	// Room detection
 	bool is_black(int, int);
@@ -135,7 +139,7 @@ public:
 
 	// Navigation
 	//void offline_wavefront();
-	void online_wavefront(int,int,int,int);
+	std::pair<int,int> online_wavefront(int,int,int,int);
 	int** wall_expansion();
 };
 

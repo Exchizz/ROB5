@@ -16,6 +16,7 @@
  *	141123		NAL		Module Created
  *	141126		NAL		Cleaned code
  *						Added comments
+ *	141205		NAL		Converted KR's code to C++11 std
  *
  *	------------------------------------------------------
  */
@@ -253,150 +254,43 @@ void Planning::detect_hallways() {
 void Planning::detect_neighbours() {
 	std::vector<int> listDistances;
 	listDistances.reserve(6);
-	int j = 10000000;
-	int iterator = 0;
-	int hitA = 0;
-	int hitB = 0;
-	int hitC = 0;
-	int hitD = 0;
-	int hitE = 0;
-	int hitBig_hall = 0;
 
-	std::cout << listHallways.size() << std::endl;
+	// Reserve memory for # priority queues
+	listQueues.reserve(6);
+	std::priority_queue<Room, std::vector<Room>, compare> blok_A,blok_B,blok_C,blok_D,blok_E,Big_hall;
 
-	// std::vector<priority_queue> hallQueue
-	// for (auto hallway : listHallways){
-	// 	hallQueue.push_back
-	//}
+	// HACK
+	listQueues.push_back(blok_A);
+	listQueues.push_back(Big_hall);
+	listQueues.push_back(blok_B);
+	listQueues.push_back(blok_C);
+	listQueues.push_back(blok_D);
+	listQueues.push_back(blok_E);
 
 	for (auto& room : listRooms) {
-		// std::cout << "Room: " << i << std::endl;
-		//Calculate distance to hallways.
+		//Calculate distance from current room to all hallways.
 		for (auto hallway : listHallways) {
-			//std::cout << "hallway x: " << hallway.center.first  << " room x: " << room.center.first << std::endl;
 			listDistances.push_back(sqrt(pow(abs(hallway.center.first - room.center.first),2)+ pow(abs(hallway.center.second- room.center.second),2)));
 		}
 
+		// Find smallest distance and the distance's position in list
 		int min_dist = *std::min_element(listDistances.begin(),listDistances.end());
-		int pos = distance(listDistances.begin(),std::min_element(listDistances.begin(),listDistances.end()));
+		int min_val_pos = distance(listDistances.begin(),std::min_element(listDistances.begin(),listDistances.end()));
 
-		//std::cout << listDistances.size() << std::endl;
-		//Determines smallest distance from list
-		for (unsigned int k = 0; k < listDistances.size(); ++k) {
-			//std::cout << "distance: " << listDistances[k] <<std::endl;
-			if (listDistances[k] < j) {
-				iterator = k;
-				j = listDistances[k];
-				//std::cout << k << "," << j << std::endl;
-			}
-		}
-		std::cout << "min value: "<<min_dist << "," << listDistances[iterator] << std::endl;
-		std::cout << "pos" << pos << "," << iterator << std::endl;
+		// Insert distance in room's data member
+		room.distance = min_dist;
+		// Insert room in appropriate priority queue
+		listQueues[min_val_pos].push(room);
 
-		//Insert room in priority_queue
-		switch (iterator) {
-		case BLOK_A:
-			room.distance = listDistances[iterator];
-			hitA++;
-			blok_A.push(room);
-			break;
-		case BIG_HALL:
-			room.distance = listDistances[iterator];
-			hitBig_hall++;
-			Big_hall.push(room);
-			break;
-		case BLOK_B:
-			room.distance = listDistances[iterator];
-			hitB++;
-			blok_B.push(room);
-			break;
-		case BLOK_C:
-			room.distance = listDistances[iterator];
-			hitC++;
-			blok_C.push(room);
-			break;
-		case BLOK_D:
-			room.distance = listDistances[iterator];
-			hitD++;
-			blok_D.push(room);
-			break;
-		case BLOK_E:
-			room.distance = listDistances[iterator];
-			hitE++;
-			blok_E.push(room);
-			break;
-		}
-		// DEBUG
-		//setPixel(room.center.first, room.center.second, BLACK);
-		// Reset
-		iterator = 0;
-		j = 10000000;
+		// Clear list of distances for next room
 		listDistances.clear();
 	}
-	//debug
-	std::cout << hitA << " " << hitB << " " << hitC << " " << hitD << " " << hitE << " " << hitBig_hall << std::endl;
-	std::cout << blok_A.size() << " " << blok_B.size() << " " << blok_C.size() << " " << blok_D.size() << " " << blok_E.size() << " " << Big_hall.size() << std::endl;
-
-	/*
-	//for (unsigned int i = 0; i< blok_A.size(); ++i){
-	while(!blok_A.empty()){
-		auto drawList = Bresenham(listHallways[BLOK_A].center.first, listHallways[BLOK_A].center.second,blok_A.top().center.first,blok_A.top().center.second);
-		for(auto pixel : drawList){
-			setPixel(pixel.first,pixel.second, 0);
-		}
-		blok_A.pop();
+	// DEBUG
+	for(auto queue : listQueues){
+		std::cout << queue.size() << " ";
 	}
+	std::cout << std::endl;
 
-	while(!Big_hall.empty()){
-		auto drawList = Bresenham(listHallways[1].center.first, listHallways[1].center.second,Big_hall.top().center.first,Big_hall.top().center.second);
-		for(auto pixel : drawList){
-			setPixel(pixel.first,pixel.second, 0);
-		}
-		Big_hall.pop();
-	}
-
-	while(!blok_B.empty()){
-		auto drawList = Bresenham(listHallways[BLOK_B].center.first, listHallways[BLOK_B].center.second,blok_B.top().center.first,blok_B.top().center.second);
-		for(auto pixel : drawList){
-			setPixel(pixel.first,pixel.second, 0);
-		}
-		blok_B.pop();
-	}
-
-	while(!blok_C.empty()){
-		auto drawList = Bresenham(listHallways[BLOK_C].center.first, listHallways[BLOK_C].center.second,blok_C.top().center.first,blok_C.top().center.second);
-		for(auto pixel : drawList){
-			setPixel(pixel.first,pixel.second, 0);
-		}
-		blok_C.pop();
-	}
-	while(!blok_D.empty()){
-		auto drawList = Bresenham(listHallways[BLOK_D].center.first, listHallways[BLOK_D].center.second,blok_D.top().center.first,blok_D.top().center.second);
-		for(auto pixel : drawList){
-			setPixel(pixel.first,pixel.second, 0);
-		}
-		blok_D.pop();
-	}
-
-	while(!blok_E.empty()){
-		auto drawList = Bresenham(listHallways[BLOK_E].center.first, listHallways[BLOK_E].center.second,blok_E.top().center.first,blok_E.top().center.second);
-		for(auto pixel : drawList){
-			setPixel(pixel.first,pixel.second, 0);
-		}
-		blok_E.pop();
-	}
-	std::cout << blok_A.size() << " " << blok_B.size() << " " << blok_C.size() << " " << blok_D.size() << " " << blok_E.size() << " " << Big_hall.size() << std::endl;
-	std::cout << listRooms.size() << std::endl;
-	*/
-
-	/*	for (unsigned int i = 0; i< blok_A.size(); ++i){
-	 draw_line(listHallways[0].center,blok_A.top().center);
-	 blok_A.pop();
-	 }*/
-	/*for (unsigned int i = 0; i < blok_E.size(); ++i) {
-		setPixel(blok_E.top().center.first, blok_E.top().center.second, BLACK);
-		blok_E.pop();
-	}*/
 }
 
 Robot Planning::draw_coverage(Robot robot){
@@ -508,7 +402,7 @@ Robot Planning::cover_room(Room room){
 	return robot;
 }
 
-void Planning::online_wavefront(int startPOSX,int startPOSY, int goalPOSX,int goalPOSY){
+std::pair<int,int> Planning::online_wavefront(int startPOSX,int startPOSY, int goalPOSX,int goalPOSY){
 	std::cout << "Initialize...\n";
 	// 1. Initialize
 	// 1.1 Set start and goal for robot
@@ -526,8 +420,8 @@ void Planning::online_wavefront(int startPOSX,int startPOSY, int goalPOSX,int go
 		map_copy[i] = new int[getHeight()];
 
 	// 1.2.1 Transform the map to One's and Zero's
-	for (int y = 0; y < getHeight(); y++){
-		for (int x = 0; x < getWidth(); x++){
+	for (int x = 0; x < getWidth(); x++){
+		for (int y = 0; y < getHeight(); y++){
 			if (getPixel(x, y) == 255)
 				map_copy[x][y] = 0;
 			else
@@ -635,6 +529,7 @@ void Planning::online_wavefront(int startPOSX,int startPOSY, int goalPOSX,int go
 					robot.currX = tempX;
 					robot.currY = tempY;
 					setPixel(tempX, tempY, 80);
+					std::cout << "Robot pos: " << tempX << "," << tempY << std::endl;
 					break;
 				}
 			}
@@ -643,6 +538,9 @@ void Planning::online_wavefront(int startPOSX,int startPOSY, int goalPOSX,int go
 		if (robot.currX == robot.goalX and robot.currY == robot.goalY)
 			break;
 	}
+	// Clean
+	delete *map_copy;
+	return std::make_pair(robot.goalX,robot.goalY);
 }
 
 int** Planning::wall_expansion() {
