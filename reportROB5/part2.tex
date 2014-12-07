@@ -19,6 +19,19 @@ The coverage plan for the complete map is
 \item Block E
 \end{enumerate}
 
+Covering the room is done in the following steps
+\begin{enumerate}\itemsep-2pt
+\item Starts at upper left corner of the rooms freespace, $Q_{room}$, and keep moving down to the lower left corner of the $Q_{room}$.
+\item Turn left 90 degrees and move 8 pixels
+\item Turn left 90 degrees and keep moving until the limit of the $Q_{room}$ is detected.
+\item Turn right 90 degrees and move 8 pixels
+\item Turn right 90 degrees and keep moving until the limit of the $Q_{room}$ is detected.
+\item Keep repeating the step 2 to 5 until either the same y--coordinate as the upper rigth corner of the rooms $Q_{room}$ is detected or the robot has the same position as the upper right corner of the $Q_{room}$. The room is fully covered and the robot can move to the next room.   
+\begin{itemize}\itemsep-2pt  
+\item If the same y--coordinate is detected, then turn 90 degrees to the left and keep moving until the robot has the same position as the upper right corner of the $Q_{room}$
+\item If the same position as the upper right corner of the $Q_{room}$, then turn right 90 degrees and keep moving until the robot has the same position as the lower right corner of the $Q_{room}$. The room is fully covered and the robot can move to the next room. 
+\end{itemize}
+\end{enumerate} 
 When the room is fully covered, then the center of the next room is popped from the priority queue of the block, that the robot is currently in. A wavefront is then generated from that center-position, until the wavefront hits the position of the robot, and then the path to that center is found. The wavefront is stopped as soon as it hits the robots position, because the robot will never gonna use the rest of wavefront, and it saves a lot of time and memory by not making a full wavefront map. This makes it also possible to run the wavefront online, because most often the robot does not have to drive so far to get to the next room center. 
 
 \subsection{Results}
