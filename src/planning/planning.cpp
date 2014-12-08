@@ -415,7 +415,6 @@ void Planning::moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<in
 		}
 		fileOut << std::endl;
 	}
-	std::cout << "partially done" << std::endl;
 
 	int x = Qstart.first;
 	int y = Qstart.second;
@@ -429,28 +428,22 @@ void Planning::moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<in
 
 	//While the robot aren't in goal.
 	do{
-		//Same checks as before and calculates difference.
+		//Make sure we stay in image and calculate pixel change in all directions.
 		if(x > 0){
 			diffLeft =  waveMap[x][y] -  waveMap[x-1][y];
-			//image[x][y].first - image[x-1][y].first;
 		}
 		if(x < (getWidth() - 1)){
 			diffRight = waveMap[x][y] - waveMap[x+1][y];
-			//image[x][y].first - image[x+1][y].first;
 		}
 		if(y > 0){
 			diffUp    =  waveMap[x][y] - waveMap[x][y-1];
-			//image[x][y].first - image[x][y-1].first;
 		}
 		if(y < (getHeight() - 1)){
 			diffDown  =  waveMap[x][y] - waveMap[x][y+1];
-			//image[x][y].first - image[x][y+1].first;
 		}
-		//Draw where the robot is - notice second.
-		//image[x][y].second = MAX_VALUE;
 
 		//Make sure we don't go into an obstacle
-		if(abs(diffUp) ==1 && abs(diffDown) == 1){
+		if(abs(diffUp) == 1 && abs(diffDown) == 1){
 			//Detect where to move - up or down
 			if(diffUp > diffDown){ // move down
 				--y;
@@ -462,7 +455,7 @@ void Planning::moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<in
 
 		if(abs(diffLeft) == 1 && abs(diffRight) == 1){
 			//Detect where to move - right or left
-			if(diffLeft >= diffRight){ //move right
+			if(diffLeft > diffRight){ //move right
 				--x;
 			}
 			if(diffLeft < diffRight){
@@ -482,10 +475,6 @@ void Planning::moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<in
 }
 bool Planning::inImage(int x, int y){
 	return (x < getWidth() and y < getWidth() and x >= 0 and y >= 0);
-}
-
-bool isDone(std::pair<int,int> start, int x, int y){
-	return start.first == x && start.second == y ;
 }
 
 void Planning::online_wavefront(std::pair<int,int> start, std::pair<int,int> end){
@@ -514,7 +503,7 @@ void Planning::online_wavefront(std::pair<int,int> start, std::pair<int,int> end
 	waveMap[end.first][end.second] = 2;
 
 	queue.push(std::make_pair(std::make_pair(end.first, end.second), last));
-	while(!isDone(start,x,y)){
+	while(!(start.first == x && start.second == y)){
 
 		//Get oldest element
 		auto pair = queue.front();
