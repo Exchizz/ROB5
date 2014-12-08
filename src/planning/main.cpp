@@ -45,11 +45,11 @@ int main() {
 	}
 
 	//img.saveImage("img/transformed_map.pgm");
-	//img.detect_rooms();
-	//img.detect_center();
-	//img.detect_hallways();
-	//img.detect_neighbours();
-	//std::cout << img.listHallways[0].center.first << " " << img.listHallways[0].center.second << std::endl;
+	img.detect_rooms();
+	img.detect_center();
+	img.detect_hallways();
+	img.detect_neighbours();
+	std::cout << img.listHallways[0].center.first << " " << img.listHallways[0].center.second << std::endl;
 	//img.online_wavefront(75,100,170,300);
 	//img.online_wavefront(700,200,900,300);
 	//img.online_wavefront(700,1200,900,1000);

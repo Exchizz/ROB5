@@ -305,7 +305,7 @@ Robot Planning::draw_coverage(Robot robot){
 	return robot;
 }
 
-Robot Planning::move_foreward(Robot robot,Room room){
+Robot Planning::move_forward(Robot robot,Room room){
 	switch(robot.direction){
 	case MOVE_RIGHT:
 	{
@@ -363,18 +363,18 @@ Robot Planning::cover_room(Room room){
 
 	while(robot.room_for_robot){
 		robot.direction = MOVE_UP;
-		robot=move_foreward(robot,room);
+		robot=move_forward(robot,room);
 		robot.direction = MOVE_RIGHT;
-		robot=move_foreward(robot,room);
+		robot=move_forward(robot,room);
 		if(!robot.room_for_robot){
 			// DEBUG
 			//std::cout << "Breaking out of loop\n";
 			break;
 		}
 		robot.direction = MOVE_DOWN;
-		robot=move_foreward(robot,room);
+		robot=move_forward(robot,room);
 		robot.direction = MOVE_RIGHT;
-		robot=move_foreward(robot,room);
+		robot=move_forward(robot,room);
 	}
 
 	//compute remaining lanes.
@@ -387,11 +387,11 @@ Robot Planning::cover_room(Room room){
 	if(robot.direction == MOVE_RIGHT){
 		if(diffX == 0 and diffY != 0){
 			robot.direction = MOVE_DOWN;
-			robot = move_foreward(robot,room);
+			robot = move_forward(robot,room);
 		}
 		if(diffX == 0 and diffY == 0){
 			robot.direction = MOVE_UP;
-			robot = move_foreward(robot,room);
+			robot = move_forward(robot,room);
 		}
 	}
 	robot.endX = robot.posX;
@@ -469,6 +469,7 @@ void Planning::moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<in
 				++x;
 			}
 		}
+		//Draw line the robot moves
 		setPixel(x,y,0);
 
 		//count number of steps
@@ -513,13 +514,7 @@ void Planning::online_wavefront(std::pair<int,int> start, std::pair<int,int> end
 	waveMap[end.first][end.second] = 2;
 
 	queue.push(std::make_pair(std::make_pair(end.first, end.second), last));
-	while(!queue.empty()){
-
-		//x,y-1 decides where the wavefront should stop with respect to the start-point
-		if(isDone(start,x,y-1)){
-			std::cout << "Wavefront has reached target point" << std::endl;
-			break;
-		}
+	while(!isDone(start,x,y)){
 
 		//Get oldest element
 		auto pair = queue.front();

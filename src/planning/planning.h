@@ -117,7 +117,7 @@ private:
 	//std::pair<int,int> drive_up(std::pair<int,int>);
 	//std::pair<int,int> drive_down(std::pair<int,int>);
 	//std::pair<int,int> drive_right(std::pair<int,int>);
-	Robot move_foreward(Robot, Room);
+	Robot move_forward(Robot, Room);
 	Robot draw_coverage(Robot);
 	void draw_area(Room);
 	void draw_line(std::pair<int,int>, std::pair<int,int>);
