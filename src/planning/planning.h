@@ -139,8 +139,11 @@ public:
 
 	// Navigation
 	//void offline_wavefront();
-	std::pair<int,int> online_wavefront(int,int,int,int);
+	//std::pair<int,int> online_wavefront(int,int,int,int);
 	int** wall_expansion();
+	void moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<int,int> Qstart, std::pair<int,int> Qend);
+	void online_wavefront(std::pair<int,int> start, std::pair<int,int> end);
+	bool inImage(int x, int y);
 };
 
 #endif

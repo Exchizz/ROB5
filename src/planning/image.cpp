@@ -80,12 +80,15 @@ void Image::loadImage(const std::string filename) {
 	ss.clear();
 	ss << inputLine;
 	ss >> maxValue;
+
 	std::cout << "max value : " << maxValue << std::endl;
+
 	ss.clear();
 	ss << imageFile.rdbuf();
 //Creates imageData-vector
 	createVector (imageData);
 //Put image into 2-D vectors
+
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
 			int value;

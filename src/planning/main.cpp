@@ -35,6 +35,7 @@
 int main() {
 	Planning img;
 	img.loadImage("img/complete_map_project.pgm");
+	//img.loadImage("img/world1.pgm");
 	for(int x = 0; x<img.getWidth();x++){
 		for(int y = 0; y<img.getHeight();y++){
 			if(img.getPixel(x,y)!= WHITE and img.getPixel(x,y)!= BLACK and img.getPixel(x,y)!= CUP){
@@ -44,15 +45,18 @@ int main() {
 	}
 
 	//img.saveImage("img/transformed_map.pgm");
-	img.detect_rooms();
-	img.detect_center();
-	img.detect_hallways();
-	img.detect_neighbours();
-	std::cout << img.listHallways[0].center.first << " " << img.listHallways[0].center.second << std::endl;
+	//img.detect_rooms();
+	//img.detect_center();
+	//img.detect_hallways();
+	//img.detect_neighbours();
+	//std::cout << img.listHallways[0].center.first << " " << img.listHallways[0].center.second << std::endl;
 	//img.online_wavefront(75,100,170,300);
 	//img.online_wavefront(700,200,900,300);
 	//img.online_wavefront(700,1200,900,1000);
-	img.online_wavefront(900,1000,700,1200);
+
+	img.online_wavefront(std::make_pair(700,1200),std::make_pair(900,1000));
+	//img.online_wavefront(std::make_pair(90,119),std::make_pair(128,55));
+	//img.online_wavefront(std::make_pair(1,2),std::make_pair(3,4));
 	//img.online_wavefront(900,1000,1100,1150);
 	//img.online_wavefront(2150,1400,780,571);
 

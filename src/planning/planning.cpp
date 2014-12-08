@@ -125,8 +125,6 @@ std::vector<std::pair<int, int>> Bresenham(int x1, int y1, int const x2,int cons
 	return dataOut;
 }
 
-
-
 /*
  * 1. Detects all upper left corners of squares, then
  * 2. it detects the upper right and then the lower left corner.
@@ -402,147 +400,178 @@ Robot Planning::cover_room(Room room){
 	return robot;
 }
 
-std::pair<int,int> Planning::online_wavefront(int startPOSX,int startPOSY, int goalPOSX,int goalPOSY){
-	std::cout << "Initialize...\n";
-	// 1. Initialize
-	// 1.1 Set start and goal for robot
-	RobotWave robot;
-	robot.startX = startPOSX;
-	robot.startY = startPOSY;
-	robot.currX = robot.startX;
-	robot.currY = robot.startY;
-	robot.goalX = goalPOSX;
-	robot.goalY = goalPOSY;
+//Method to move robot
+void Planning::moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<int,int> Qstart, std::pair<int,int> Qend){
+	std::ofstream fileOut;
+	fileOut.open("img/tmp_output.pgm");
+	fileOut << "P2\n";
+	fileOut << "# THE BEER-WARE LICENSE (Revision 42)\n";
+	fileOut << getWidth() << " " << getHeight() << "\n";
+	fileOut << 255 << "\n";
 
-	// 1.2 Create copy of map
-	int** map_copy = new int*[getWidth()];
-	for (int i = 0; i < getWidth(); i++)
-		map_copy[i] = new int[getHeight()];
-
-	// 1.2.1 Transform the map to One's and Zero's
-	for (int x = 0; x < getWidth(); x++){
-		for (int y = 0; y < getHeight(); y++){
-			if (getPixel(x, y) == 255)
-				map_copy[x][y] = 0;
-			else
-				map_copy[x][y] = 1;
+	for(auto vec : waveMap){
+		for(auto elm : vec){
+			fileOut << elm << " ";
 		}
+		fileOut << std::endl;
 	}
-
-	// 1.3 Label the goal with a two
-	map_copy[robot.goalX][robot.goalY] = 2;
-
-	// 1.4 Create buffers that will hold locations of last visited values
-	std::vector<std::pair<int,int>> buffer_write;
+	std::cout << "partially done" << std::endl;
 
 
-	// 1.5 Put goal into buffer
-	buffer_write.push_back(std::make_pair(robot.goalX,robot.goalY));
+	exit(0);
+	int x = Qstart.first;
+	int y = Qstart.second;
+
+	std::cout << "Starting in (x,y): " << x << " " << y << std::endl;
+	std::cout << "stopping in (x,y): " << Qend.first << " " << Qend.second << std::endl;
+
+	int diffLeft = 0, diffRight = 0, diffUp = 0, diffDown = 0;
+	int counter = 0;
 
 
-	int incValue = 2;
+	//While the robot aren't in goal.
+	do{
+		//Same checks as before and calculates difference.
+		if(x > 0){
+			diffLeft =  waveMap[x][y] -  waveMap[x-1][y];
+			//image[x][y].first - image[x-1][y].first;
+		}
+		if(x < (getWidth() - 1)){
+			diffRight = waveMap[x][y] - waveMap[x+1][y];
+			//image[x][y].first - image[x+1][y].first;
+		}
+		if(y > 0){
+			diffUp    =  waveMap[x][y] - waveMap[x][y-1];
+			//image[x][y].first - image[x][y-1].first;
+		}
+		if(y < (getHeight() - 1)){
+			diffDown  =  waveMap[x][y] - waveMap[x][y+1];
+			//image[x][y].first - image[x][y+1].first;
+		}
+		//Draw where the robot is - notice second.
+		//image[x][y].second = MAX_VALUE;
 
-	std::cout << "Create wave...\n";
-	//Make the wave
-	//Run until robot's location has a value
-	int tempX, tempY;
-	while (map_copy[robot.currX][robot.currY] == 0)
-	{
-		incValue++;
-		//Copy write buffer to read buffer
-		std::vector<std::pair<int,int>> buffer_read (buffer_write);
-		buffer_write.clear();
-
-		//Go through all coordinates set in previous iteration
-		for(auto coord : buffer_read)
-		{
-			//Location to inspect is loaded
-			std::pair<int,int> location = std::make_pair(coord.first,coord.second);
-
-			//Do for each connection (four in this case)
-			for ( int i = 0; i < 4; i++ )
-			{
-				switch (i)
-				{
-				case 0:
-					tempY = location.second - 1;
-					tempX = location.first;
-					break;
-				case 1:
-					tempY = location.second + 1;
-					tempX = location.first;
-					break;
-				case 2:
-					tempY = location.second;
-					tempX = location.first - 1;
-					break;
-				case 3:
-					tempY = location.second;
-					tempX = location.first + 1;
-					break;
-				}
-				//If connected pixel is not a wall or obstacle set value to incValue(the incrementing value)
-				if (tempX <= getWidth() - 1 && tempY <= getHeight() - 1 && tempX > 0 && tempY > 0)
-				{
-					//only if there is no value there
-					if (map_copy[tempX][tempY] == 0)
-					{
-						map_copy[tempX][tempY] = incValue;
-						buffer_write.push_back(std::make_pair(tempX,tempY));
-					}
-				}
+		//Make sure we don't go into an obstacle
+		if(abs(diffUp) ==1 && abs(diffDown) == 1){
+			//Detect where to move - up or down
+			if(diffUp > diffDown){ // move down
+				--y;
+			}
+			if(diffUp < diffDown) {
+				++y;
 			}
 		}
-	}
 
-	std::cout << "Run through wave...\n";
-	// Plan/Run route
-	while (true)
-	{
-		//Get value at robots location
-		incValue = map_copy[robot.currX][robot.currY];
-		// For all connecting points try to find a value that is less than the current
-		// Directions up and right are preferred
-		// When found change pixelvalue and increment moves
-		for (int i = 0; i < 4; i++)
-		{
-			switch (i){
-			case 3:
-				tempY = robot.currY - 1;
-				tempX = robot.currX;
-				break;
-			case 1:
-				tempY = robot.currY + 1;
-				tempX = robot.currX;
-				break;
-			case 2:
-				tempY = robot.currY;
-				tempX = robot.currX - 1;
-				break;
-			case 0:
-				tempY = robot.currY;
-				tempX = robot.currX + 1;
-				break;
+		std::cout << "diffleft: " << diffLeft << " diffright: " << diffRight << std::endl;
+
+		if(abs(diffLeft) == 1 && abs(diffRight) == 1){
+			//Detect where to move - right or left
+			if(diffLeft >= diffRight){ //move right
+				--x;
 			}
-			if (tempX <= getWidth() - 1 && tempY <= getHeight() - 1 && tempX > 0 && tempY > 0){
-				if (incValue > map_copy[tempX][tempY] && map_copy[tempX][tempY] != 1){
-					robot.currX = tempX;
-					robot.currY = tempY;
-					setPixel(tempX, tempY, 80);
-					std::cout << "Robot pos: " << tempX << "," << tempY << std::endl;
-					break;
-				}
+			if(diffLeft < diffRight){
+				++x;
 			}
 		}
-		//If goal is reached break loop
-		if (robot.currX == robot.goalX and robot.currY == robot.goalY)
-			break;
-	}
-	// Clean
-	delete *map_copy;
-	return std::make_pair(robot.goalX,robot.goalY);
+		std::cout << "x: " << x << " y: " << y << std::endl;
+
+		//count number of steps
+		++counter;
+
+	}while(!(x == Qend.first && y == Qend.second));
+	//saveImg("draw.pgm");
+
+	std::cout << "count: " << counter << std::endl;
+}
+bool Planning::inImage(int x, int y){
+	return (x < getWidth() and y < getWidth() and x >= 0 and y >= 0);
 }
 
+
+bool isDone(std::pair<int,int> start, int x, int y){
+	return start.first == x && start.second == y ;
+}
+
+void Planning::online_wavefront(std::pair<int,int> start, std::pair<int,int> end){
+	if(!inImage(start.first,start.second)){
+		std::cout << "Wavefront: Qstart out of range..." << std::endl;
+		exit(0);
+	}
+
+	if(!inImage(end.first,end.second)){
+		std::cout << "Wavefront: Qend out of range..." << std::endl;
+		exit(0);
+	}
+
+	std::vector<std::vector <int> > waveMap;
+
+	for(int i = 0; i < getWidth(); i++){
+		std::vector<int> col(getHeight());
+		waveMap.push_back(col);
+	}
+
+	std::queue<std::pair<std::pair<int,int>, int>> queue;
+	int last = 2;
+	int x = 0;
+	int y = 0;
+	std::vector<std::pair<int,int>> lastPoint;
+
+	waveMap[end.first][end.second] = 2;
+	//waveMap[start.first][start.second] = 1;
+
+	queue.push(std::make_pair(std::make_pair(end.first, end.second), last));
+
+	//while(x != start.first and y != start.second){
+	while(!queue.empty()){
+		//for(int i = 0; i < 10; i++){
+		//Get oldest element
+		auto pair = queue.front();
+		//remove oldest element
+		queue.pop();
+
+		std::cout << "queue size: " << queue.size() << std::endl;
+		x = pair.first.first;
+		y = pair.first.second;
+
+		last = pair.second +1;
+		if (inImage(x,y+1) && waveMap[x][y+1] == 0 && !is_black(x,y+1)){
+			waveMap[x][y+1] = last;
+			queue.push(std::make_pair(std::make_pair(x,y+1), last));
+		}
+		if (inImage(x,y-1) && waveMap[x][y-1] == 0 && !is_black(x,y-1) ){
+			waveMap[x][y-1] = last;
+			queue.push(std::make_pair(std::make_pair(x,y-1), last));
+		}
+		if (inImage(x+1,y) && waveMap[x+1][y] == 0  && !is_black(x+1,y)){
+			waveMap[x+1][y] = last;
+			queue.push(std::make_pair(std::make_pair(x+1,y), last));
+		}
+		if (inImage(x-1,y) && waveMap[x-1][y] == 0 && !is_black(x-1,y)){
+			waveMap[x-1][y] = last;
+			queue.push(std::make_pair(std::make_pair(x-1,y), last));
+		}
+
+		if(isDone(start,x,y+1) || isDone(start,x,y-1) || isDone(start,x+1, y) || isDone(start,x-1,y)){
+			std::cout << "I'm out" << std::endl;
+			break;
+		}
+		std::cout << "x: " << x << " y: " << y << " last: " << last << std::endl;
+	}
+	//moveRobot(waveMap,start, end);
+	std::ofstream fileOut;
+	fileOut.open("img/tmp_output.pgm");
+	fileOut << "P2\n";
+	fileOut << "# THE BEER-WARE LICENSE (Revision 42)\n";
+	fileOut << getWidth() << " " << getHeight() << "\n";
+	fileOut << 255 << "\n";
+
+	for(int y = 0; y < getHeight(); y++){
+		for(int x = 0; x <  getWidth(); x++){
+			fileOut << waveMap[x][y] << " ";
+		}
+		fileOut << std::endl;
+	}
+}
 int** Planning::wall_expansion() {
 	int expansion_factor = 4;
 
