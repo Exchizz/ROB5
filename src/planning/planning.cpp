@@ -409,16 +409,14 @@ void Planning::moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<in
 	fileOut << getWidth() << " " << getHeight() << "\n";
 	fileOut << 255 << "\n";
 
-	for(auto vec : waveMap){
-		for(auto elm : vec){
-			fileOut << elm << " ";
+	for(int y = 0; y < getHeight(); y++){
+		for(int x = 0; x <  getWidth(); x++){
+			fileOut << waveMap[x][y] << " ";
 		}
 		fileOut << std::endl;
 	}
 	std::cout << "partially done" << std::endl;
 
-
-	exit(0);
 	int x = Qstart.first;
 	int y = Qstart.second;
 
@@ -462,8 +460,6 @@ void Planning::moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<in
 			}
 		}
 
-		std::cout << "diffleft: " << diffLeft << " diffright: " << diffRight << std::endl;
-
 		if(abs(diffLeft) == 1 && abs(diffRight) == 1){
 			//Detect where to move - right or left
 			if(diffLeft >= diffRight){ //move right
@@ -473,7 +469,7 @@ void Planning::moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<in
 				++x;
 			}
 		}
-		std::cout << "x: " << x << " y: " << y << std::endl;
+		setPixel(x,y,0);
 
 		//count number of steps
 		++counter;
@@ -481,12 +477,11 @@ void Planning::moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<in
 	}while(!(x == Qend.first && y == Qend.second));
 	//saveImg("draw.pgm");
 
-	std::cout << "count: " << counter << std::endl;
+	std::cout << "Number of movements: " << counter << std::endl;
 }
 bool Planning::inImage(int x, int y){
 	return (x < getWidth() and y < getWidth() and x >= 0 and y >= 0);
 }
-
 
 bool isDone(std::pair<int,int> start, int x, int y){
 	return start.first == x && start.second == y ;
@@ -514,22 +509,23 @@ void Planning::online_wavefront(std::pair<int,int> start, std::pair<int,int> end
 	int last = 2;
 	int x = 0;
 	int y = 0;
-	std::vector<std::pair<int,int>> lastPoint;
 
 	waveMap[end.first][end.second] = 2;
-	//waveMap[start.first][start.second] = 1;
 
 	queue.push(std::make_pair(std::make_pair(end.first, end.second), last));
-
-	//while(x != start.first and y != start.second){
 	while(!queue.empty()){
-		//for(int i = 0; i < 10; i++){
+
+		//x,y-1 decides where the wavefront should stop with respect to the start-point
+		if(isDone(start,x,y-1)){
+			std::cout << "Wavefront has reached target point" << std::endl;
+			break;
+		}
+
 		//Get oldest element
 		auto pair = queue.front();
 		//remove oldest element
 		queue.pop();
 
-		std::cout << "queue size: " << queue.size() << std::endl;
 		x = pair.first.first;
 		y = pair.first.second;
 
@@ -550,27 +546,8 @@ void Planning::online_wavefront(std::pair<int,int> start, std::pair<int,int> end
 			waveMap[x-1][y] = last;
 			queue.push(std::make_pair(std::make_pair(x-1,y), last));
 		}
-
-		if(isDone(start,x,y+1) || isDone(start,x,y-1) || isDone(start,x+1, y) || isDone(start,x-1,y)){
-			std::cout << "I'm out" << std::endl;
-			break;
-		}
-		std::cout << "x: " << x << " y: " << y << " last: " << last << std::endl;
 	}
-	//moveRobot(waveMap,start, end);
-	std::ofstream fileOut;
-	fileOut.open("img/tmp_output.pgm");
-	fileOut << "P2\n";
-	fileOut << "# THE BEER-WARE LICENSE (Revision 42)\n";
-	fileOut << getWidth() << " " << getHeight() << "\n";
-	fileOut << 255 << "\n";
-
-	for(int y = 0; y < getHeight(); y++){
-		for(int x = 0; x <  getWidth(); x++){
-			fileOut << waveMap[x][y] << " ";
-		}
-		fileOut << std::endl;
-	}
+	moveRobot(waveMap,start, end);
 }
 int** Planning::wall_expansion() {
 	int expansion_factor = 4;
