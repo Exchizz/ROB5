@@ -34,8 +34,14 @@ Covering the room is done in the following steps
 \end{enumerate} 
 When the room is fully covered, then the center of the next room is popped from the priority queue of the block, that the robot is currently in. A wavefront is then generated from that center-position, until the wavefront hits the position of the robot, and then the path to that center is found. The wavefront is stopped as soon as it hits the robots position, because the robot will never gonna use the rest of wavefront, and it saves a lot of time and memory by not making a full wavefront map. This makes it also possible to run the wavefront online, because most often the robot does not have to drive so far to get to the next room center. 
 
+%\begin{figure}[H]
+%\centering
+%\includegraphics[scale=0.43]{img/coverage.png}
+%\caption{Coverage of a room in the complete map.}
+%\label{fig::coverage}
+%\end{figure}
+
 \subsection{Results}
-How long does it take?
 
 \subsection{Conclusion}
 What works and what does not? Why?

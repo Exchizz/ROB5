@@ -1,13 +1,45 @@
-\section{Localisation}
+\section{Localization}
 \label{sec::localisation}
 Finally, a method to compute the state (configuration) of the robot is required. The method should be applied to a real system such as the Nexus platform from the course and due to the size of the university it is important that the robot is able to use features to precisely measure its whereabouts. These features could be based on the Hokoyo 2D laser scanner mounted on the robot.\\[0.2cm]
-Again document what algorithm, and test how well it performs. You should at least write what model you choose for the robot and show that the localisation works better than odometry alone.
+Again document what algorithm, and test how well it performs. You should at least write what model you choose for the robot and show that the localisation works better than odometry alone.\\[0.2cm]
+In the real world, no actuator is perfect: they may overshoot or undershoot the desired amount of motion. So when a robot tries to drive in a straight line, it will inevitably curve to one side or the other due to minute differences in wheel radius. Figure \ref{fig::MC_test} shows how the position of a robot can get more and more uncertain, as it moves in straight lines. A robot becomes less sure of its position if it moves blindly without sensing the environment, so it is necessary to sensors to localize the robot in the environment, and not only count on the odometry alone. To solve this, on the robot is a 2D laser range scanner mounted to sense the environment around it.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.43]{img/MCtest.png}
+\caption{Belief after moving several steps for a 2D robot using a typical motion model without sensing.}
+\label{fig::MC_test}
+\end{figure}
+All localization is done online, and it involves the functions:
+\begin{itemize}\itemsep-2pt
+\item \textbf{Monte Carlo localization (MCL)} for determining the localization of the robot as it moves. This algorithm is normally used for robots to localize using a particle filter.
+\item \textbf{Set linear speed} for the robot, to determine how fast it should move
+\item \textbf{Set rotations speed} on each wheel of the robot, so it possible for it to turn 90 degrees to either left or right.  
+\end{itemize}
+\newpage
+\subsection{Solution}
+The MCL is given a map of the environment, and then the algorithm estimates the position and orientation of a robot as it moves and senses the environment. This is used to determine the position of the robot, by following\footnote{\url{http://en.wikipedia.org/wiki/Monte_Carlo_localization}} 
+\begin{enumerate}\itemsep-2pt
+\item The algorithm uses a particle filter to represent the distribution of likely states, with each particle representing a possible state, i.e. a hypothesis of where the robot is. First $N$ numbers of normal distributed hypothesis of the robots position is made of the entire map. At this point, the robot has no information about where it is and can only assumes it is equally likely to be at any point in configuration space.
+\item All the hypothesis is compared to what the 2D laser range scanner sees, and that hypothesis with the highest probability, i.e. how well the actual sensed data correlate with the predicted position, an is assumed being the robots current position.
+\item Whenever the robot moves, it shifts the particles to predict its new state after the movement, so, $N$ normal distributed hypotheses surrounding our current position--hypothesis is made within a smaller area around the predicted current position. Maintaining the entire map as sample size would be computationally wasteful and make the the calculations less precise.
+\item Step 2 to 4 is repeated with the previous belief as input, because ultimately, the particles should converge towards the actual position of the robot. This is repeated until the robot is either turned off or done collecting the cups.
+\end{enumerate}
+Figure \ref{fig::MC} shows the implemented Monte Carlo method on the robot. The yellow dots are the hypothesis that is normal distributed around the robot and the red dot is the robots current position according to the hypothesis and what the 2D laser range scanner sees. All white pixels are free space and the black pixels are obstacles. The robot is seen as a point--robot in this example.\\[0.2cm]
 
-\subsection{Method}
-How is the problem solved? 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.43]{img/MC.png}
+\caption{Monte Carlo hypothesis (yellow dots) and the current position (red dot)}
+\label{fig::MC}
+\end{figure}
 
+\newpage
 \subsection{Results}
 How long does it take?
 
-\subsection{Conclusion}
-What works and what does not? Why?
+\subsection{Alternatives}
+As alternatives to localization could the following methods may also be used:
+\begin{itemize}\itemsep-2pt
+\item Kalman filter
+\end{itemize}
+

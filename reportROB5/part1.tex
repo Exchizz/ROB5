@@ -4,9 +4,10 @@ All rooms in the map must be checked in order to find cups. The robot must be wi
 You are free in regard in choice of algorithms. However, please document what algorithm you choose, how many kilometers the robot moves and how long it takes to calculate the path the robot takes.\\[0.2cm]
 All planning is done offline, and it involves the functions:
 \begin{itemize}\itemsep-2pt
-\item \textbf{Wavefront} from the two unloading--stations
-\item \textbf{Detection} of the rooms and blocks
-\item \textbf{Priority queues} for each block and the
+\item \textbf{Wall expansion}, so the free--space, $Q_{free}$, is 4 pixels away from the walls. In $Q_{free}$ the robot will not collide with the walls or other obstacles.
+\item \textbf{Wavefront} from the two unloading--stations.
+\item \textbf{Detection} of the rooms and blocks.
+\item \textbf{Priority queues} for each block and the a priority queue for the big hall way on the map.
 \end{itemize}
 
 \subsection{Solution}
@@ -74,7 +75,7 @@ When all the rooms are detected, the center of each room is calculated, by takin
 \subsection{Results}
 
 \subsection{Alternatives}
-As alternatives to planning could be the following methods may also be used:
+As alternatives to planning could the following methods also be used:
 \begin{itemize}\itemsep-2pt
 \item Sweepline
 \end{itemize}
