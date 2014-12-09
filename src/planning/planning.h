@@ -117,7 +117,7 @@ private:
 	//std::pair<int,int> drive_up(std::pair<int,int>);
 	//std::pair<int,int> drive_down(std::pair<int,int>);
 	//std::pair<int,int> drive_right(std::pair<int,int>);
-	Robot move_forward(Robot, Room);
+	Robot move_forward(Robot, Room, int &px_move);
 	Robot draw_coverage(Robot);
 	void draw_area(Room);
 	void draw_line(std::pair<int,int>, std::pair<int,int>);
@@ -135,14 +135,14 @@ public:
 	void detect_neighbours();
 
 	//Coverage
-	Robot cover_room(Room);
+	Robot cover_room(Room, int &px_moves);
 
 	// Navigation
 	//void offline_wavefront();
 	//std::pair<int,int> online_wavefront(int,int,int,int);
 	int** wall_expansion();
-	void moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<int,int> Qstart, std::pair<int,int> Qend);
-	void online_wavefront(std::pair<int,int> start, std::pair<int,int> end);
+	int moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<int,int> Qstart, std::pair<int,int> Qend);
+	std::pair<int,int> online_wavefront(std::pair<int,int> start, std::pair<int,int> end, int& px_moves);
 	bool inImage(int x, int y);
 };
 

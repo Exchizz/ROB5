@@ -305,7 +305,7 @@ Robot Planning::draw_coverage(Robot robot){
 	return robot;
 }
 
-Robot Planning::move_forward(Robot robot,Room room){
+Robot Planning::move_forward(Robot robot,Room room, int &px_moves){
 	switch(robot.direction){
 	case MOVE_RIGHT:
 	{
@@ -319,6 +319,7 @@ Robot Planning::move_forward(Robot robot,Room room){
 				break;
 			}
 			setPixel(robot.posX,robot.posY,PATH);
+			px_moves++;
 		}
 		break;
 	}
@@ -329,6 +330,7 @@ Robot Planning::move_forward(Robot robot,Room room){
 			robot = draw_coverage(robot);
 			robot.posY++;
 			setPixel(robot.posX, robot.posY,PATH);
+			px_moves++;
 		}
 		break;
 	}
@@ -339,6 +341,7 @@ Robot Planning::move_forward(Robot robot,Room room){
 			robot = draw_coverage(robot);
 			robot.posY--;
 			setPixel(robot.posX, robot.posY,PATH);
+			px_moves++;
 		}
 
 		break;
@@ -347,7 +350,7 @@ Robot Planning::move_forward(Robot robot,Room room){
 	return robot;
 }
 
-Robot Planning::cover_room(Room room){
+Robot Planning::cover_room(Room room, int &px_moves){
 	Robot robot;
 
 	// Initialize starting position
@@ -363,18 +366,18 @@ Robot Planning::cover_room(Room room){
 
 	while(robot.room_for_robot){
 		robot.direction = MOVE_UP;
-		robot=move_forward(robot,room);
+		robot=move_forward(robot,room, px_moves);
 		robot.direction = MOVE_RIGHT;
-		robot=move_forward(robot,room);
+		robot=move_forward(robot,room, px_moves);
 		if(!robot.room_for_robot){
 			// DEBUG
 			//std::cout << "Breaking out of loop\n";
 			break;
 		}
 		robot.direction = MOVE_DOWN;
-		robot=move_forward(robot,room);
+		robot=move_forward(robot,room, px_moves);
 		robot.direction = MOVE_RIGHT;
-		robot=move_forward(robot,room);
+		robot=move_forward(robot,room, px_moves);
 	}
 
 	//compute remaining lanes.
@@ -387,11 +390,11 @@ Robot Planning::cover_room(Room room){
 	if(robot.direction == MOVE_RIGHT){
 		if(diffX == 0 and diffY != 0){
 			robot.direction = MOVE_DOWN;
-			robot = move_forward(robot,room);
+			robot = move_forward(robot,room, px_moves);
 		}
 		if(diffX == 0 and diffY == 0){
 			robot.direction = MOVE_UP;
-			robot = move_forward(robot,room);
+			robot = move_forward(robot,room, px_moves);
 		}
 	}
 	robot.endX = robot.posX;
@@ -401,20 +404,7 @@ Robot Planning::cover_room(Room room){
 }
 
 //Method to move robot
-void Planning::moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<int,int> Qstart, std::pair<int,int> Qend){
-	std::ofstream fileOut;
-	fileOut.open("img/tmp_output.pgm");
-	fileOut << "P2\n";
-	fileOut << "# THE BEER-WARE LICENSE (Revision 42)\n";
-	fileOut << getWidth() << " " << getHeight() << "\n";
-	fileOut << 255 << "\n";
-
-	for(int y = 0; y < getHeight(); y++){
-		for(int x = 0; x <  getWidth(); x++){
-			fileOut << waveMap[x][y] << " ";
-		}
-		fileOut << std::endl;
-	}
+int Planning::moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<int,int> Qstart, std::pair<int,int> Qend){
 
 	int x = Qstart.first;
 	int y = Qstart.second;
@@ -442,42 +432,63 @@ void Planning::moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<in
 			diffDown  =  waveMap[x][y] - waveMap[x][y+1];
 		}
 
-		//Make sure we don't go into an obstacle
-		if(abs(diffUp) == 1 && abs(diffDown) == 1){
-			//Detect where to move - up or down
-			if(diffUp > diffDown){ // move down
-				--y;
-			}
-			if(diffUp < diffDown) {
-				++y;
+		int moveError = 0;
+		if (diffLeft == 1){
+			x--;
+		} else if(diffRight == 1){
+			x++;
+		} else {
+			moveError++;
+		}
+
+		if (diffUp == 1){
+			y--;
+		} else if(diffDown == 1){
+			y++;
+		} else {
+			if(moveError==1){
+				std::cout << "diffLeft: " << diffLeft << " diffUp: " << diffUp << " diffRight: " << diffRight << " diffDown: " << diffDown << std::endl;
+				std::cout << "current val: " << waveMap[x][y]  << " up: " << waveMap[x][y-1] << std::endl;
+				std::cout << "Stuck" << std::endl;
+				std::cout << "x: " << x << " y: " << y << std::endl;
+
+				//Output wavefront when stuck *DEBUG*
+				std::ofstream fileOut;
+				fileOut.open("img/tmp_output.pgm");
+				fileOut << "P2\n";
+				fileOut << "# THE BEER-WARE LICENSE (Revision 42)\n";
+				fileOut << getWidth() << " " << getHeight() << "\n";
+				fileOut << 255 << "\n";
+
+				for(int y = 0; y < getHeight(); y++){
+					for(int x = 0; x <  getWidth(); x++){
+						fileOut << waveMap[x][y] << " ";
+					}
+					fileOut << std::endl;
+				}
+
+				exit(0);
 			}
 		}
 
-		if(abs(diffLeft) == 1 && abs(diffRight) == 1){
-			//Detect where to move - right or left
-			if(diffLeft > diffRight){ //move right
-				--x;
-			}
-			if(diffLeft < diffRight){
-				++x;
-			}
-		}
 		//Draw line the robot moves
-		setPixel(x,y,0);
+		setPixel(x,y,100);
 
 		//count number of steps
 		++counter;
 
 	}while(!(x == Qend.first && y == Qend.second));
 	//saveImg("draw.pgm");
-
-	std::cout << "Number of movements: " << counter << std::endl;
+	return counter;
 }
 bool Planning::inImage(int x, int y){
 	return (x < getWidth() and y < getWidth() and x >= 0 and y >= 0);
 }
 
-void Planning::online_wavefront(std::pair<int,int> start, std::pair<int,int> end){
+std::pair<int,int> Planning::online_wavefront(std::pair<int,int> start, std::pair<int,int> end, int &moved_px){
+
+	std::cout << "Wavefront from (x,y): (" << end.first << "," << end.second << ")" << std::endl;
+	std::cout << "Wavefront end (x,y): (" << start.first << "," << start.second << ")" << std::endl;
 	if(!inImage(start.first,start.second)){
 		std::cout << "Wavefront: Qstart out of range..." << std::endl;
 		exit(0);
@@ -494,7 +505,6 @@ void Planning::online_wavefront(std::pair<int,int> start, std::pair<int,int> end
 		std::vector<int> col(getHeight());
 		waveMap.push_back(col);
 	}
-
 	std::queue<std::pair<std::pair<int,int>, int>> queue;
 	int last = 2;
 	int x = 0;
@@ -503,8 +513,13 @@ void Planning::online_wavefront(std::pair<int,int> start, std::pair<int,int> end
 	waveMap[end.first][end.second] = 2;
 
 	queue.push(std::make_pair(std::make_pair(end.first, end.second), last));
-	while(!(start.first == x && start.second == y)){
-
+	//while(!(start.first == x && start.second == y)){
+	while(!queue.empty()){
+		if(start.first == x &&  start.second == y){
+			std::cout << "x: " << x << " y: " << y << std::endl;
+			std::cout << "Wavefront: Goal reached" << std::endl;
+			break;
+		}
 		//Get oldest element
 		auto pair = queue.front();
 		//remove oldest element
@@ -531,7 +546,9 @@ void Planning::online_wavefront(std::pair<int,int> start, std::pair<int,int> end
 			queue.push(std::make_pair(std::make_pair(x-1,y), last));
 		}
 	}
-	moveRobot(waveMap,start, end);
+	//update px moves
+	moved_px+=moveRobot(waveMap,start, end);
+	return end;
 }
 int** Planning::wall_expansion() {
 	int expansion_factor = 4;
