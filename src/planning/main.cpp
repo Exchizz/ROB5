@@ -61,6 +61,7 @@ int main() {
 	//img.online_wavefront(2150,1400,780,571);
 
 
+
 	/*
 	// ONLINE
 	// 1. Move from start position to first hallway
