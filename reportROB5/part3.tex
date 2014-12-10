@@ -1,4 +1,4 @@
-\section{Localization}
+\subsection{Localization}
 \label{sec::localisation}
 Finally, a method to compute the state (configuration) of the robot is required. The method should be applied to a real system such as the Nexus platform from the course and due to the size of the university it is important that the robot is able to use features to precisely measure its whereabouts. These features could be based on the Hokoyo 2D laser scanner mounted on the robot.\\[0.2cm]
 Again document what algorithm, and test how well it performs. You should at least write what model you choose for the robot and show that the localisation works better than odometry alone.\\[0.2cm]
@@ -16,7 +16,7 @@ All localization is done online, and it involves the functions:
 \item \textbf{Set rotations speed} on each wheel of the robot, so it possible for it to turn 90 degrees to either left or right.  
 \end{itemize}
 \newpage
-\subsection{Solution}
+\subsubsection{Solution}
 The MCL is given a map of the environment, and then the algorithm estimates the position and orientation of a robot as it moves and senses the environment. This is used to determine the position of the robot, by following\footnote{\url{http://en.wikipedia.org/wiki/Monte_Carlo_localization}} 
 \begin{enumerate}\itemsep-2pt
 \item The algorithm uses a particle filter to represent the distribution of likely states, with each particle representing a possible state, i.e. a hypothesis of where the robot is. First $N$ numbers of normal distributed hypothesis of the robots position is made of the entire map. At this point, the robot has no information about where it is and can only assumes it is equally likely to be at any point in configuration space.
@@ -24,7 +24,7 @@ The MCL is given a map of the environment, and then the algorithm estimates the 
 \item Whenever the robot moves, it shifts the particles to predict its new state after the movement, so, $N$ normal distributed hypotheses surrounding our current position--hypothesis is made within a smaller area around the predicted current position. Maintaining the entire map as sample size would be computationally wasteful and make the the calculations less precise.
 \item Step 2 to 4 is repeated with the previous belief as input, because ultimately, the particles should converge towards the actual position of the robot. This is repeated until the robot is either turned off or done collecting the cups.
 \end{enumerate}
-Figure \ref{fig::MC} shows the implemented Monte Carlo method on the robot. The yellow dots are the hypothesis that is normal distributed around the robot and the red dot is the robots current position according to the hypothesis and what the 2D laser range scanner sees. All white pixels are free space and the black pixels are obstacles. The robot is seen as a point--robot in this example.\\[0.2cm]
+Figure \ref{fig::MC} shows the implemented Monte Carlo method on the robot. The yellow dots are the hypothesis that is normal distributed around the robot and the red dot is the robots current position according to the hypothesis and what the 2D laser range scanner sees. All white pixels are free space and the black pixels are obstacles. The robot is seen as a point robot in this example.\\[0.2cm]
 
 \begin{figure}[H]
 \centering
@@ -34,7 +34,7 @@ Figure \ref{fig::MC} shows the implemented Monte Carlo method on the robot. The 
 \end{figure}
 
 \newpage
-\subsection{Results}
+\subsubsection{Results of the localization}
 To test how accurately the implemented Monte Carlo method detects, where on the map the robot is located, a experimental setup for testing the robots real and virtual position is shown on figure \ref{fig::experimental}. On the figure, a construction similar to the map on figure \ref{fig::MC_test} is made and 10x10 cm is drawn on the floor. This indicates each pixel on the map and makes it possible to compare the current real position with the virtual position. 
 
 \begin{figure}[H]
@@ -80,9 +80,12 @@ Virtual $\theta$ & 45-50 & degrees &       &    &  & Virtual $\theta$ & 5-10    
 \label{tab::results}
 \end{table}
 
-\subsection{Alternatives}
+Testing of the localization and direction was only done on a small map, with few and unique angles, which made it easier for the robot to detect its position. If the map has been larger and with many similar angles, the precision of the robots positions would be expected to be worse, but it would still be better than depending on odometry alone.
+
+\subsubsection{Alternatives}
 As alternatives to localization could the following methods may also be used:
 \begin{itemize}\itemsep-2pt
-\item Kalman filter
+\item Kalman filter for smoothing noisy data and providing estimates of parameters of interest, e.g. the position of the .
+
 \end{itemize}
 

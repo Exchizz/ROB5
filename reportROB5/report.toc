@@ -1,14 +1,14 @@
 \select@language {english}
 \contentsline {section}{\numberline {1}The Cup Collector}{2}{section.1}
 \contentsline {subsection}{\numberline {1.1}Limitations and information}{2}{subsection.1.1}
-\contentsline {section}{\numberline {2}Planning}{3}{section.2}
-\contentsline {subsection}{\numberline {2.1}Solution}{3}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Alternatives}{5}{subsection.2.2}
-\contentsline {section}{\numberline {3}Coverage}{6}{section.3}
-\contentsline {subsection}{\numberline {3.1}Method}{6}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Results}{7}{subsection.3.2}
-\contentsline {section}{\numberline {4}Localization}{8}{section.4}
-\contentsline {subsection}{\numberline {4.1}Solution}{9}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Results}{10}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Alternatives}{11}{subsection.4.3}
-\contentsline {section}{\numberline {5}Future work}{12}{section.5}
+\contentsline {subsection}{\numberline {1.2}Planning}{3}{subsection.1.2}
+\contentsline {subsubsection}{\numberline {1.2.1}Solution}{3}{subsubsection.1.2.1}
+\contentsline {subsubsection}{\numberline {1.2.2}Alternatives}{5}{subsubsection.1.2.2}
+\contentsline {subsection}{\numberline {1.3}Coverage}{6}{subsection.1.3}
+\contentsline {subsubsection}{\numberline {1.3.1}Solution}{6}{subsubsection.1.3.1}
+\contentsline {subsubsection}{\numberline {1.3.2}Results of the planning and coverage}{7}{subsubsection.1.3.2}
+\contentsline {subsection}{\numberline {1.4}Localization}{9}{subsection.1.4}
+\contentsline {subsubsection}{\numberline {1.4.1}Solution}{10}{subsubsection.1.4.1}
+\contentsline {subsubsection}{\numberline {1.4.2}Results of the localization}{11}{subsubsection.1.4.2}
+\contentsline {subsubsection}{\numberline {1.4.3}Alternatives}{12}{subsubsection.1.4.3}
+\contentsline {section}{\numberline {2}Future work}{13}{section.2}

@@ -117,18 +117,20 @@ Dato: \today
 
 \newpage
 \section{The Cup Collector}
-The cantina at SDU has in a period of time collected empirical data that suggests that researchers and students at SDU are lazy and forgetful when it comes to bringing back used cups to the cantina. To avoid situations where there are no coffee cups and thereby loosing coffee sales (or fresh students), the cantina has decided to assign the task of collecting cups form offices and hallways of SDU, to one person for 2 hours per day.\\[0.2cm]
-A master student with some knowledge on vision and point clouds has using a Kinect and a robot arm implemented an algorithm to detect and collect cups within a distance of 2 meters. Also he has implemented the stable grasping of cups that are within 1 meter of the robot. Unfortunately, this master student never attended ROB05 and therefore has no skill in navigating robots.\\[0.2cm]
+The cantina at SDU has in a period of time collected empirical data that suggests that researchers and students at SDU are lazy and forgetful when it comes to bringing back used cups to the cantina. To avoid situations where there are no coffee cups and thereby loosing coffee sales (or fresh students), the cantina has decided to assign the task of collecting cups form offices and hallways of SDU, to one person for two hours per day.\\[0.2cm]
+A master student with some knowledge on vision and point clouds has using a Kinect and a robot arm implemented an algorithm to detect and collect cups within a distance of two meters. Also he has implemented the stable grasping of cups that are within one meter of the robot. Unfortunately, this master student never attended ROB05 and therefore has no skill in navigating robots.\\[0.2cm]
 The problem is therefore presented to this year’s class in ROB05.\\[0.2cm]
-The task contains 3 parts. All 3 must be targeted in the project.
+The task contains tree parts. All tree must be targeted in the project.
 
 \subsection{Limitations and information}
 \begin{itemize}
 \item The map ”complete\_map\_project.pgm” use a scale 10pixel:1m and figure \ref{fig::original} shows the complete map. 
 \item The map use the scale 10px to 1 meter
 \item The robot can only carry 20 cups at the time
-\item The robot is NOT a point robot. It has a circular shape with a radius of 0.4m, which in this map then is equivalent to a radius of 4px. 
-\item The robot can drive up to 5km per hour
+\item The robot is NOT a point robot. It has a circular shape with a radius of 0,4m, which on the complete map is equivalent to 
+$$r=4\:px$$
+\item The robot can drive up to 5 km/hour, which on the complete map is equivalent to
+$$v=50.000\:px/hour$$
 \item The elevators are denoted with pixelvalues 128,129,130,131 and 132.
 \end{itemize}
 
@@ -151,54 +153,19 @@ The task contains 3 parts. All 3 must be targeted in the project.
 \newpage
 
 \section{Future work}
-Use a greedy algorithm. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+To improve the coverage time, the planning part should be seen as a the Travelling Salesman Problem (TSP). Currently, it is the shortest distance from the center of the block to each center of room in the block that determines the order the rooms are covered. The TSP asks the following question:
+\begin{center}
+\textit{Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?\footnote{\url{http://en.wikipedia.org/wiki/Travelling_salesman_problem}}}
+\end{center} 
+To do this, the following requirements must be met
+\begin{itemize}\itemsep-2pt
+\item The model is a complete map, i.e. all rooms and blocks are connected by an edge. Long edges will only complete the graph, not affect the optimal tour.
+\item Each weight of the edge is the distance between the two vertexes 
+\item All edges are undirected
+\end{itemize}   
+The most direct implementation would be using the brute force method, at search for the cheapest route around each vertex. The running time for this approach would be $O(n!)$, but there are 100-130 rooms, so it would take way to long time to use that approach, so if the problem should be solved, the Held--Karp algorithm would be the choice of implementation, because it has a time complexity of
+$$O(n^2 2^n)$$
+or if another algorithm with a better time complexity. \\[0.2cm]
+Another improvement could be to take into account for suddenly changes, while the robot cleans the rooms and collects the cups. Better hardware and improvement of the software is needed to make this possible, but if it is done, then the robot would be able to clean and collect cups around the clock.  
 
 \end{document}

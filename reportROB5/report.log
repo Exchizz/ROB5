@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.8)  10 DEC 2014 12:14
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.8)  11 DEC 2014 00:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -824,53 +824,76 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 <img/original.png, id=97, 1351.0475pt x 388.45125pt>
 File: img/original.png Graphic file (type png)
  <use img/original.png>
-Package pdftex.def Info: img/original.png used on input line 137.
+Package pdftex.def Info: img/original.png used on input line 139.
 (pdftex.def)             Requested size: 445.84706pt x 128.1893pt.
 
 [2 <./img/original.png>] (./part1.tex
-<img/wavefront_path.png, id=106, 1351.0475pt x 388.45125pt>
+<img/expand.png, id=108, 481.8pt x 226.8475pt>
+File: img/expand.png Graphic file (type png)
+ <use img/expand.png>
+Package pdftex.def Info: img/expand.png used on input line 16.
+(pdftex.def)             Requested size: 144.5411pt x 68.05476pt.
+
+<img/map_expand.png, id=111, 1348.03625pt x 390.45876pt>
+File: img/map_expand.png Graphic file (type png)
+
+<use img/map_expand.png>
+Package pdftex.def Info: img/map_expand.png used on input line 23.
+(pdftex.def)             Requested size: 404.414pt x 117.13852pt.
+ [3 <./img/expand.png> <./img/map_expand.png>]
+<img/wavefront_path.png, id=120, 1351.0475pt x 388.45125pt>
 File: img/wavefront_path.png Graphic file (type png)
 
 <use img/wavefront_path.png>
-Package pdftex.def Info: img/wavefront_path.png used on input line 24.
+Package pdftex.def Info: img/wavefront_path.png used on input line 37.
 (pdftex.def)             Requested size: 445.84706pt x 128.1893pt.
- [3] [4 <./img/wavefront_path.png>]
-<img/graph.png, id=129, 1351.0475pt x 388.45125pt>
+ [4 <./img/wavefront_path.png>]
+<img/graph.png, id=137, 1351.0475pt x 388.45125pt>
 File: img/graph.png Graphic file (type png)
  <use img/graph.png>
-Package pdftex.def Info: img/graph.png used on input line 70.
+Package pdftex.def Info: img/graph.png used on input line 83.
 (pdftex.def)             Requested size: 445.84706pt x 128.1893pt.
+
+<img/sweepline.png, id=138, 627.34375pt x 130.4875pt>
+File: img/sweepline.png Graphic file (type png)
+ <use img/sweepline.png>
+Package pdftex.def Info: img/sweepline.png used on input line 95.
+(pdftex.def)             Requested size: 313.6711pt x 65.24358pt.
 )
-[5 <./img/graph.png>] (./part2.tex [6]
-<img/room.png, id=158, 650.43pt x 380.42125pt>
+[5 <./img/graph.png> <./img/sweepline.png>] (./part2.tex [6]
+<img/room.png, id=168, 650.43pt x 380.42125pt>
 File: img/room.png Graphic file (type png)
  <use img/room.png>
-Package pdftex.def Info: img/room.png used on input line 42.
+Package pdftex.def Info: img/room.png used on input line 40.
 (pdftex.def)             Requested size: 214.64256pt x 125.53938pt.
 
-<img/coverage.png, id=161, 1350.04375pt x 389.455pt>
+<img/coverage.png, id=171, 1350.04375pt x 389.455pt>
 File: img/coverage.png Graphic file (type png)
  <use img/coverage.png>
-Package pdftex.def Info: img/coverage.png used on input line 51.
+Package pdftex.def Info: img/coverage.png used on input line 49.
 (pdftex.def)             Requested size: 445.51582pt x 128.52054pt.
-)
-[7 <./img/room.png> <./img/coverage.png>] (./part3.tex
-<img/MCtest.png, id=169, 803.0pt x 501.875pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 58--60
+
+ []
+
+[7 <./img/room.png> <./img/coverage.png>]) [8] (./part3.tex
+<img/MCtest.png, id=183, 803.0pt x 501.875pt>
 File: img/MCtest.png Graphic file (type png)
  <use img/MCtest.png>
 Package pdftex.def Info: img/MCtest.png used on input line 8.
 (pdftex.def)             Requested size: 345.28326pt x 215.80203pt.
- [8 <./img/MCtest.png>]
+ [9 <./img/MCtest.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 27--28
 
  []
 
-<img/MC.png, id=179, 447.6725pt x 433.62pt>
+<img/MC.png, id=193, 447.6725pt x 433.62pt>
 File: img/MC.png Graphic file (type png)
  <use img/MC.png>
 Package pdftex.def Info: img/MC.png used on input line 31.
 (pdftex.def)             Requested size: 192.49542pt x 186.45296pt.
- [9 <./img/MC.png>] <img/test.png, id=195, 790.955pt x 558.085pt>
+ [10 <./img/MC.png>] <img/test.png, id=209, 790.955pt x 558.085pt>
 File: img/test.png Graphic file (type png)
  <use img/test.png>
 Package pdftex.def Info: img/test.png used on input line 42.
@@ -880,27 +903,30 @@ Overfull \hbox (38.48004pt too wide) in paragraph at lines 56--79
 [][] 
  []
 
-[10 <./img/test.png>]) [11]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 204.
- [12]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 204.
+[11 <./img/test.png>]) [12]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 171.
+ [13]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 171.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 204.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 204.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 171.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 171.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 6F9C8C57E65F70DF35B0592DBC3DB268;714.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 204.
+(rerunfilecheck)             Checksum: 810B47725C00BA517C1E5A52FB51DCA6;877.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 171.
  ) 
 Here is how much of TeX's memory you used:
- 10829 strings out of 493304
- 154503 string characters out of 6139872
+ 10854 strings out of 493304
+ 155031 string characters out of 6139872
  287186 words of memory out of 5000000
- 14001 multiletter control sequences out of 15000+600000
- 14187 words of font info for 54 fonts, out of 8000000 for 9000
+ 14017 multiletter control sequences out of 15000+600000
+ 14533 words of font info for 55 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  42i,12n,58p,920b,1219s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exi
+pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exi
 st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exist
+, replaced by a fixed one
 
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/
@@ -912,12 +938,13 @@ type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
-12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on report.pdf (13 pages, 1309273 bytes).
+10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
+Output written on report.pdf (14 pages, 1354537 bytes).
 PDF statistics:
- 274 PDF objects out of 1000 (max. 8388607)
- 232 compressed objects within 3 object streams
- 61 named destinations out of 1000 (max. 500000)
- 150 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 295 PDF objects out of 1000 (max. 8388607)
+ 248 compressed objects within 3 object streams
+ 66 named destinations out of 1000 (max. 500000)
+ 165 words of extra memory for PDF output out of 10000 (max. 10000000)
 

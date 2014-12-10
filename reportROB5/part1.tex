@@ -1,20 +1,33 @@
-\section{Planning}
+\subsection{Planning}
 \label{sec::planning}
-All rooms in the map must be checked in order to find cups. The robot must be within 2 meters of a cup in order to actually detect the cup and within 1 meter in order to collect it. Cups are marked in the map using one pixel with grayscale value 150. Cups can be unloaded at the two offloading stations in the cafeteria. The offloading stations are represented with pixel values 100. The robot must start and end at an offloading station.\\[0.2cm]
-You are free in regard in choice of algorithms. However, please document what algorithm you choose, how many kilometers the robot moves and how long it takes to calculate the path the robot takes.\\[0.2cm]
+All rooms in the map must be checked in order to find cups. The robot must be within two meters of a cup in order to actually detect the cup and within one meter in order to collect it. Cups are marked in the map using one pixel with grayscale value 150. Cups can be unloaded at one of the two offloading stations in the cafeteria. The offloading stations are represented with pixel values 100. The robot must start and end at an offloading station.\\[0.2cm]
 All planning is done offline, and it involves the functions:
 \begin{itemize}\itemsep-2pt
-\item \textbf{Wall expansion}, so the free--space, $Q_{free}$, is 4 pixels away from the walls. In $Q_{free}$ the robot will not collide with the walls or other obstacles.
+\item \textbf{Wall expansion}, so the free--space, $Q_{free}$, is four pixels away from the walls. In $Q_{free}$ the robot will not collide with the walls or other obstacles.
 \item \textbf{Offline wavefront} from the two unloading--stations.
 \item \textbf{Detection} of the rooms and blocks.
 \item \textbf{Priority queues} for each block and the a priority queue for the big hall way on the map.
 \end{itemize}
 
-\subsection{Solution}
-The first thing that happens in the planning part, is that a wavefront is generated from the two positions where the unloading--stations are located in the cafeteria. Cups are also seen as obstacles, when the wavefront is generated. The pixel values for the two unloadings stations are 
+\subsubsection{Solution}
+The first thing in the planning part is, that all obstacle (not cups) pixels are expanded with four pixel, as illustrated on figure \ref{fig::expand}, so the complete map would look like figure \ref{fig::map_expand}.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{img/expand.png}
+\caption{Expansion of one pixel}
+\label{fig::expand}
+\end{figure}
+The map on figure \ref{fig::map_expand} is only used with the offline wavefront, to ensure that the robot not collides with the walls or other obstacles while unloading the cups. The online wavefront in section \ref{sec::coverage} also uses this map, for the same reasons, when it moves to the next room.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{img/map_expand.png}
+\caption{Expansion of one pixel}
+\label{fig::map_expand}
+\end{figure}
+The offline wavefront is generated from the two positions, where the unloading--stations are located in the cafeteria. Cups are also seen as obstacles, when the wavefront is generated. The pixel values for the two unloadings stations are 
 \begin{eqnarray*}
-Unloading-station\: 1&:& \hspace{1cm}(3100,1400) \\
-Unloading-station\: 2&:& \hspace{1cm}(2150,1400) \\
+Unloading-station\: 1&:& \hspace{1cm}(3100,\: 1400) \\
+Unloading-station\: 2&:& \hspace{1cm}(2150,\: 1400) \\
 \end{eqnarray*}
 and figure \ref{fig::path} shows how the wavefront expands from the two unloading--stations in the complete map. The unloading stations are the two darkest areas on the figure.\\[.2cm]
 The wavefront--values is stored in a 2D--array, so when it is time for emptying the container, it is possible run the wavefront--function quickly in the online part. The generated array takes up some memory, but it saves time keeping the wavefront--map to the two unloading stations. When the cup container is filled, a path to the nearest unloading--station is found by using the offline wavefront function. For each pixel the robot moves through the wavefront path to a station, each coordinate is pushed into a vector--pair, so it can take the same path back to where it were interrupted by popping the values from the vector--pair. Just like Hansel and Gretel with the breadcrumbs, except that the robot will not get lost in the woods, find a gingerbread house, be fattened and so on.  
@@ -72,8 +85,16 @@ When all the rooms are detected, the center of each room is calculated, by takin
 \label{fig::graph}
 \end{figure}
 
-\subsection{Alternatives}
+\subsubsection{Alternatives}
 As alternatives to planning could the following methods also be used:
 \begin{itemize}\itemsep-2pt
-\item Sweepline
+\item Determine the appropriate edges for the vertical extensions, i.e., the two edges that the sweep line lies between. To make it feasible with this map, the sweep line should be sweeping the map with a angle different from 0 or 90 degrees.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{img/sweepline.png}
+\caption{The kinds of events}
+\label{fig::sweepline}
+\end{figure}
+
 \end{itemize}
