@@ -35,7 +35,50 @@ Figure \ref{fig::MC} shows the implemented Monte Carlo method on the robot. The 
 
 \newpage
 \subsection{Results}
-How long does it take?
+To test how accurately the implemented Monte Carlo method detects, where on the map the robot is located, a experimental setup for testing the robots real and virtual position is shown on figure \ref{fig::experimental}. On the figure, a construction similar to the map on figure \ref{fig::MC_test} is made and 10x10 cm is drawn on the floor. This indicates each pixel on the map and makes it possible to compare the current real position with the virtual position. 
+
+\begin{figure}[H]
+\centering 
+\includegraphics[scale=0.3]{img/test.png}
+\caption{The experimental setup for testing the robots real and virtual position}
+\label{fig::experimental}
+\end{figure}
+
+The steps for testing is done by the following steps
+\begin{enumerate}\itemsep-2pt
+\item The robot is moved to a position
+\item The real and virtual position is noted
+\item The real and virtual degree is noted
+\end{enumerate}
+The results is shown in table \ref{tab::results} and by look at the collected data, it can be seen that the virtual position correspond well to the real position.
+
+\begin{table}[H]
+\begin{tabular}{|lrlrll|lrlrl|}
+\rowcolor[HTML]{9B9B9B} 
+Mesurement 1            & pos x &         & pos y &    &  & Mesurement 4            & pos x   &         & posy  &    \\
+Real position           & 39    & px      & 53    & px &  & Real position           & 47      & px      & 53    & px \\
+Virtual position        & 39    & px      & 53    & px &  & Virtual position        & 39      & px      & 46    & px \\
+Real $\theta$    & 0     & degrees &       &    &  & Real $\theta$    & 90      & degrees &       &    \\
+Virtual $\theta$ & 0-12  & degrees &       &    &  & Virtual $\theta$ & 9-15    & degrees &       &    \\
+                        &       &         &       &    &  &                         &         &         &       &    \\
+\rowcolor[HTML]{9B9B9B} 
+Mesurement 2            & pos x &         & pos y &    &  & Mesurement 5            & pos x   &         & pos y &    \\
+Real position           & 42    & px      & 56    & px &  & Real position           & 48      & px      & 55    & px \\
+Virtual position        & 43    & px      & 56    & px &  & Virtual position        & 51      & px      & 55    & px \\
+Real $\theta$    & 0-12  & degrees &       &    &  & Real $\theta$   & 335     & degrees &       &    \\
+Virtual $\theta$& 1-5   & degrees &       &    &  & Virtual $\theta$ & 328-331 & degrees &       &    \\
+                        &       &         &       &    &  &                         &         &         &       &    \\
+\rowcolor[HTML]{9B9B9B} 
+Mesurement 3            & pos x &         & pos y &    &  & Mesurement 6            & pos x   &         & pos y &    \\
+Real position           & 40    & px      & 56    & px &  & Real position           & 44      & px      & 51    & px \\
+Virtual position        & 39    & px      & 56    & px &  & Virtual position        & 45      & px      & 51    & px \\
+Real $\theta$    & 45    & degrees &       &    &  & Real $\theta$    & 0       & degrees &       &    \\
+Virtual $\theta$ & 45-50 & degrees &       &    &  & Virtual $\theta$ & 5-10    & degrees &       &   \\ 
+ &  &  &       &    &  &  &    &  &       &   \\ \hline
+\end{tabular}
+\caption{Results}
+\label{tab::results}
+\end{table}
 
 \subsection{Alternatives}
 As alternatives to localization could the following methods may also be used:

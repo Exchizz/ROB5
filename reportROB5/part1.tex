@@ -5,7 +5,7 @@ You are free in regard in choice of algorithms. However, please document what al
 All planning is done offline, and it involves the functions:
 \begin{itemize}\itemsep-2pt
 \item \textbf{Wall expansion}, so the free--space, $Q_{free}$, is 4 pixels away from the walls. In $Q_{free}$ the robot will not collide with the walls or other obstacles.
-\item \textbf{Wavefront} from the two unloading--stations.
+\item \textbf{Offline wavefront} from the two unloading--stations.
 \item \textbf{Detection} of the rooms and blocks.
 \item \textbf{Priority queues} for each block and the a priority queue for the big hall way on the map.
 \end{itemize}
@@ -17,7 +17,7 @@ Unloading-station\: 1&:& \hspace{1cm}(3100,1400) \\
 Unloading-station\: 2&:& \hspace{1cm}(2150,1400) \\
 \end{eqnarray*}
 and figure \ref{fig::path} shows how the wavefront expands from the two unloading--stations in the complete map. The unloading stations are the two darkest areas on the figure.\\[.2cm]
-The wavefront--values is stored in a 2D--array, so when it is time for emptying the container, it is possible run the wavefront--function quickly in the online part. The generated array takes up some memory, but it saves time keeping the wavefront--map to the two unloading stations. When the cup container is filled, a path to the nearest unloading--station is found by using the offline wavefront function, \lstinline|makeWaveFrontoffline(currentX,currentY)|. For each pixel the robot moves through the wavefront path to a station, each coordinate is pushed into a vector--pair, so it can take the same path back to where it were interrupted by popping the values from the vector--pair. Just like Hansel and Gretel with the breadcrumbs, except that the robot will not get lost in the woods, find a gingerbread house, be fattened and so on.  
+The wavefront--values is stored in a 2D--array, so when it is time for emptying the container, it is possible run the wavefront--function quickly in the online part. The generated array takes up some memory, but it saves time keeping the wavefront--map to the two unloading stations. When the cup container is filled, a path to the nearest unloading--station is found by using the offline wavefront function. For each pixel the robot moves through the wavefront path to a station, each coordinate is pushed into a vector--pair, so it can take the same path back to where it were interrupted by popping the values from the vector--pair. Just like Hansel and Gretel with the breadcrumbs, except that the robot will not get lost in the woods, find a gingerbread house, be fattened and so on.  
 
 \begin{figure}[H]
 \centering
@@ -71,8 +71,6 @@ When all the rooms are detected, the center of each room is calculated, by takin
 \caption{An overview of how the different rooms are detected and connected to each hallway on the complete map of SDU.}
 \label{fig::graph}
 \end{figure}
-
-\subsection{Results}
 
 \subsection{Alternatives}
 As alternatives to planning could the following methods also be used:

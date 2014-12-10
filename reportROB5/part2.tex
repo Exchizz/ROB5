@@ -5,7 +5,10 @@ Again, you are free to choose algorithm and you should document the choice, the 
 
 All coverage is done online, and it involves the functions
 \begin{itemize}\itemsep-2pt
-\item \textbf{Wavefront} from the robots current position to the center of an other room
+\item \textbf{Online wavefront} from the robots current position to the center of an other room.
+\item \textbf{Coverage of a room}. Each room is covered similar.
+\item \textbf{Collecting the cups} within a radius of 4px.
+\item \textbf{Offline wavefront}, as described in section \ref{sec::planning}, when the robot has collected 20 cups and needs unload them at one of the unloading--stations, by using the 2D--array from the offline planning. 
 \end{itemize}
 
 \subsection{Method}
@@ -19,7 +22,7 @@ The coverage plan for the complete map is
 \item Block E
 \end{enumerate}
 
-Figure \ref{fig::room} illustrates covering a room. The dark gray pixels are where the robot is moving and the light gray area is what the robot has covered. The coverage is done in the following steps
+Figure \ref{fig::room} illustrates covering a room. The dark gray pixels are where the robot is moving and the light gray area is what the robot has covered for cups. The coverage is done in the following steps
 \begin{enumerate}\itemsep-2pt
 \item Starts at upper left corner of the rooms freespace, $Q_{room}$, and keep moving down to the lower left corner of the $Q_{room}$.
 \item Turn left 90 degrees and move 8 pixels
@@ -41,16 +44,17 @@ When the room is fully covered, then the center of the next room is popped from 
 \label{fig::room}
 \end{figure}
 
-Figure \ref{fig::coverage} shows the complete map fully covered.
+Figure \ref{fig::coverage} shows the complete map covered with this projects program.
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.33]{img/coverage.png}
-\caption{Coverage of a room in the complete map.}
+\caption{Coverage of the complete map.}
 \label{fig::coverage}
 \end{figure}
 
 \subsection{Results}
-
-\subsection{Conclusion}
-What works and what does not? Why?
+While covering the complete map, a counter keeps track of how many pixels the robot moves, during the program. 
+$$513.008\:px=51,3008\:km$$
+and the time it will take the robot to clean the school is
+$$t=\frac{51,3008\:km}{5\:km/hour}=10,26\:hours$$

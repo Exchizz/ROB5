@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.8)  9 DEC 2014 19:54
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.8)  10 DEC 2014 12:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -784,7 +784,7 @@ LaTeX Info: Redefining \nameref on input line 77.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
- <img/SDU.png, id=64, 925.4575pt x 285.065pt>
+ <img/SDU.png, id=56, 925.4575pt x 285.065pt>
 File: img/SDU.png Graphic file (type png)
 
 <use img/SDU.png>
@@ -821,41 +821,41 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 127.
 
-<img/original.png, id=109, 1351.0475pt x 388.45125pt>
+<img/original.png, id=97, 1351.0475pt x 388.45125pt>
 File: img/original.png Graphic file (type png)
  <use img/original.png>
 Package pdftex.def Info: img/original.png used on input line 137.
 (pdftex.def)             Requested size: 445.84706pt x 128.1893pt.
 
 [2 <./img/original.png>] (./part1.tex
-<img/wavefront_path.png, id=118, 1351.0475pt x 388.45125pt>
+<img/wavefront_path.png, id=106, 1351.0475pt x 388.45125pt>
 File: img/wavefront_path.png Graphic file (type png)
 
 <use img/wavefront_path.png>
 Package pdftex.def Info: img/wavefront_path.png used on input line 24.
 (pdftex.def)             Requested size: 445.84706pt x 128.1893pt.
  [3] [4 <./img/wavefront_path.png>]
-<img/graph.png, id=141, 1351.0475pt x 388.45125pt>
+<img/graph.png, id=129, 1351.0475pt x 388.45125pt>
 File: img/graph.png Graphic file (type png)
  <use img/graph.png>
 Package pdftex.def Info: img/graph.png used on input line 70.
 (pdftex.def)             Requested size: 445.84706pt x 128.1893pt.
 )
-[5 <./img/graph.png>] (./part2.tex
-<img/room.png, id=150, 650.43pt x 380.42125pt>
+[5 <./img/graph.png>] (./part2.tex [6]
+<img/room.png, id=158, 650.43pt x 380.42125pt>
 File: img/room.png Graphic file (type png)
  <use img/room.png>
-Package pdftex.def Info: img/room.png used on input line 39.
+Package pdftex.def Info: img/room.png used on input line 42.
 (pdftex.def)             Requested size: 214.64256pt x 125.53938pt.
- [6]
-<img/coverage.png, id=172, 1350.04375pt x 389.455pt>
+
+<img/coverage.png, id=161, 1350.04375pt x 389.455pt>
 File: img/coverage.png Graphic file (type png)
  <use img/coverage.png>
-Package pdftex.def Info: img/coverage.png used on input line 48.
+Package pdftex.def Info: img/coverage.png used on input line 51.
 (pdftex.def)             Requested size: 445.51582pt x 128.52054pt.
 )
 [7 <./img/room.png> <./img/coverage.png>] (./part3.tex
-<img/MCtest.png, id=180, 803.0pt x 501.875pt>
+<img/MCtest.png, id=169, 803.0pt x 501.875pt>
 File: img/MCtest.png Graphic file (type png)
  <use img/MCtest.png>
 Package pdftex.def Info: img/MCtest.png used on input line 8.
@@ -865,30 +865,40 @@ Underfull \hbox (badness 10000) in paragraph at lines 27--28
 
  []
 
-<img/MC.png, id=190, 447.6725pt x 433.62pt>
+<img/MC.png, id=179, 447.6725pt x 433.62pt>
 File: img/MC.png Graphic file (type png)
  <use img/MC.png>
 Package pdftex.def Info: img/MC.png used on input line 31.
 (pdftex.def)             Requested size: 192.49542pt x 186.45296pt.
- [9 <./img/MC.png>]) [10]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 205.
- [11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 205.
+ [9 <./img/MC.png>] <img/test.png, id=195, 790.955pt x 558.085pt>
+File: img/test.png Graphic file (type png)
+ <use img/test.png>
+Package pdftex.def Info: img/test.png used on input line 42.
+(pdftex.def)             Requested size: 237.28833pt x 167.42679pt.
+
+Overfull \hbox (38.48004pt too wide) in paragraph at lines 56--79
+[][] 
+ []
+
+[10 <./img/test.png>]) [11]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 204.
+ [12]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 204.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 205.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 205.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 204.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 204.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: BE9F948BDC55A98CDBB7C5EB5FB2E104;831.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 205.
+(rerunfilecheck)             Checksum: 6F9C8C57E65F70DF35B0592DBC3DB268;714.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 204.
  ) 
 Here is how much of TeX's memory you used:
- 10826 strings out of 493304
- 154506 string characters out of 6139872
- 286186 words of memory out of 5000000
- 14003 multiletter control sequences out of 15000+600000
+ 10829 strings out of 493304
+ 154503 string characters out of 6139872
+ 287186 words of memory out of 5000000
+ 14001 multiletter control sequences out of 15000+600000
  14187 words of font info for 54 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 42i,12n,58p,920b,1138s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,12n,58p,920b,1219s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exi
 st, replaced by a fixed one
 
@@ -904,10 +914,10 @@ sfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
 12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb
 ></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on report.pdf (12 pages, 402379 bytes).
+Output written on report.pdf (13 pages, 1309273 bytes).
 PDF statistics:
- 270 PDF objects out of 1000 (max. 8388607)
- 230 compressed objects within 3 object streams
- 57 named destinations out of 1000 (max. 500000)
- 161 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 274 PDF objects out of 1000 (max. 8388607)
+ 232 compressed objects within 3 object streams
+ 61 named destinations out of 1000 (max. 500000)
+ 150 words of extra memory for PDF output out of 10000 (max. 10000000)
 
