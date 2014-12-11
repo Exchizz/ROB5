@@ -52,6 +52,9 @@
 #define PATH		200
 #define COVERAGE	220
 
+#define OBSTACLE    1
+#define FREE_SPACE  0
+
 /*****************************   Constants   *******************************/
 
 /*****************************   Functions   *******************************/
@@ -63,6 +66,7 @@ public:
 	int cup_holder=0;
 	bool room_for_robot = true;
 	int endX,endY;
+	bool full = false;
 };
 
 class Room {
@@ -117,8 +121,8 @@ private:
 	//std::pair<int,int> drive_up(std::pair<int,int>);
 	//std::pair<int,int> drive_down(std::pair<int,int>);
 	//std::pair<int,int> drive_right(std::pair<int,int>);
-	Robot move_forward(Robot, Room, int &px_move);
-	Robot draw_coverage(Robot);
+	Robot move_forward(Robot &robot, Room, int &px_moves);
+	Robot draw_coverage(Robot &robot);
 	void draw_area(Room);
 	void draw_line(std::pair<int,int>, std::pair<int,int>);
 public:
@@ -134,13 +138,19 @@ public:
 	void detect_hallways();
 	void detect_neighbours();
 
+	//Planning(const Planning &planning){
+
+	//}
+
+	void Copyconstructor(const Planning &planning);
+
 	//Coverage
-	Robot cover_room(Room, int &px_moves);
+	Robot cover_room(Room, int &px_moves, Robot &robot);
 
 	// Navigation
 	//void offline_wavefront();
 	//std::pair<int,int> online_wavefront(int,int,int,int);
-	int** wall_expansion();
+	void wall_expansion();
 	int moveRobot(std::vector<std::vector <int> > & waveMap, std::pair<int,int> Qstart, std::pair<int,int> Qend);
 	std::pair<int,int> online_wavefront(std::pair<int,int> start, std::pair<int,int> end, int& px_moves);
 	bool inImage(int x, int y);

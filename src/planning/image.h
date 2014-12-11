@@ -49,9 +49,8 @@ public:
 	void createVector(std::vector<std::vector<int>> &image);
 	void loadImage(const std::string filename);
 	void saveImage(std::string filename);
-private:
-	std::fstream imageFile;
 	std::vector<std::vector<int>> imageData;
+	std::fstream imageFile;
 	int width;
 	int height;
 	int maxValue;

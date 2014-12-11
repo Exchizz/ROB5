@@ -110,10 +110,12 @@ int Image::getHeight() {
 	return height;
 }
 void Image::createVector(std::vector<std::vector<int> > &image) {
-	image.reserve(width);
+	//image.reserve(width);
+
 	for (int i = 0; i < width; ++i) {
 		std::vector<int> temp(height);
 		image.push_back(temp);
+		//image[i] = temp;
 	}
 }
 int Image::getPixel(int width, int height) {

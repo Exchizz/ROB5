@@ -291,31 +291,43 @@ void Planning::detect_neighbours() {
 
 }
 
-Robot Planning::draw_coverage(Robot robot){
+Robot Planning::draw_coverage(Robot &robot){
 	for(signed int tempY = robot.posY-ROBOT_RAD; tempY < robot.posY+ROBOT_RAD; tempY++){
 		for(signed int tempX = robot.posX-ROBOT_RAD; tempX < robot.posX+ROBOT_RAD; tempX++){
-			if(getPixel(tempX,tempY)==WHITE or getPixel(tempX,tempY)==COVERAGE){
+			if(getPixel(tempX,tempY)==WHITE or getPixel(tempX,tempY)==COVERAGE or getPixel(tempX, tempY) == 100){
 				setPixel(tempX,tempY,COVERAGE);
-			}else if(getPixel(tempX,tempY) == CUP){
+			}
+			if(getPixel(tempX,tempY) == CUP){
 				robot.cup_holder++;
-				setPixel(tempX,tempY,COVERAGE);
+				setPixel(tempX, tempY, COVERAGE);
+				std::cout << "cups: " << robot.cup_holder << std::endl;
+				if(robot.cup_holder == 20){
+					robot.full = true;
+					std::cout << "Robot FULL" << std::endl;
+					return robot;
+				}
+				//setPixel(tempX,tempY,COVERAGE);
 			}
 		}
 	}
 	return robot;
 }
 
-Robot Planning::move_forward(Robot robot,Room room, int &px_moves){
+Robot Planning::move_forward(Robot &robot,Room room, int &px_moves){
 	switch(robot.direction){
 	case MOVE_RIGHT:
 	{
 		int boundary = ROBOT_DIA+robot.posX;
 		while(robot.posX < boundary){
 			robot = draw_coverage(robot);
+			//if(robot.full){
+			//	return robot;
+			//}
 			robot.posX++;
 			if(room.x3 - robot.posX <= ROBOT_RAD){
 				robot.room_for_robot = false;
 				//std::cout << "No more room\n";
+				//std::cout << room.x3 << " " << robot.posX << std::endl;
 				break;
 			}
 			setPixel(robot.posX,robot.posY,PATH);
@@ -328,6 +340,9 @@ Robot Planning::move_forward(Robot robot,Room room, int &px_moves){
 		int boundary = room.y1 - ROBOT_RAD;
 		while(robot.posY < boundary){
 			robot = draw_coverage(robot);
+			//if(robot.full){
+			//	return robot;
+			//}
 			robot.posY++;
 			setPixel(robot.posX, robot.posY,PATH);
 			px_moves++;
@@ -339,6 +354,9 @@ Robot Planning::move_forward(Robot robot,Room room, int &px_moves){
 		int boundary = ROBOT_RAD+room.y2;
 		while(robot.posY > boundary){
 			robot = draw_coverage(robot);
+			//if(robot.full){
+			//	return robot;
+			//}
 			robot.posY--;
 			setPixel(robot.posX, robot.posY,PATH);
 			px_moves++;
@@ -350,16 +368,17 @@ Robot Planning::move_forward(Robot robot,Room room, int &px_moves){
 	return robot;
 }
 
-Robot Planning::cover_room(Room room, int &px_moves){
-	Robot robot;
+Robot Planning::cover_room(Room room, int &px_moves,Robot &robot){
+	robot.room_for_robot = true;
 
+	std::cout << "New Room" << std::endl;
 	// Initialize starting position
 	robot.posX = room.x2+ROBOT_RAD;
 	robot.posY = room.y2+ROBOT_RAD;
 
 	// 1.2 Initial Coverage
-	for(signed int tempY = robot.posY-ROBOT_RAD; tempY < robot.posY+ROBOT_RAD; tempY++){
-		for(signed int tempX = robot.posX-ROBOT_RAD; tempX < robot.posX+ROBOT_RAD; tempX++){
+	for(unsigned int tempY = robot.posY-ROBOT_RAD; tempY < robot.posY+ROBOT_RAD; tempY++){
+		for(unsigned int tempX = robot.posX-ROBOT_RAD; tempX < robot.posX+ROBOT_RAD; tempX++){
 			setPixel(tempX,tempY,COVERAGE);
 		}
 	}
@@ -367,39 +386,66 @@ Robot Planning::cover_room(Room room, int &px_moves){
 	while(robot.room_for_robot){
 		robot.direction = MOVE_UP;
 		robot=move_forward(robot,room, px_moves);
+		if(robot.full){
+			return robot;
+		}
 		robot.direction = MOVE_RIGHT;
 		robot=move_forward(robot,room, px_moves);
+		//if(robot.full){
+		//	return robot;
+		//}
 		if(!robot.room_for_robot){
 			// DEBUG
 			//std::cout << "Breaking out of loop\n";
+			robot.room_for_robot = true;
 			break;
 		}
 		robot.direction = MOVE_DOWN;
 		robot=move_forward(robot,room, px_moves);
+		//if(robot.full){
+		//	return robot;
+		//}
 		robot.direction = MOVE_RIGHT;
 		robot=move_forward(robot,room, px_moves);
+		//if(robot.full){
+		//	return robot;
+		//}
 	}
 
 	//compute remaining lanes.
 
 	int diffX = room.x3 - ROBOT_RAD - robot.posX;
 	int diffY = room.y3 + ROBOT_RAD - robot.posY;
-	//std::cout << room.x3 << " " << robot.posX << " " << diffX << std::endl;
-	//std::cout << room.y3 << " " << robot.posY << " " << diffY << std::endl;
+	std::cout << room.x3 << " " << robot.posX << " " << diffX << std::endl;
+	std::cout << room.y3 << " " << robot.posY << " " << diffY << std::endl;
 
 	if(robot.direction == MOVE_RIGHT){
 		if(diffX == 0 and diffY != 0){
 			robot.direction = MOVE_DOWN;
 			robot = move_forward(robot,room, px_moves);
+			//if(robot.full){
+			//	return robot;
+			//}
+			//HACK
+			std::cout << "Sidder fast oppe" << std::endl;
+			robot.posY+=ROBOT_RAD;
+			robot.posX-=ROBOT_RAD;
 		}
 		if(diffX == 0 and diffY == 0){
 			robot.direction = MOVE_UP;
 			robot = move_forward(robot,room, px_moves);
+			//if(robot.full){
+			//	return robot;
+			//}
+			//HACK
+			std::cout << "Sidder fast nede" << std::endl;
+			robot.posY-=ROBOT_RAD;
+			robot.posX-=ROBOT_RAD;
 		}
 	}
 	robot.endX = robot.posX;
 	robot.endY = robot.posY;
-	//std::cout << "Cup holder: " << robot.cup_holder << std::endl;
+	std::cout << "Cup holder: " << robot.cup_holder << std::endl;
 	return robot;
 }
 
@@ -529,19 +575,19 @@ std::pair<int,int> Planning::online_wavefront(std::pair<int,int> start, std::pai
 		y = pair.first.second;
 
 		last = pair.second +1;
-		if (inImage(x,y+1) && waveMap[x][y+1] == 0 && !is_black(x,y+1)){
+		if (inImage(x,y+1) && waveMap[x][y+1] == FREE_SPACE && getPixel(x,y+1) != OBSTACLE){
 			waveMap[x][y+1] = last;
 			queue.push(std::make_pair(std::make_pair(x,y+1), last));
 		}
-		if (inImage(x,y-1) && waveMap[x][y-1] == 0 && !is_black(x,y-1) ){
+		if (inImage(x,y-1) && waveMap[x][y-1] == FREE_SPACE && getPixel(x,y-1) != OBSTACLE ){
 			waveMap[x][y-1] = last;
 			queue.push(std::make_pair(std::make_pair(x,y-1), last));
 		}
-		if (inImage(x+1,y) && waveMap[x+1][y] == 0  && !is_black(x+1,y)){
+		if (inImage(x+1,y) && waveMap[x+1][y] == FREE_SPACE  && getPixel(x+1,y) != OBSTACLE){
 			waveMap[x+1][y] = last;
 			queue.push(std::make_pair(std::make_pair(x+1,y), last));
 		}
-		if (inImage(x-1,y) && waveMap[x-1][y] == 0 && !is_black(x-1,y)){
+		if (inImage(x-1,y) && waveMap[x-1][y] == FREE_SPACE && getPixel(x-1,y) != OBSTACLE){
 			waveMap[x-1][y] = last;
 			queue.push(std::make_pair(std::make_pair(x-1,y), last));
 		}
@@ -550,30 +596,54 @@ std::pair<int,int> Planning::online_wavefront(std::pair<int,int> start, std::pai
 	moved_px+=moveRobot(waveMap,start, end);
 	return end;
 }
-int** Planning::wall_expansion() {
+void Planning::wall_expansion() {
 	int expansion_factor = 4;
+	std::vector<std::vector <int> > expand_map;
 
-	int** expand_map = new int*[getWidth()];
 
-	for (int i = 0; i < getWidth(); i++){
-		expand_map[i] = new int[getHeight()];
+	for(int i = 0; i < getWidth(); i++){
+		std::vector<int> col(getHeight());
+		expand_map.push_back(col);
 	}
-
 	for(int x = 0; x < getWidth(); x++){
 		for(int y = 0; y < getHeight(); y++){
 			if(getPixel(x,y) <= 50){
 				for(int i = 0; i<=expansion_factor;i++){
 					for(int j = 0; j<=expansion_factor;j++){
-						if(y+i <= getHeight()-1 && x+j <= getWidth()-1 ){expand_map[x+j][y+i] = 1;}
-						if(y+i <= getHeight()-1 && x-j >= 0){expand_map[x-j][y+i] = 1;}
-						if(y-i >= 0 && x-j >= 0 ){expand_map[x-j][y-i] = 1;}
-						if(y-i >= 0 && x+j <= getWidth()-1 ){expand_map[x+j][y-i] = 1;}
+						if(y+i <= getHeight()-1 && x+j <= getWidth()-1 ){
+							expand_map[x+j][y+i] = 1;
+						}
+						if(y+i <= getHeight()-1 && x-j >= 0){
+							expand_map[x-j][y+i] = 1;
+						}
+						if(y-i >= 0 && x-j >= 0 ){
+							expand_map[x-j][y-i] = 1;
+						}
+						if(y-i >= 0 && x+j <= getWidth()-1 ){
+							expand_map[x+j][y-i] = 1;
+						}
 					}
 				}
 			}else if(expand_map[x][y] != 1){
-				expand_map[x][y] = 0;
+					expand_map[x][y] = 0;
 			}
 		}
 	}
-	return expand_map;
+
+	std::cout << "width: " << getWidth() << std::endl;
+	for(int x = 0; x < getWidth(); ++x){
+		for(int y = 0; y < getHeight(); y++){
+			//setPixel(x,y,(expand_map[x][y] == 0) ? WHITE : BLACK);
+			setPixel(x,y,expand_map[x][y]);
+		}
+	}
+}
+
+
+void Planning::Copyconstructor(const Planning &planning){
+	width = planning.width;
+	height = planning.height;
+	maxValue = planning.maxValue;
+	version = planning.version;
+	imageData = planning.imageData;
 }
